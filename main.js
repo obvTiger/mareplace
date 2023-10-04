@@ -3,7 +3,7 @@ const Express = require("express");
 const ExpressSession = require("express-session");
 const ExpressCompression = require("compression");
 const SessionFileStore = require("session-file-store")(ExpressSession);
-
+const ExpressWS = require("express-ws");
 // Discord
 const { Client, Events, GatewayIntentBits } = require("discord.js");
 
@@ -30,12 +30,11 @@ require("dotenv").config();
  * - Move more stuff to config like redirect url, etc
  */
 
-const client = new Client({ intents: [ GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers ] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers] });
 
 client.login(process.env.BOT_TOKEN);
 
-client.once(Events.ClientReady, c =>
-{
+client.once(Events.ClientReady, c => {
 	console.log("Ready! Logged in as", c.user.tag);
 });
 
@@ -44,8 +43,8 @@ client.once(Events.ClientReady, c =>
 */
 
 const app = Express();
-// const port = 80;
-
+const port = 80;
+ExpressWS(app);
 
 
 /*
@@ -53,33 +52,31 @@ const app = Express();
 */
 
 app.use(Express.static(Path.join(__dirname, "public")));
-app.use(ExpressSession({ store: new SessionFileStore(
-{
-	path: "./canvas/sessions",
-	ttl: 7 * 24 * 60 * 60,
-	retries: 0,
-	encoder: data => JSON.stringify(data, null, "\t") }),
+app.use(ExpressSession({
+	store: new SessionFileStore(
+		{
+			path: "./canvas/sessions",
+			ttl: 7 * 24 * 60 * 60,
+			retries: 0,
+			encoder: data => JSON.stringify(data, null, "\t")
+		}),
 	secret: process.env.SESSION_SECRET,
 	saveUninitialized: false,
 	resave: false
 }));
 app.use(Express.json());
 
-async function userInfo(req, res, next)
-{
-	if(!req.session?.user)
-	{
+async function userInfo(req, res, next) {
+	if (!req.session?.user) {
 		return next();
 	}
 
 	req.user = req.session.user;
 
-	try
-	{
+	try {
 		req.member = await client.guilds.cache.get(Config.guild.id).members.fetch(req.session.user.id);
 	}
-	catch(e)
-	{
+	catch (e) {
 	}
 
 	next();
@@ -91,7 +88,7 @@ async function userInfo(req, res, next)
  * ===============================
 */
 
-const canvas = new Canvas().initialize({ sizeX: 500, sizeY: 500, colors: [ "#be0039", "#ff4500", "#ffa800", "#ffd635", "#00a368", "#00cc78", "#7eed56", "#00756f", "#009eaa", "#2450a4", "#3690ea", "#51e9f4", "#493ac1", "#6a5cff", "#811e9f", "#b44ac0", "#ff3881", "#ff99aa", "#6d482f", "#9c6926", "#000000", "#898d90", "#d4d7d9", "#ffffff" ] });
+const canvas = new Canvas().initialize({ sizeX: 1000, sizeY: 1000, colors: ["#be0039", "#ff4500", "#ffa800", "#ffd635", "#00a368", "#00cc78", "#7eed56", "#00756f", "#009eaa", "#2450a4", "#3690ea", "#51e9f4", "#493ac1", "#6a5cff", "#811e9f", "#b44ac0", "#ff3881", "#ff99aa", "#6d482f", "#9c6926", "#000000", "#898d90", "#d4d7d9", "#ffffff"] });
 const io = new Canvas.IO(canvas, "./canvas/current.hst").read();
 
 // day 2 colors
@@ -107,64 +104,59 @@ const io = new Canvas.IO(canvas, "./canvas/current.hst").read();
  * ===============================
 */
 
-const oauthRedirectUrl = "https://place.manechat.net/auth/discord/redirect"
+const oauthRedirectUrl = "http://IPADRESSE/auth/discord/redirect"
 const oauthScope = "identify";
 
 
 
-app.get("/auth/discord", (req, res) =>
-{
+app.get("/auth/discord", (req, res) => {
 	const query = QueryString.encode(
-	{
-		client_id: process.env.CLIENT_ID,
-		scope: oauthScope,
-		redirect_uri: oauthRedirectUrl,
-		response_type: "code",
-	});
+		{
+			client_id: process.env.CLIENT_ID,
+			scope: oauthScope,
+			redirect_uri: oauthRedirectUrl,
+			response_type: "code",
+		});
 
 	res.redirect(`https://discord.com/api/oauth2/authorize?${query}`);
 });
 
 
 
-app.get("/auth/discord/redirect", async (req, res) =>
-{
+app.get("/auth/discord/redirect", async (req, res) => {
 	const code = req.query.code;
 
-	if (!code)
-	{
+	if (!code) {
 		return res.redirect("/");
 	}
 
 	const authRes = await fetch("https://discord.com/api/oauth2/token",
-	{
-		method: "POST",
-		headers: { "Content-Type": "application/x-www-form-urlencoded" },
-		body: new URLSearchParams(
 		{
-			client_id: process.env.CLIENT_ID,
-			client_secret: process.env.CLIENT_SECRET,
-			grant_type: "authorization_code",
-			scope: oauthScope,
-			redirect_uri: oauthRedirectUrl,
-			code
-		})
-	});
+			method: "POST",
+			headers: { "Content-Type": "application/x-www-form-urlencoded" },
+			body: new URLSearchParams(
+				{
+					client_id: process.env.CLIENT_ID,
+					client_secret: process.env.CLIENT_SECRET,
+					grant_type: "authorization_code",
+					scope: oauthScope,
+					redirect_uri: oauthRedirectUrl,
+					code
+				})
+		});
 
-	if(!authRes.ok)
-	{
+	if (!authRes.ok) {
 		return res.redirect("/");
 	}
 
 	const auth = await authRes.json();
 
 	const userRes = await fetch("https://discord.com/api/users/@me",
-	{
-		headers: { Authorization: `${auth.token_type} ${auth.access_token}` }
-	});
+		{
+			headers: { Authorization: `${auth.token_type} ${auth.access_token}` }
+		});
 
-	if(!userRes.ok)
-	{
+	if (!userRes.ok) {
 		return res.redirect("/");
 	}
 
@@ -176,10 +168,8 @@ app.get("/auth/discord/redirect", async (req, res) =>
 
 
 
-app.get("/initialize", userInfo, async (req, res) =>
-{
-	if(!req.user)
-	{
+app.get("/initialize", userInfo, async (req, res) => {
+	if (!req.user) {
 		return res.json({ loggedIn: false, banned: false, cooldown: 0, settings: canvas.settings });
 	}
 
@@ -188,23 +178,19 @@ app.get("/initialize", userInfo, async (req, res) =>
 
 
 
-app.get("/canvas", ExpressCompression(), (req, res) =>
-{
+app.get("/canvas", ExpressCompression(), (req, res) => {
 	res.contentType("application/octet-stream");
 	res.send(canvas.pixels.data);
 });
 
 
 
-app.post("/place", userInfo, async (req, res) =>
-{
-	if(!req.member)
-	{
+app.post("/place", userInfo, async (req, res) => {
+	if (!req.member) {
 		return res.status(401).send();
 	}
 
-	if(isBanned(req.member))
-	{
+	if (isBanned(req.member)) {
 		return res.status(403).send();
 	}
 
@@ -215,37 +201,30 @@ app.post("/place", userInfo, async (req, res) =>
 
 
 
-app.post("/placer", async (req, res) =>
-{
-	if(!canvas.isInBounds(+req.body.x, +req.body.y))
-	{
+app.post("/placer", async (req, res) => {
+	if (!canvas.isInBounds(+req.body.x, +req.body.y)) {
 		return res.json({ username: "" });
 	}
 
 	const pixelInfo = canvas.info[+req.body.x][+req.body.y];
 
-	if(!pixelInfo)
-	{
+	if (!pixelInfo) {
 		return res.json({ username: "" });
 	}
 
-	try
-	{
+	try {
 		const member = await client.guilds.cache.get(Config.guild.id).members.fetch(pixelInfo.userId.toString());
 
-		if(member && member.nickname)
-		{
+		if (member && member.nickname) {
 			return res.json({ username: member.nickname });
 		}
 	}
-	catch(e)
-	{
+	catch (e) {
 	}
 
 	const user = await client.users.fetch(pixelInfo.userId.toString());
 
-	if(!user)
-	{
+	if (!user) {
 		return res.json({ username: "" });
 	}
 
@@ -258,15 +237,12 @@ app.post("/placer", async (req, res) =>
  * ===============================
 */
 
-function isBanned(member)
-{
-	if(!member)
-	{
+function isBanned(member) {
+	if (!member) {
 		return true;
 	}
 
-	if(Config.guild.moderatorRoles.some(roleId => member.roles.cache.has(roleId)))
-	{
+	if (Config.guild.moderatorRoles.some(roleId => member.roles.cache.has(roleId))) {
 		return false;
 	}
 
@@ -282,12 +258,10 @@ function isBanned(member)
 let idCounter = 0;
 const clients = new Map();
 
-canvas.addListener("pixel", (x, y, color) =>
-{
+canvas.addListener("pixel", (x, y, color) => {
 	console.log("Pixel sent to " + clients.size + " - " + new Date().toString());
 	const buf = io.serializePixelWithoutTheOtherStuff(x, y, color);
-	for(const socket of clients.values())
-	{
+	for (const socket of clients.values()) {
 		socket.send(buf);
 	}
 });
@@ -295,31 +269,25 @@ canvas.addListener("pixel", (x, y, color) =>
 app.setUpSockets = () => // TODO: THis is really ugly because of Greenlock
 {
 
-app.ws("/", ws =>
-{
-	const clientId = idCounter++;
+	app.ws("/", ws => {
+		const clientId = idCounter++;
 
-	clients.set(clientId, ws);
+		clients.set(clientId, ws);
 
-	ws.on("close", () =>
-	{
-		clients.delete(clientId);
+		ws.on("close", () => {
+			clients.delete(clientId);
+		});
 	});
-});
 
 }
-
-
+app.setUpSockets();
 
 /*
  * ===============================
 */
-
-/*
-app.listen(port, () =>
-{
+app.listen(port, () => {
 	console.log(`Example app listening on port ${port}`);
 });
-*/
+
 
 module.exports = app;

@@ -19,8 +19,7 @@
 
 let pixelSize = 1;
 
-function isIOS()
-{
+function isIOS() {
 	return /iPad|iPhone|iPod/.test(navigator.userAgent); // TODO: Mac?
 }
 
@@ -44,8 +43,7 @@ const colorsContainer = document.getElementById("colors");
 
 
 
-function setSize(sizeX, sizeY)
-{
+function setSize(sizeX, sizeY) {
 	main.style.width = sizeX + "px";
 	main.style.height = sizeY + "px";
 	canvas.width = sizeX * pixelSize;
@@ -56,13 +54,13 @@ function setSize(sizeX, sizeY)
 
 
 
-const selectSound = new Howl({ src: [ "./sounds/select.mp3" ], volume: 0.2 });
-const cancelSound = new Howl({ src: [ "./sounds/cancel.mp3" ], volume: 0.2 });
-const pickSound = new Howl({ src: [ "./sounds/pick.mp3" ], volume: 0.2 });
-const placeSound = new Howl({ src: [ "./sounds/place.mp3" ], volume: 0.2 });
-const errorSound = new Howl({ src: [ "./sounds/error.mp3" ], volume: 0.2 });
-const refreshSound = new Howl({ src: [ "./sounds/refresh.mp3" ], volume: 0.2 });
-const clickSound = new Howl({ src: [ "./sounds/click.mp3" ], volume: 0.2 });
+const selectSound = new Howl({ src: ["./sounds/select.mp3"], volume: 0.2 });
+const cancelSound = new Howl({ src: ["./sounds/cancel.mp3"], volume: 0.2 });
+const pickSound = new Howl({ src: ["./sounds/pick.mp3"], volume: 0.2 });
+const placeSound = new Howl({ src: ["./sounds/place.mp3"], volume: 0.2 });
+const errorSound = new Howl({ src: ["./sounds/error.mp3"], volume: 0.2 });
+const refreshSound = new Howl({ src: ["./sounds/refresh.mp3"], volume: 0.2 });
+const clickSound = new Howl({ src: ["./sounds/click.mp3"], volume: 0.2 });
 
 
 
@@ -84,84 +82,73 @@ let banned = false;
 
 
 
-function toUInt16(b1, b2)
-{
+function toUInt16(b1, b2) {
 	return (b1 << 8) | b2;
 }
 
-function toUInt24(b1, b2, b3)
-{
+function toUInt24(b1, b2, b3) {
 	return (b1 << 16) | (b2 << 8) | b3;
 }
 
-function rgbIntToHex(rgbInt)
-{
+function rgbIntToHex(rgbInt) {
 	return "#" + rgbInt.toString(16).padStart(6, "0");
 }
 
-function reloadPage()
-{
+function reloadPage() {
 	location.reload();
 }
 
-function delayedReloadPage()
-{
+function delayedReloadPage() {
 	setTimeout(reloadPage, 2000);
 }
 
 
 fetch("/initialize")
-.then(res => res.json())
-.then(res =>
-{
-	loggedIn = res.loggedIn;
-	banned = res.banned;
+	.then(res => res.json())
+	.then(res => {
+		loggedIn = res.loggedIn;
+		banned = res.banned;
 
-	if(isIOS()) // fix for iOS blurring the canvas for some odd reason... 
-	{
-		pixelSize = Math.floor(4000 / res.settings.sizeX);
-	}
+		if (isIOS()) // fix for iOS blurring the canvas for some odd reason... 
+		{
+			pixelSize = Math.floor(4000 / res.settings.sizeX);
+		}
 
-	setSize(res.settings.sizeX, res.settings.sizeY);
-	centerCanvas();
+		setSize(res.settings.sizeX, res.settings.sizeY);
+		centerCanvas();
 
-	maxCooldown = res.settings.maxCooldown;
-	startCooldown(res.cooldown);
+		maxCooldown = res.settings.maxCooldown;
+		startCooldown(res.cooldown);
 
-	setColors(res.settings.colors);
-	updatePlaceButton();
-})
-.then(repaintCanvas)
-.then(() =>
-{
-	const socket = new WebSocket("wss://" + window.location.host);
+		setColors(res.settings.colors);
+		updatePlaceButton();
+	})
+	.then(repaintCanvas)
+	.then(() => {
+		const socket = new WebSocket("ws://" + window.location.host);
 
-	socket.addEventListener("message", async e =>
-	{
-		const bytes = new Uint8Array( await e.data.arrayBuffer() );
+		socket.addEventListener("message", async e => {
+			const bytes = new Uint8Array(await e.data.arrayBuffer());
 
-		const x = toUInt16(bytes[0], bytes[1]);
-		const y = toUInt16(bytes[2], bytes[3]);
-		const color = toUInt24(bytes[4], bytes[5], bytes[6]);
+			const x = toUInt16(bytes[0], bytes[1]);
+			const y = toUInt16(bytes[2], bytes[3]);
+			const color = toUInt24(bytes[4], bytes[5], bytes[6]);
 
-		ctx.fillStyle = rgbIntToHex(color);
-		ctx.fillRect(x * pixelSize, y * pixelSize, pixelSize, pixelSize);
+			ctx.fillStyle = rgbIntToHex(color);
+			ctx.fillRect(x * pixelSize, y * pixelSize, pixelSize, pixelSize);
+		});
+
+		socket.addEventListener("error", delayedReloadPage);
+		socket.addEventListener("close", delayedReloadPage);
+	})
+	.then(() => {
+		loadingScreen.classList.add("hidden");
 	});
 
-	socket.addEventListener("error", delayedReloadPage);
-	socket.addEventListener("close", delayedReloadPage);
-})
-.then(() =>
-{
-	loadingScreen.classList.add("hidden");
-});
-
-async function repaintCanvas()
-{
+async function repaintCanvas() {
 	const canvasRes = await fetch("/canvas");
 
-	if(!canvasRes.ok)
-	{
+	if (!canvasRes.ok) {
 		return delayedReloadPage();
 	}
 
@@ -175,15 +162,12 @@ async function repaintCanvas()
 
 let lastSwitchTime = 0;
 
-document.addEventListener("visibilitychange", () =>
-{
-	if(document.visibilityState !== "visible")
-	{
+document.addEventListener("visibilitychange", () => {
+	if (document.visibilityState !== "visible") {
 		return;
 	}
 
-	if(Date.now() - lastSwitchTime > 5000)
-	{
+	if (Date.now() - lastSwitchTime > 5000) {
 		repaintCanvas();
 	}
 
@@ -192,10 +176,9 @@ document.addEventListener("visibilitychange", () =>
 
 
 
-const bounds = { };
+const bounds = {};
 
-function updateBounds()
-{
+function updateBounds() {
 	bounds.left = document.body.clientWidth / 2.0 + 1.0;
 	bounds.top = document.body.clientHeight / 2.0 + 1.0;
 	bounds.right = document.body.clientWidth / 2.0;
@@ -206,27 +189,24 @@ updateBounds();
 
 const instance = panzoom(main, { smoothScroll: false, zoomDoubleClickSpeed: 1, minZoom: 0.5, maxZoom: 40, bounds });
 
-instance.on("panend", e =>
-{
+instance.on("panend", e => {
 	e.moveBy(0, 0, smooth = true); // cancel movement from onpointerup
 	clearTimeout(selectTimer);
 });
 
 
 
-async function showPlacerTooltip()
-{
+async function showPlacerTooltip() {
 	const placerRes = await fetch("/placer",
-	{
-		method: "POST",
-		headers: new Headers({ "content-type": "application/json" }),
-		body: JSON.stringify( { x: selectX, y: selectY } )
-	});
+		{
+			method: "POST",
+			headers: new Headers({ "content-type": "application/json" }),
+			body: JSON.stringify({ x: selectX, y: selectY })
+		});
 
 	const placerName = (await placerRes.json()).username;
 
-	if(!placerName)
-	{
+	if (!placerName) {
 		return;
 	}
 
@@ -235,8 +215,7 @@ async function showPlacerTooltip()
 	placerTooltip.classList.add("visible");
 }
 
-function hidePlacerTooltip()
-{
+function hidePlacerTooltip() {
 	placerTooltip.classList.remove("visible");
 }
 
@@ -244,9 +223,8 @@ function hidePlacerTooltip()
 
 let justCreated = true;
 
-instance.on("transform", e =>
-{
-	if(justCreated) // TODO: Dirty hack
+instance.on("transform", e => {
+	if (justCreated) // TODO: Dirty hack
 	{
 		justCreated = false;
 		return;
@@ -259,8 +237,8 @@ instance.on("transform", e =>
 	const centerX = (document.body.clientWidth / 2.0 - transform.x) / transform.scale;
 	const centerY = (document.body.clientHeight / 2.0 - transform.y) / transform.scale;
 
-	selectX = Math.floor( centerX );
-	selectY = Math.floor( centerY );
+	selectX = Math.floor(centerX);
+	selectY = Math.floor(centerY);
 
 	window.sessionStorage.setItem("x", centerX);
 	window.sessionStorage.setItem("y", centerY);
@@ -273,17 +251,15 @@ instance.on("transform", e =>
 	clearTimeout(placerTooltipTimer);
 	hidePlacerTooltip();
 
-	if(transform.scale < 30)
-	{
+	if (transform.scale < 30) {
 		return;
 	}
 
 	placerTooltipTimer = setTimeout(showPlacerTooltip, 200);
 });
 
-main.onmouseup = e =>
-{
-	if(Date.now() - lastResizeTime <= 200) // prevent this from triggering in a rare scenario where the titlebar is double clicked to resize the window
+main.onmouseup = e => {
+	if (Date.now() - lastResizeTime <= 200) // prevent this from triggering in a rare scenario where the titlebar is double clicked to resize the window
 	{
 		return;
 	}
@@ -299,8 +275,7 @@ main.onmouseup = e =>
 let lastWidth = 0;
 let lastHeight = 0;
 
-function centerCanvas()
-{
+function centerCanvas() {
 	lastWidth = document.body.clientWidth;
 	lastHeight = document.body.clientHeight;
 
@@ -310,8 +285,7 @@ function centerCanvas()
 	let qy = parseFloat(query.get("y"));
 	let qs = parseFloat(query.get("s"));
 
-	if(centerTo(qx, qy, qs))
-	{
+	if (centerTo(qx, qy, qs)) {
 		window.history.replaceState(null, "", "/");
 		return;
 	}
@@ -320,18 +294,15 @@ function centerCanvas()
 	const sy = parseFloat(window.sessionStorage.getItem("y"));
 	const ss = parseFloat(window.sessionStorage.getItem("s"));
 
-	if(centerTo(sx, sy, ss))
-	{
+	if (centerTo(sx, sy, ss)) {
 		return;
 	}
 
 	instance.moveTo((lastWidth - canvas.width / pixelSize) / 2.0, (lastHeight - canvas.height / pixelSize) / 2.0);
 }
 
-function centerTo(x, y, s)
-{
-	if(isFinite(x) && isFinite(y) && isFinite(s))
-	{
+function centerTo(x, y, s) {
+	if (isFinite(x) && isFinite(y) && isFinite(s)) {
 		instance.moveTo(lastWidth / 2.0 - x, lastHeight / 2.0 - y);
 		instance.zoomTo(lastWidth / 2.0, lastHeight / 2.0, s);
 
@@ -341,8 +312,7 @@ function centerTo(x, y, s)
 	return false;
 }
 
-function recenterCanvas()
-{	
+function recenterCanvas() {
 	const dw = document.body.clientWidth - lastWidth;
 	const dh = document.body.clientHeight - lastHeight;
 
@@ -357,18 +327,15 @@ function recenterCanvas()
 
 window.onresize = recenterCanvas;
 
-function openPicker()
-{
+function openPicker() {
 	selectSound.play();
 
-	if(!loggedIn)
-	{
+	if (!loggedIn) {
 		window.location.href = "/auth/discord";
 		return;
 	}
 
-	if(banned)
-	{
+	if (banned) {
 		return;
 	}
 
@@ -377,14 +344,12 @@ function openPicker()
 	const transform = instance.getTransform();
 	const scale = transform.scale;
 
-	if(scale < 20)
-	{
+	if (scale < 20) {
 		instance.smoothZoom(document.body.clientWidth / 2.0, document.body.clientHeight / 2.0, 20 / scale, duration = 2000, easing = "easeInOut");
 	}
 }
 
-function closePicker()
-{
+function closePicker() {
 	picker.classList.remove("open");
 	cancelSound.play();
 	unpickColor();
@@ -394,15 +359,13 @@ function closePicker()
 
 let selectedColor;
 
-function pickColor(e)
-{
+function pickColor(e) {
 	unpickColor();
 	selectedColor = e;
 
 	e.classList.add("picked");
 
-	if(cooldown <= 0)
-	{
+	if (cooldown <= 0) {
 		confirm.classList.remove("inactive");
 	}
 
@@ -411,10 +374,8 @@ function pickColor(e)
 	pickSound.play();
 }
 
-function unpickColor()
-{
-	if(selectedColor)
-	{
+function unpickColor() {
+	if (selectedColor) {
 		selectedColor.classList.remove("picked");
 		selectedColor = null;
 	}
@@ -426,29 +387,25 @@ function unpickColor()
 
 const ctx = canvas.getContext("2d");
 
-async function placeColor()
-{
-	if(!selectedColor || cooldown > 0 )
-	{
+async function placeColor() {
+	if (!selectedColor || cooldown > 0) {
 		return errorSound.play();
 	}
 
 	const placedRes = await fetch("/place",
-	{
-		method: "POST",
-		headers: new Headers({ "content-type": "application/json" }),
-		body: JSON.stringify( { x: selectX, y: selectY, color: +selectedColor.dataset.color } )
-	});
+		{
+			method: "POST",
+			headers: new Headers({ "content-type": "application/json" }),
+			body: JSON.stringify({ x: selectX, y: selectY, color: +selectedColor.dataset.color })
+		});
 
-	if(!placedRes.ok)
-	{
+	if (!placedRes.ok) {
 		return reloadPage();
 	}
 
 	const placed = (await placedRes.json()).placed;
 
-	if(!placed)
-	{
+	if (!placed) {
 		return errorSound.play();
 	}
 
@@ -460,14 +417,12 @@ async function placeColor()
 	startCooldown(maxCooldown);
 }
 
-function showSelectorBorder()
-{
+function showSelectorBorder() {
 	selectorBorder.classList.remove("hidden");
 	selectorPixel.classList.add("hidden");
 }
 
-function showSelectorPixel()
-{
+function showSelectorPixel() {
 	selectorBorder.classList.add("hidden");
 	selectorPixel.classList.remove("hidden");
 	pixelColor.style.backgroundColor = selectedColor.style.backgroundColor;
@@ -475,8 +430,7 @@ function showSelectorPixel()
 
 
 
-function convertTimer()
-{
+function convertTimer() {
 	const date = new Date(0);
 	date.setSeconds(cooldown);
 	return timeString = date.toISOString().substring(14, 19);
@@ -484,17 +438,14 @@ function convertTimer()
 
 let cooldownInterval;
 
-function updatePlaceButton()
-{
-	if(!loggedIn)
-	{
+function updatePlaceButton() {
+	if (!loggedIn) {
 		placeButton.style.background = `linear-gradient(to left, #2C3C41, #2C3C41 100%, #566F74 100%, #566F74)`;
 		placeText.innerHTML = "<b>Login to Place!</b>";
 		return;
 	}
 
-	if(banned)
-	{
+	if (banned) {
 		placeButton.style.background = `linear-gradient(to left, #2C3C41, #2C3C41 100%, #566F74 100%, #566F74)`;
 		placeText.innerHTML = "<b>Restricted</b>";
 		return;
@@ -504,8 +455,7 @@ function updatePlaceButton()
 
 	placeText.innerHTML = "<b>Place" + (cooldown > 0 ? ` in ${convertTimer()}` : "!") + "</b>";
 
-	if(progress < 100)
-	{
+	if (progress < 100) {
 		placeButton.style.background = `linear-gradient(to left, #2C3C41, #2C3C41 ${progress}%, #566F74 ${progress}%, #566F74)`;
 		return;
 	}
@@ -513,32 +463,27 @@ function updatePlaceButton()
 	placeButton.style.background = null;
 }
 
-function startCooldown(newCooldown)
-{
+function startCooldown(newCooldown) {
 	cooldown = newCooldown;
 	updatePlaceButton();
 
-	if(newCooldown === 0)
-	{
+	if (newCooldown === 0) {
 		return;
 	}
 
 	setTimeout(stopCooldown, newCooldown * 1000);
-	cooldownInterval = setInterval(() =>
-	{
+	cooldownInterval = setInterval(() => {
 		--cooldown;
 		updatePlaceButton();
 	}, 1000);
 }
 
-function stopCooldown()
-{
+function stopCooldown() {
 	cooldown = 0;
 	updatePlaceButton();
 	clearTimeout(cooldownInterval);
 
-	if(picker.classList.contains("open") && selectedColor)
-	{
+	if (picker.classList.contains("open") && selectedColor) {
 		confirm.classList.remove("inactive");
 	}
 
@@ -547,8 +492,7 @@ function stopCooldown()
 
 
 
-function shareUrl()
-{
+function shareUrl() {
 	const transform = instance.getTransform();
 
 	const url = new URL(window.location);
@@ -558,15 +502,13 @@ function shareUrl()
 
 	const link = url.toString();
 
-	if (window.isSecureContext && navigator.clipboard)
-	{
+	if (window.isSecureContext && navigator.clipboard) {
 		navigator.clipboard.writeText(link);
 	}
 
 	clearTimeout(shareTooltipTimer);
 
-	shareTooltipTimer = setTimeout(() =>
-	{
+	shareTooltipTimer = setTimeout(() => {
 		shareTooltip.classList.remove("visible");
 	}, 1500);
 
@@ -577,12 +519,10 @@ function shareUrl()
 
 
 
-function setColors(colors)
-{
+function setColors(colors) {
 	colorsContainer.innerHTML = "";
 
-	for(const color of colors)
-	{
+	for (const color of colors) {
 		const colorButton = document.createElement("div");
 
 		colorButton.className = "color";
