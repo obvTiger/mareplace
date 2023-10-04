@@ -43,7 +43,7 @@ client.once(Events.ClientReady, c => {
 */
 
 const app = Express();
-const port = 82;
+const port = 1300;
 ExpressWS(app);
 
 
