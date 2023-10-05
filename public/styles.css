@@ -559,16 +559,16 @@ body {
 
 .blue {
   color: white;
-  background-color: #0037ff;
+  background-color: #ffffff;
 }
 
 .orange {
   color: white;
-  background-color: #FF4500;
+  background-color: #2fff00;
 }
 
 .orange.inactive {
-  background-color: #2C3C41;
+  background-color: #3387a0;
 }
 
 .white {
