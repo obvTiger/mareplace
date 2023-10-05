@@ -24,8 +24,6 @@
 			</div>
 		</div>
 	</div>
-	<div id="minimap">
-	</div>
 	<div id="mercy">
 		<div style="display: flex; justify-content: center">
 			<div id="credits" class="blue button" onpointerup="creditsForMerc()" style="margin: 10px; padding: 3px;">
@@ -81,21 +79,6 @@
 	<script src="https://cdn.jsdelivr.net/npm/howler@2.2.3/dist/howler.min.js"></script>
 	<script src="./lib/panzoom_modified.js"></script>
 	<script src="./script.js"></script>
-	<script>
-		// JavaScript code to add minimap from minimap.js
-		const minimapContainer = document.getElementById("minimap");
-		const minimapDiv = document.createElement("div");
-		minimapDiv.innerHTML = `
-            <mlpminimap>
-                <img class="map">
-                <div class="crosshair"></div>
-                <div class="settings"></div>
-                <div id="resizer"></div>
-            </mlpminimap>
-        `;
-		minimapContainer.appendChild(minimapDiv);
-	</script>
-	<script src="./minimap.js"></script>
 </body>
 
 </html>
