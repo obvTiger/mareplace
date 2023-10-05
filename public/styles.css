@@ -520,8 +520,8 @@ body {
   width: 400px;
   height: 300px;
   position: absolute;
-  top: 0%;
-  right: 0%;
+  top: 20%;
+  right: 20%;
   background-color: rgba(0, 0, 0, .75);
   border: 1px solid black;
   overflow: hidden;
