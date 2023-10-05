@@ -88,7 +88,7 @@ async function userInfo(req, res, next) {
  * ===============================
 */
 
-const canvas = new Canvas().initialize({ sizeX: 1000, sizeY: 1000, colors: ["#be0039", "#ff4500", "#ffa800", "#ffd635", "#00a368", "#00cc78", "#7eed56", "#00756f", "#009eaa", "#2450a4", "#3690ea", "#51e9f4", "#493ac1", "#6a5cff", "#811e9f", "#b44ac0", "#ff3881", "#ff99aa", "#6d482f", "#9c6926", "#000000", "#898d90", "#d4d7d9", "#ffffff"] });
+const canvas = new Canvas().initialize({ sizeX: 250, sizeY: 250, colors: ["#ff4500", "#ffa800", "#ffd635", "#00a368", "#7eed56", "#2450a4", "#3690ea", "#51e9f4", "#811e9f", "#b44ac0", "#ff99aa", "#9c6926", "#000000", "#898d90", "#d4d7d9", "ffffff"] });
 const io = new Canvas.IO(canvas, "./canvas/current.hst").read();
 
 // day 2 colors
