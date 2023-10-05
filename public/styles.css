@@ -450,7 +450,7 @@ body {
 }
 
 body {
-  background-color: #006381;
+  background-color: #333333;
   overflow: hidden;
   font-family: "Noto Sans", sans-serif;
 }
@@ -481,7 +481,7 @@ body {
 
 #canvas {
   position: absolute;
-  background-color: rgb(255, 0, 0);
+  background-color: white;
   image-rendering: pixelated;
 }
 
@@ -512,6 +512,14 @@ body {
 
 #pixel-color {
   transform: scale(1.1);
+}
+
+#minimap {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
 }
 
 #mercy {
