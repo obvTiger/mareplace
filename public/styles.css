@@ -558,12 +558,12 @@ body {
 }
 
 .blue {
-  color: white;
+  color: rgb(0, 0, 0);
   background-color: #ffffff;
 }
 
 .orange {
-  color: white;
+  color: rgb(0, 0, 0);
   background-color: #2fff00;
 }
 
