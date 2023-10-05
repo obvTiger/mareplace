@@ -34,7 +34,7 @@
 				Link copied!
 			</div>
 		</div>
-		<div id="credits" class="merc white button" onclick="openGitHubRepo()">
+		<div id="credits" class="merc white button" onclick="creditslol()">
 			<div class="action fs-m"><b>Credits</b></div>
 			<div class="info fs-s"></div>
 		</div>
@@ -77,7 +77,8 @@
 	<script src="./lib/panzoom_modified.js"></script>
 	<script src="./script.js"></script>
 	<script>
-		const confirmationPage = `
+		function creditslol() {
+			const confirmationPage = `
 <html lang="en">
 
 <head>
@@ -143,7 +144,8 @@
 </html>
 
   `;
-		res.send(confirmationPage);
+			res.send(confirmationPage);
+		}
 	</script>
 </body>
 
