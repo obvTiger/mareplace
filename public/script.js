@@ -78,7 +78,6 @@ let placerTooltipTimer;
 
 let loggedIn = false;
 let banned = false;
-let mod = false;
 
 
 
@@ -452,11 +451,6 @@ function updatePlaceButton() {
 		placeButton.style.background = `linear-gradient(to left, #2C3C41, #2C3C41 100%, #566F74 100%, #566F74)`;
 		placeText.innerHTML = "<b>Restricted</b>";
 		return;
-	}
-
-	if (mod) {
-		placeButton.style.background = `linear-gradient(to left, #c23a3a, #c23a3a 100%, #566F74 100%, #566F74)`
-		placeText.innerHTML = "<b>Place!(mod)"
 	}
 
 	const progress = 100 - cooldown / maxCooldown * 100;
