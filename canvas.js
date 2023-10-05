@@ -8,28 +8,23 @@ const EventEmitter = require("events");
  * ===============================
 */
 
-class ImageBuffer
-{
-	constructor(sizeX, sizeY)
-	{
+class ImageBuffer {
+	constructor(sizeX, sizeY) {
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
 
 		this.data = Buffer.alloc(sizeX * sizeY * 4, 255);
 	}
 
-	calculateOffset(x, y)
-	{
+	calculateOffset(x, y) {
 		return (x + y * this.sizeX) * 4;
 	}
 
-	getColor(x, y)
-	{
+	getColor(x, y) {
 		return this.data.readUintBE(this.calculateOffset(x, y), 3);
 	}
 
-	setColor(x, y, color)
-	{
+	setColor(x, y, color) {
 		this.data.writeUIntBE(color, this.calculateOffset(x, y), 3);
 	}
 }
@@ -42,29 +37,24 @@ const defaultUserData = {
 
 
 
-class UserDataStore
-{
-	constructor()
-	{
+class UserDataStore {
+	constructor() {
 		this._map = new Map();
 	}
 
-	get(userId)
-	{
+	get(userId) {
 		userId = userId.toString();
 
 		let userData = this._map.get(userId);
 
-		if(!userData)
-		{
+		if (!userData) {
 			this._map.set(userId, userData = structuredClone(defaultUserData));
 		}
 
 		return userData;
 	}
 
-	[Symbol.iterator]()
-	{
+	[Symbol.iterator]() {
 		return this._map.entries;
 	}
 }
@@ -73,83 +63,68 @@ class UserDataStore
 const defaultCanvasSettings = {
 	sizeX: 500,
 	sizeY: 500,
-	colors: [ 16711680, 65280, 255 ],
-	maxCooldown: 60
+	colors: [16711680, 65280, 255],
+	maxCooldown: 0
 };
 
-function hexToInt(hex)
-{
-	if(typeof hex === "number")
-	{
+function hexToInt(hex) {
+	if (typeof hex === "number") {
 		return hex;
 	}
 
-	if(hex.startsWith("#"))
-	{
+	if (hex.startsWith("#")) {
 		hex = hex.slice(1);
 	}
 
 	return Number(`0x${hex}`);
 }
 
-class Canvas extends EventEmitter
-{
-	constructor()
-	{
+class Canvas extends EventEmitter {
+	constructor() {
 		super();
 		this.users = new UserDataStore();
 
 		setInterval(this._update.bind(this), 1000);
 	}
 
-	initialize(settings)
-	{
+	initialize(settings) {
 		this.settings = Object.assign(structuredClone(defaultCanvasSettings), settings);
 		this.settings.colors = this.settings.colors.map(hexToInt);
 
 		this.pixels = new ImageBuffer(this.settings.sizeX, this.settings.sizeY);
 		this.info = new Array(this.settings.sizeX).fill(null).map(() => new Array(this.settings.sizeY).fill(null));
-		
+
 		return this;
 	}
 
-	_update()
-	{
-		for(const [ userId, data ] of this.users._map)
-		{
-			if(data.cooldown > 0)
-			{
+	_update() {
+		for (const [userId, data] of this.users._map) {
+			if (data.cooldown > 0) {
 				--data.cooldown;
 			}
 		}
 	}
 
-	_setPixel(x, y, color, userId, timestamp)
-	{
+	_setPixel(x, y, color, userId, timestamp) {
 		this.pixels.setColor(x, y, color);
 		this.info[x][y] = { userId, timestamp };
 		this.emit("pixel", x, y, color, userId, timestamp);
 	}
 
-	isInBounds(x, y)
-	{
+	isInBounds(x, y) {
 		return parseInt(x) == x && parseInt(y) == y && x >= 0 && x < this.settings.sizeX && y >= 0 && y < this.settings.sizeY;
 	}
 
-	place(x, y, color, userId)
-	{
-		if(!this.isInBounds(x, y))
-		{
+	place(x, y, color, userId) {
+		if (!this.isInBounds(x, y)) {
 			return false;
 		}
 
-		if(!this.settings.colors.includes(+color))
-		{
+		if (!this.settings.colors.includes(+color)) {
 			return false;
 		}
 
-		if(this.users.get(userId).cooldown > 0)
-		{
+		if (this.users.get(userId).cooldown > 0) {
 			return false;
 		}
 
@@ -163,15 +138,12 @@ class Canvas extends EventEmitter
 
 
 
-Canvas.IO = class
-{
-	constructor(canvas, path)
-	{
+Canvas.IO = class {
+	constructor(canvas, path) {
 		this._canvas = canvas;
 		this._path = path;
 
-		if(!FileSystem.existsSync(path))
-		{
+		if (!FileSystem.existsSync(path)) {
 			FileSystem.writeFileSync(path, "");
 		}
 
@@ -180,15 +152,13 @@ Canvas.IO = class
 		canvas.addListener("pixel", this.writePixel.bind(this));
 	}
 
-	read()
-	{
+	read() {
 		const buf = SmartBuffer.fromBuffer(FileSystem.readFileSync(this._path));
 
-		while(buf.remaining() > 0)
-		{
+		while (buf.remaining() > 0) {
 			const x = buf.readUInt16BE();
 			const y = buf.readUInt16BE();
-			
+
 			const color = buf.readBuffer(3).readUintBE(0, 3);
 
 			const userId = buf.readBigUInt64BE();
@@ -201,8 +171,7 @@ Canvas.IO = class
 		return this;
 	}
 
-	writePixel(x, y, color, userId, timestamp)
-	{
+	writePixel(x, y, color, userId, timestamp) {
 		const buf = new SmartBuffer(); // TODO: re-use buffer
 
 		buf.writeUInt16BE(x);
@@ -216,8 +185,7 @@ Canvas.IO = class
 		this._stream.write(buf.toBuffer());
 	}
 
-	serializePixelWithoutTheOtherStuff(x, y, color)
-	{
+	serializePixelWithoutTheOtherStuff(x, y, color) {
 		const buf = new SmartBuffer();
 
 		buf.writeUInt16BE(x);
