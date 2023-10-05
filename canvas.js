@@ -71,8 +71,8 @@ class UserDataStore
 
 
 const defaultCanvasSettings = {
-	sizeX: 1000,
-	sizeY: 1000,
+	sizeX: 500,
+	sizeY: 500,
 	colors: [ 16711680, 65280, 255 ],
 	maxCooldown: 60
 };
