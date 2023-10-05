@@ -10,574 +10,683 @@
 
 /* noto-sans-100 - cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Noto Sans';
   font-style: normal;
   font-weight: 100;
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-100.eot'); /* IE9 Compat Modes */
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-100.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-100.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-100.woff') format('woff'), /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-100.ttf') format('truetype'), /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-100.svg#NotoSans') format('svg'); /* Legacy iOS */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-100.eot');
+  /* IE9 Compat Modes */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-100.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-100.woff2') format('woff2'),
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-100.woff') format('woff'),
+    /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-100.ttf') format('truetype'),
+    /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-100.svg#NotoSans') format('svg');
+  /* Legacy iOS */
 }
 
 /* noto-sans-100italic - cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Noto Sans';
   font-style: italic;
   font-weight: 100;
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-100italic.eot'); /* IE9 Compat Modes */
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-100italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-100italic.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-100italic.woff') format('woff'), /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-100italic.ttf') format('truetype'), /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-100italic.svg#NotoSans') format('svg'); /* Legacy iOS */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-100italic.eot');
+  /* IE9 Compat Modes */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-100italic.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-100italic.woff2') format('woff2'),
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-100italic.woff') format('woff'),
+    /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-100italic.ttf') format('truetype'),
+    /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-100italic.svg#NotoSans') format('svg');
+  /* Legacy iOS */
 }
 
 /* noto-sans-200 - cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Noto Sans';
   font-style: normal;
   font-weight: 200;
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-200.eot'); /* IE9 Compat Modes */
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-200.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-200.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-200.woff') format('woff'), /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-200.ttf') format('truetype'), /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-200.svg#NotoSans') format('svg'); /* Legacy iOS */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-200.eot');
+  /* IE9 Compat Modes */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-200.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-200.woff2') format('woff2'),
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-200.woff') format('woff'),
+    /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-200.ttf') format('truetype'),
+    /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-200.svg#NotoSans') format('svg');
+  /* Legacy iOS */
 }
 
 /* noto-sans-200italic - cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Noto Sans';
   font-style: italic;
   font-weight: 200;
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-200italic.eot'); /* IE9 Compat Modes */
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-200italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-200italic.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-200italic.woff') format('woff'), /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-200italic.ttf') format('truetype'), /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-200italic.svg#NotoSans') format('svg'); /* Legacy iOS */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-200italic.eot');
+  /* IE9 Compat Modes */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-200italic.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-200italic.woff2') format('woff2'),
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-200italic.woff') format('woff'),
+    /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-200italic.ttf') format('truetype'),
+    /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-200italic.svg#NotoSans') format('svg');
+  /* Legacy iOS */
 }
 
 /* noto-sans-300 - cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Noto Sans';
   font-style: normal;
   font-weight: 300;
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-300.eot'); /* IE9 Compat Modes */
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-300.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-300.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-300.woff') format('woff'), /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-300.ttf') format('truetype'), /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-300.svg#NotoSans') format('svg'); /* Legacy iOS */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-300.eot');
+  /* IE9 Compat Modes */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-300.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-300.woff2') format('woff2'),
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-300.woff') format('woff'),
+    /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-300.ttf') format('truetype'),
+    /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-300.svg#NotoSans') format('svg');
+  /* Legacy iOS */
 }
 
 /* noto-sans-300italic - cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Noto Sans';
   font-style: italic;
   font-weight: 300;
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-300italic.eot'); /* IE9 Compat Modes */
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-300italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-300italic.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-300italic.woff') format('woff'), /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-300italic.ttf') format('truetype'), /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-300italic.svg#NotoSans') format('svg'); /* Legacy iOS */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-300italic.eot');
+  /* IE9 Compat Modes */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-300italic.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-300italic.woff2') format('woff2'),
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-300italic.woff') format('woff'),
+    /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-300italic.ttf') format('truetype'),
+    /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-300italic.svg#NotoSans') format('svg');
+  /* Legacy iOS */
 }
 
 /* noto-sans-regular - cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Noto Sans';
   font-style: normal;
   font-weight: 400;
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-regular.eot'); /* IE9 Compat Modes */
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-regular.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-regular.woff') format('woff'), /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-regular.ttf') format('truetype'), /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-regular.svg#NotoSans') format('svg'); /* Legacy iOS */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-regular.eot');
+  /* IE9 Compat Modes */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-regular.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-regular.woff2') format('woff2'),
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-regular.woff') format('woff'),
+    /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-regular.ttf') format('truetype'),
+    /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-regular.svg#NotoSans') format('svg');
+  /* Legacy iOS */
 }
 
 /* noto-sans-italic - cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Noto Sans';
   font-style: italic;
   font-weight: 400;
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-italic.eot'); /* IE9 Compat Modes */
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-italic.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-italic.woff') format('woff'), /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-italic.ttf') format('truetype'), /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-italic.svg#NotoSans') format('svg'); /* Legacy iOS */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-italic.eot');
+  /* IE9 Compat Modes */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-italic.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-italic.woff2') format('woff2'),
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-italic.woff') format('woff'),
+    /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-italic.ttf') format('truetype'),
+    /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-italic.svg#NotoSans') format('svg');
+  /* Legacy iOS */
 }
 
 /* noto-sans-500 - cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Noto Sans';
   font-style: normal;
   font-weight: 500;
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-500.eot'); /* IE9 Compat Modes */
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-500.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-500.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-500.woff') format('woff'), /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-500.ttf') format('truetype'), /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-500.svg#NotoSans') format('svg'); /* Legacy iOS */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-500.eot');
+  /* IE9 Compat Modes */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-500.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-500.woff2') format('woff2'),
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-500.woff') format('woff'),
+    /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-500.ttf') format('truetype'),
+    /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-500.svg#NotoSans') format('svg');
+  /* Legacy iOS */
 }
 
 /* noto-sans-500italic - cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Noto Sans';
   font-style: italic;
   font-weight: 500;
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-500italic.eot'); /* IE9 Compat Modes */
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-500italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-500italic.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-500italic.woff') format('woff'), /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-500italic.ttf') format('truetype'), /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-500italic.svg#NotoSans') format('svg'); /* Legacy iOS */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-500italic.eot');
+  /* IE9 Compat Modes */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-500italic.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-500italic.woff2') format('woff2'),
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-500italic.woff') format('woff'),
+    /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-500italic.ttf') format('truetype'),
+    /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-500italic.svg#NotoSans') format('svg');
+  /* Legacy iOS */
 }
 
 /* noto-sans-600 - cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Noto Sans';
   font-style: normal;
   font-weight: 600;
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-600.eot'); /* IE9 Compat Modes */
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-600.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-600.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-600.woff') format('woff'), /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-600.ttf') format('truetype'), /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-600.svg#NotoSans') format('svg'); /* Legacy iOS */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-600.eot');
+  /* IE9 Compat Modes */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-600.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-600.woff2') format('woff2'),
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-600.woff') format('woff'),
+    /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-600.ttf') format('truetype'),
+    /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-600.svg#NotoSans') format('svg');
+  /* Legacy iOS */
 }
 
 /* noto-sans-600italic - cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Noto Sans';
   font-style: italic;
   font-weight: 600;
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-600italic.eot'); /* IE9 Compat Modes */
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-600italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-600italic.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-600italic.woff') format('woff'), /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-600italic.ttf') format('truetype'), /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-600italic.svg#NotoSans') format('svg'); /* Legacy iOS */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-600italic.eot');
+  /* IE9 Compat Modes */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-600italic.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-600italic.woff2') format('woff2'),
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-600italic.woff') format('woff'),
+    /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-600italic.ttf') format('truetype'),
+    /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-600italic.svg#NotoSans') format('svg');
+  /* Legacy iOS */
 }
 
 /* noto-sans-700 - cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Noto Sans';
   font-style: normal;
   font-weight: 700;
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-700.eot'); /* IE9 Compat Modes */
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-700.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-700.woff') format('woff'), /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-700.ttf') format('truetype'), /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-700.svg#NotoSans') format('svg'); /* Legacy iOS */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-700.eot');
+  /* IE9 Compat Modes */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-700.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-700.woff2') format('woff2'),
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-700.woff') format('woff'),
+    /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-700.ttf') format('truetype'),
+    /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-700.svg#NotoSans') format('svg');
+  /* Legacy iOS */
 }
 
 /* noto-sans-700italic - cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Noto Sans';
   font-style: italic;
   font-weight: 700;
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-700italic.eot'); /* IE9 Compat Modes */
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-700italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-700italic.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-700italic.woff') format('woff'), /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-700italic.ttf') format('truetype'), /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-700italic.svg#NotoSans') format('svg'); /* Legacy iOS */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-700italic.eot');
+  /* IE9 Compat Modes */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-700italic.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-700italic.woff2') format('woff2'),
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-700italic.woff') format('woff'),
+    /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-700italic.ttf') format('truetype'),
+    /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-700italic.svg#NotoSans') format('svg');
+  /* Legacy iOS */
 }
 
 /* noto-sans-800 - cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Noto Sans';
   font-style: normal;
   font-weight: 800;
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-800.eot'); /* IE9 Compat Modes */
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-800.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-800.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-800.woff') format('woff'), /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-800.ttf') format('truetype'), /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-800.svg#NotoSans') format('svg'); /* Legacy iOS */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-800.eot');
+  /* IE9 Compat Modes */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-800.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-800.woff2') format('woff2'),
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-800.woff') format('woff'),
+    /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-800.ttf') format('truetype'),
+    /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-800.svg#NotoSans') format('svg');
+  /* Legacy iOS */
 }
 
 /* noto-sans-800italic - cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Noto Sans';
   font-style: italic;
   font-weight: 800;
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-800italic.eot'); /* IE9 Compat Modes */
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-800italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-800italic.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-800italic.woff') format('woff'), /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-800italic.ttf') format('truetype'), /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-800italic.svg#NotoSans') format('svg'); /* Legacy iOS */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-800italic.eot');
+  /* IE9 Compat Modes */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-800italic.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-800italic.woff2') format('woff2'),
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-800italic.woff') format('woff'),
+    /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-800italic.ttf') format('truetype'),
+    /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-800italic.svg#NotoSans') format('svg');
+  /* Legacy iOS */
 }
 
 /* noto-sans-900 - cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Noto Sans';
   font-style: normal;
   font-weight: 900;
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-900.eot'); /* IE9 Compat Modes */
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-900.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-900.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-900.woff') format('woff'), /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-900.ttf') format('truetype'), /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-900.svg#NotoSans') format('svg'); /* Legacy iOS */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-900.eot');
+  /* IE9 Compat Modes */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-900.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-900.woff2') format('woff2'),
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-900.woff') format('woff'),
+    /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-900.ttf') format('truetype'),
+    /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-900.svg#NotoSans') format('svg');
+  /* Legacy iOS */
 }
 
 /* noto-sans-900italic - cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Noto Sans';
   font-style: italic;
   font-weight: 900;
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-900italic.eot'); /* IE9 Compat Modes */
-  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-900italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-900italic.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-900italic.woff') format('woff'), /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-900italic.ttf') format('truetype'), /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
-       url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-900italic.svg#NotoSans') format('svg'); /* Legacy iOS */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-900italic.eot');
+  /* IE9 Compat Modes */
+  src: url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-900italic.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-900italic.woff2') format('woff2'),
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-900italic.woff') format('woff'),
+    /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-900italic.ttf') format('truetype'),
+    /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+    url('../fonts/noto-sans-v30-cyrillic_cyrillic-ext_devanagari_greek_greek-ext_latin_latin-ext_vietnamese-900italic.svg#NotoSans') format('svg');
+  /* Legacy iOS */
 }
 
 
-*, *::before, *::after
-{
-	box-sizing: border-box;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-*
-{
-	margin: 0;
-	padding: 0;
+* {
+  margin: 0;
+  padding: 0;
 }
 
-html, body
-{
-	width: 100%;
-	height: 100%;
+html,
+body {
+  width: 100%;
+  height: 100%;
 }
 
-body
-{
-	line-height: 1.5;
+body {
+  line-height: 1.5;
 }
 
-img, picture, video, canvas, svg
-{
-	display: block;
-	max-width: 100%;
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
 }
 
-input, button, textarea, select
-{
-	font: inherit;
+input,
+button,
+textarea,
+select {
+  font: inherit;
 }
 
 /*
  * General styles
  */
 
-.fs-s
-{
-	font-size: 13px;
+.fs-s {
+  font-size: 13px;
 }
 
-.fs-m
-{
-	font-size: 16px;
+.fs-m {
+  font-size: 16px;
 }
 
-.hidden
-{
-	visibility: hidden;
+.hidden {
+  visibility: hidden;
 }
 
 /*
  * Site styles
  */
 
-html, body
-{
-	position: fixed;
+html,
+body {
+  position: fixed;
 }
 
-body
-{
-	background-color: #333333;
-	overflow: hidden;
-	font-family: "Noto Sans", sans-serif;
+body {
+  background-color: #333333;
+  overflow: hidden;
+  font-family: "Noto Sans", sans-serif;
 }
 
-#main
-{
-	/* This has to be absolute because otherwise iOS will blur the canvas when scaling it */
-	position: absolute;
+#main {
+  /* This has to be absolute because otherwise iOS will blur the canvas when scaling it */
+  position: absolute;
 }
 
-#loading-screen
-{
-	position: absolute;
+#loading-screen {
+  position: absolute;
 
-	width: 100%;
-	height: 100%;
+  width: 100%;
+  height: 100%;
 
-	background-color: #E5E5E5;
+  background-color: #E5E5E5;
 
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	transition: 0.5s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: 0.5s ease;
 }
 
-#loading-screen.hidden
-{
-	opacity: 0%;
+#loading-screen.hidden {
+  opacity: 0%;
 }
 
-#canvas
-{
-	position: absolute;
-	background-color: white;
-	image-rendering: pixelated;
+#canvas {
+  position: absolute;
+  background-color: white;
+  image-rendering: pixelated;
 }
 
-#selector
-{
-	position: absolute;
-	width: 1px;
-	height: 1px;
+#selector {
+  position: absolute;
+  width: 1px;
+  height: 1px;
 }
 
-#selector #selector-border
-{
-	position: absolute;
-	image-rendering: pixelated;
-	transform: scale(1.5);
+#selector #selector-border {
+  position: absolute;
+  image-rendering: pixelated;
+  transform: scale(1.5);
 }
 
-#selector-pixel, #pixel-border, #pixel-color
-{
-	position: absolute;
-	width: 100%;
-	height: 100%;
+#selector-pixel,
+#pixel-border,
+#pixel-color {
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
-#pixel-border
-{
-	background-color: black;
-	transform: scale(1.2);
+#pixel-border {
+  background-color: black;
+  transform: scale(1.2);
 }
 
-#pixel-color
-{
-	transform: scale(1.1);
+#pixel-color {
+  transform: scale(1.1);
 }
 
-#ui
-{
-	position: absolute;
-	width: 100%;
-	height: max(10%, 130px);
-	bottom: 0;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	pointer-events: none;
+#mercy {
+  position: absolute;
+  width: 100%;
+  height: max(10%, 130px);
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: left;
+  pointer-events: none;
 }
 
-.button
-{
-	box-shadow: 10px 10px #111111C0;
-	border: 3px solid #111111;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	pointer-events: all;
+#ui {
+  position: absolute;
+  width: 100%;
+  height: max(10%, 130px);
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
 }
 
-@media (hover: hover)
-{
-	.button:hover
-	{
-		cursor: pointer;
-		filter: brightness(80%);
-	}
+.button {
+  box-shadow: 10px 10px #111111C0;
+  border: 3px solid #111111;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  pointer-events: all;
 }
 
-.button:active
-{
-	transform: scale(0.95);
+@media (hover: hover) {
+  .button:hover {
+    cursor: pointer;
+    filter: brightness(80%);
+  }
 }
 
-.orange
-{
-	color: white;
-	background-color: #FF4500;
+.button:active {
+  transform: scale(0.95);
 }
 
-.orange.inactive
-{
-	background-color: #2C3C41;
+.orange {
+  color: white;
+  background-color: #FF4500;
 }
 
-.white
-{
-	background-color: white;
+.orange.inactive {
+  background-color: #2C3C41;
 }
 
-#place
-{
-	margin: 0 max(2.5%, 40px) 0 max(2.5%, 40px);
-	width: clamp(150px, 10%, 200px);
-	height: 60px;
+.white {
+  background-color: white;
 }
 
-#share, #settings
-{
-	width: 50px;
-	height: 50px;
+#place {
+  margin: 0 max(2.5%, 40px) 0 max(2.5%, 40px);
+  width: clamp(150px, 10%, 200px);
+  height: 60px;
 }
 
-#picker
-{
-	position: absolute;
-	padding: 10px;
-	width: 100%;
-	background-color: white;
-	border-top: 3px solid #111111;
-	bottom: 0;
-	transition: transform 0.2s ease-out;
-	transform: translateY(100%);
-	pointer-events: all;
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
+#share,
+#settings {
+  width: 50px;
+  height: 50px;
 }
 
-#picker.open
-{
-	transform: translateY(0px);
+#picker {
+  position: absolute;
+  padding: 10px;
+  width: 100%;
+  background-color: white;
+  border-top: 3px solid #111111;
+  bottom: 0;
+  transition: transform 0.2s ease-out;
+  transform: translateY(100%);
+  pointer-events: all;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
-#picker .container
-{
-	width: 100%;
-	padding: 10px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+#picker.open {
+  transform: translateY(0px);
 }
 
-#colors
-{
-	width: min(700px, 100%);
-	height: 100%;
-	display: flex;
-	justify-content: center;
-	align-content: center;
-	align-items: center;
-	flex-wrap: wrap;
-	gap: 3px;
+#picker .container {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.color
-{
-	border: 1px solid #E5E5E5;
-	aspect-ratio: 1 / 1;
-	width: min(8%, 40px);
-	pointer-events: all;
+#colors {
+  width: min(700px, 100%);
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 3px;
 }
 
-.color.picked
-{
-	transform: scale(1.3);
-	border: 2px solid #111111;
-	box-shadow: 7px 7px #111111E0;
+.color {
+  border: 1px solid #E5E5E5;
+  aspect-ratio: 1 / 1;
+  width: min(8%, 40px);
+  pointer-events: all;
 }
 
-#cancel, #confirm
-{
-	width: min(35%, 270px);
-	height: 55px;
-	margin: 0 15px 0 15px;
+.color.picked {
+  transform: scale(1.3);
+  border: 2px solid #111111;
+  box-shadow: 7px 7px #111111E0;
 }
 
-#cancel
-{
-	background-color: #E9EDEE;
+#cancel,
+#confirm {
+  width: min(35%, 270px);
+  height: 55px;
+  margin: 0 15px 0 15px;
 }
 
-#confirm
-{
-	
-	transition: background-color 0.3s ease;
+#cancel {
+  background-color: #E9EDEE;
 }
 
-#share-tooltip
-{
-	background-color: black;
-	border: 2px solid white;
-	color: white;
-	top: -10px;
+#confirm {
+
+  transition: background-color 0.3s ease;
 }
 
-#placer-tooltip
-{
-	background: white;
-	border: 2px solid black;
-	color: black;
-	transform: translate(0%, -56%) scale(0.05);	
-	transition: none; /* this cannot have a transition, otherwise the canvas starts getting blurred */
-	white-space: nowrap;
+#share-tooltip {
+  background-color: black;
+  border: 2px solid white;
+  color: white;
+  top: -10px;
 }
 
-.tooltip
-{
-	position: absolute;
-	padding: 4px 10px 4px 10px;
-
-	opacity: 0%;
-	transition: 0.2s ease;
+#placer-tooltip {
+  background: white;
+  border: 2px solid black;
+  color: black;
+  transform: translate(0%, -56%) scale(0.05);
+  transition: none;
+  /* this cannot have a transition, otherwise the canvas starts getting blurred */
+  white-space: nowrap;
 }
 
-.tooltip.visible
-{
-	opacity: 100%;
+.tooltip {
+  position: absolute;
+  padding: 4px 10px 4px 10px;
+
+  opacity: 0%;
+  transition: 0.2s ease;
 }
 
-.tooltip::after
-{
-	content: "";
-	position: absolute;
-	top: 100%;
-	left: 50%;
-	height: 15px;
-	width: 15px;
-	transform: translate(-50%, -40%) rotate(45deg);
-	background: inherit;
-	border-bottom: inherit;
-	border-right: inherit;
+.tooltip.visible {
+  opacity: 100%;
+}
+
+.tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  height: 15px;
+  width: 15px;
+  transform: translate(-50%, -40%) rotate(45deg);
+  background: inherit;
+  border-bottom: inherit;
+  border-right: inherit;
 }
