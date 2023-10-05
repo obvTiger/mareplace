@@ -327,7 +327,6 @@ app.get("/initialize", userInfo, async (req, res) => {
 	}
 
 	res.json({ loggedIn: true, banned: isBanned(req.member), cooldown: canvas.users.get(req.user.id).cooldown, settings: canvas.settings });
-	res.json({ loggedIn: true, mod: isMod(req.member), cooldown: canvas.users.get(req.user.id).cooldown, settings: canvas.settings })
 });
 
 
@@ -412,7 +411,7 @@ function isMod(member) {
 	if (Config.guild.moderatorRoles.some(roleId => member.roles.cache.has(roleId))) {
 		return true;
 	}
-	return true;
+	return Config.guild.moderatorRolesRoles.some(roleId => member.roles.cache.has(roleId));
 }
 
 /*

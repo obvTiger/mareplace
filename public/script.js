@@ -144,7 +144,7 @@ fetch("/initialize")
 	.then(() => {
 		loadingScreen.classList.add("hidden");
 	});
-console.log(mod)
+
 async function repaintCanvas() {
 	const canvasRes = await fetch("/canvas");
 
@@ -456,7 +456,7 @@ function updatePlaceButton() {
 
 	if (mod) {
 		placeButton.style.background = `linear-gradient(to left, #c23a3a, #c23a3a 100%, #566F74 100%, #566F74)`
-		placeText.innerHTML = "<b>Place! (Mod)"
+		placeText.innerHTML = "<b>Place!(mod)"
 	}
 
 	const progress = 100 - cooldown / maxCooldown * 100;
