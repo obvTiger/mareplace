@@ -106,24 +106,7 @@ const io = new Canvas.IO(canvas, "./canvas/current.hst").read();
 
 const oauthRedirectUrl = "https://canvas.mares.place/auth/discord/redirect"
 const oauthScope = "identify";
-app.get("/auth/discord", (req, res) => {
-  // Zeige eine Bestätigungsnachricht und frage den Benutzer, ob er fortfahren möchte
-  const confirmation = window.confirm("Möchten Sie zur Discord-Authentifizierung weitergeleitet werden?");
 
-  if (confirmation) {
-    const query = QueryString.encode({
-      client_id: process.env.CLIENT_ID,
-      scope: oauthScope,
-      redirect_uri: oauthRedirectUrl,
-      response_type: "code",
-    });
-
-    res.redirect(`https://discord.com/api/oauth2/authorize?${query}`);
-  } else {
-    // Hier kannst du den Code für den Fall ausführen, dass der Benutzer abgebrochen hat
-    res.send("Die Authentifizierung wurde abgebrochen.");
-  }
-});
 app.get("/auth/discord", (req, res) => {
   // HTML-Seite mit Bestätigungsnachricht und Weiterleitungslink anzeigen
   const query = QueryString.encode({
