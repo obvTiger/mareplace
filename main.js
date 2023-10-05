@@ -323,7 +323,7 @@ app.get("/auth/discord/redirect", async (req, res) => {
 
 app.get("/initialize", userInfo, async (req, res) => {
 	if (!req.user) {
-		return res.json({ loggedIn: false, banned: false, cooldown: 0, settings: canvas.settings });
+		return res.json({ loggedIn: false, banned: false, mod: false, cooldown: 0, settings: canvas.settings });
 	}
 
 	res.json({ loggedIn: true, banned: isBanned(req.member), cooldown: canvas.users.get(req.user.id).cooldown, settings: canvas.settings });
@@ -345,6 +345,9 @@ app.post("/place", userInfo, async (req, res) => {
 
 	if (isBanned(req.member)) {
 		return res.status(403).send();
+	}
+	if (isMod(req.member)) {
+		return res.status(401).send();
 	}
 
 	const placed = canvas.place(+req.body.x, +req.body.y, +req.body.color, req.member.user.id);
@@ -401,8 +404,15 @@ function isBanned(member) {
 
 	return member.communication_disabled_until || Config.guild.bannedRoles.some(roleId => member.roles.cache.has(roleId));
 }
-
-
+function isMod(member) {
+	if (!member) {
+		return true;
+	}
+	if (Config.guild.moderatorRoles.some(roleId => member.roles.cache.has(roleId))) {
+		return true;
+	}
+	return Config.guild.bannedRoles.some(roleId => member.roles.cache.has(roleId));
+}
 
 /*
  * ===============================

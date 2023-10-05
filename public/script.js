@@ -78,7 +78,7 @@ let placerTooltipTimer;
 
 let loggedIn = false;
 let banned = false;
-
+let mod = false;
 
 
 
@@ -454,6 +454,11 @@ function updatePlaceButton() {
 		return;
 	}
 
+	if (mod) {
+		placeButton.style.background = `linear-gradient(to left, #c23a3a, #c23a3a 100%, #566F74 100%, #566F74)`
+		placeText.innerHTML = "<b>Place! (Mod)"
+	}
+
 	const progress = 100 - cooldown / maxCooldown * 100;
 
 	placeText.innerHTML = "<b>Place" + (cooldown > 0 ? ` in ${convertTimer()}` : "!") + "</b>";
@@ -520,8 +525,33 @@ function shareUrl() {
 	clickSound.play();
 }
 
+async function adminDraw() {
+	if (!selectedColor || cooldown > 0) {
+		return errorSound.play();
+	}
 
+	const placedRes = await fetch("/place",
+		{
+			method: "POST",
+			headers: new Headers({ "content-type": "application/json" }),
+			body: JSON.stringify({ x: selectX, y: selectY, color: +selectedColor.dataset.color })
+		});
 
+	if (!placedRes.ok) {
+		return reloadPage();
+	}
+
+	const placed = (await placedRes.json()).placed;
+
+	if (!placed) {
+		return errorSound.play();
+	}
+
+	picker.classList.remove("open");
+
+	placeSound.play();
+
+}
 function setColors(colors) {
 	colorsContainer.innerHTML = "";
 
