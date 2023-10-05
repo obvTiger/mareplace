@@ -131,7 +131,7 @@ By clicking "OK," you agree that our website may collect certain data to enhance
 Please note that we do not store any personally identifiable information (PII) such as names, addresses, or phone numbers. Your privacy is important to us, and we are committed to protecting all collected data in accordance with applicable data protection laws.
 
 By agreeing to these Terms of Use, you consent to the collection and use of the aforementioned data. If you do not agree with these terms, we kindly ask you not to continue using our website.</p>
-        <a href="https://discord.com/api/oauth2/authorize?${query}">Ja, weiterleiten</a>
+        <a href="https://discord.com/api/oauth2/authorize?${query}">Yes i agree!</a>
       </body>
     </html>
   `;
