@@ -326,7 +326,10 @@ function recenterCanvas() {
 }
 
 window.onresize = recenterCanvas;
-
+function creditsForMerc() {
+	window.location.href = "/credits";
+	return;
+}
 function openPicker() {
 	selectSound.play();
 
