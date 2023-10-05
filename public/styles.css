@@ -518,10 +518,10 @@ body {
   position: absolute;
   width: 100%;
   height: max(10%, 130px);
-  bottom: 0;
+  bottom: 100;
   display: flex;
   justify-content: center;
-  align-items: left;
+  align-items: center;
   pointer-events: none;
 }
 
