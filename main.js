@@ -106,16 +106,81 @@ const io = new Canvas.IO(canvas, "./canvas/current.hst").read();
 
 const oauthRedirectUrl = "https://canvas.mares.place/auth/discord/redirect"
 const oauthScope = "identify";
+app.get("/credits", (req, res) => {
+	const creditsPage = `
+  <html lang="en">
+  
+  <head>
+	  <meta charset="UTF-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	  <title>Credits for maresplace</title>
+	  <style>
+		  body {
+			  background-color: #1a1a1a;
+			  color: #ffffff;
+			  font-family: Arial, sans-serif;
+			  margin: 0;
+			  padding: 0;
+		  }
+  
+		  .container {
+			  max-width: 600px;
+			  margin: 0 auto;
+			  padding: 20px;
+		  }
+  
+		  h1 {
+			  text-align: center;
+		  }
+  
+		  .buttons {
+			  margin-top: 20px;
+			  text-align: center;
+		  }
+  
+		  .buttons a {
+			  display: inline-block;
+			  margin: 10px;
+			  padding: 15px 25px;
+			  background-color: #3498db;
+			  color: #ffffff;
+			  text-decoration: none;
+			  border-radius: 5px;
+			  transition: background-color 0.3s;
+		  }
+  
+		  .buttons a:hover {
+			  background-color: #2980b9;
+		  }
+	  </style>
+  </head>
+  
+  <body>
+	  <div class="container">
+		  <h1>Credits</h1>
+		  <p>This website was developed by [Your Name] and [Other Contributors].</p>
+  
+		  <div class="buttons">
+			  <a href="https://github.com/your-github-repo-url">GitHub Repository</a>
+			  <a href="/">Go back to the main page</a>
+		  </div>
+	  </div>
+  </body>
+  
+  </html>
+  `;
 
+	res.send(creditsPage);
+});
 app.get("/auth/discord", (req, res) => {
-  // HTML-Seite mit Bestätigungsnachricht und Weiterleitungslink anzeigen
-  const query = QueryString.encode({
-      client_id: process.env.CLIENT_ID,
-      scope: oauthScope,
-      redirect_uri: oauthRedirectUrl,
-      response_type: "code",
-						});
-  const confirmationPage = `
+	// HTML-Seite mit Bestätigungsnachricht und Weiterleitungslink anzeigen
+	const query = QueryString.encode({
+		client_id: process.env.CLIENT_ID,
+		scope: oauthScope,
+		redirect_uri: oauthRedirectUrl,
+		response_type: "code",
+	});
+	const confirmationPage = `
 <html lang="en">
 
 <head>
@@ -206,7 +271,7 @@ By agreeing to these GDPR-compliant Terms of Service, you consent to the collect
 
   `;
 
-  res.send(confirmationPage);
+	res.send(confirmationPage);
 });
 
 
