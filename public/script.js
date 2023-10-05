@@ -125,7 +125,7 @@ fetch("/initialize")
 	})
 	.then(repaintCanvas)
 	.then(() => {
-		const socket = new WebSocket("ws://" + window.location.host);
+		const socket = new WebSocket("wss://" + window.location.host);
 
 		socket.addEventListener("message", async e => {
 			const bytes = new Uint8Array(await e.data.arrayBuffer());
