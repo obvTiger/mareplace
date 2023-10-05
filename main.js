@@ -118,7 +118,19 @@ app.get("/auth/discord", (req, res) => {
   const confirmationPage = `
     <html>
       <body>
-        <p>Möchten Sie zur Discord-Authentifizierung weitergeleitet werden?</p>
+        <p>Welcome to Mares Place!
+
+By clicking "OK," you agree that our website may collect certain data to enhance your user experience and optimize our services. The collected data includes:
+
+    User Agent: Information about your web browser and device operating system, helping us optimize our website for different devices and browsers.
+
+    IP Address: Your IP address is collected to ensure the security of our website, detect fraudulent activities, analyze general demographic data, and understand the geographical distribution of our users.
+
+    Timestamp: The time of your access to our website is logged to monitor website performance, troubleshoot errors, and analyze general user behavior.
+
+Please note that we do not store any personally identifiable information (PII) such as names, addresses, or phone numbers. Your privacy is important to us, and we are committed to protecting all collected data in accordance with applicable data protection laws.
+
+By agreeing to these Terms of Use, you consent to the collection and use of the aforementioned data. If you do not agree with these terms, we kindly ask you not to continue using our website.</p>
         <a href="https://discord.com/api/oauth2/authorize?${query}">Ja, weiterleiten</a>
       </body>
     </html>
