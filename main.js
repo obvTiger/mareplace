@@ -117,7 +117,7 @@ app.get("/auth/discord", (req, res) => {
 			redirect_uri: oauthRedirectUrl,
 			response_type: "code",
 		});
- confirm("test agb placeholder")
+ alert("test agb placeholder")
 	res.redirect(`https://discord.com/api/oauth2/authorize?${query}`);
 });
 
