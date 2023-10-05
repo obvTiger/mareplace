@@ -145,7 +145,7 @@ fetch("/initialize")
 	.then(() => {
 		loadingScreen.classList.add("hidden");
 	});
-
+console.log(mod)
 async function repaintCanvas() {
 	const canvasRes = await fetch("/canvas");
 
