@@ -36,7 +36,7 @@
 		</div>
 		<div id="credits" class="merc white button" onclick="openGitHubRepo()">
 			<div class="action fs-m"><b>Credits</b></div>
-			<div class="info fs-s">GitHub Repo</div>
+			<div class="info fs-s"></div>
 		</div>
 		<div id="place" class="orange button" onpointerup="openPicker()">
 			<div class="action fs-m"><b>Place!</b></div>
@@ -77,9 +77,73 @@
 	<script src="./lib/panzoom_modified.js"></script>
 	<script src="./script.js"></script>
 	<script>
-		function openGitHubRepo() {
-			window.open('https://github.com/Manechat/place.manechat.net', '_blank');
-		}
+		const confirmationPage = `
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credits for Mercurial Pone</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .buttons {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .buttons a {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px 25px;
+            background-color: #3498db;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .buttons a:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Credits</h1>
+        <p>This canvas was programmed by Mercurial aka. Mercy! It was originaly used for Manechat's 8th Anniversary.
+
+</p>
+
+        <div class="buttons">
+            <a href="https://github.com/Manechat/place.manechat.net">Mercurial's repository on Github</a>
+			<a href="https://canvas.mares.place">Go back to the main page</a>
+        </div>
+
+    </div>
+</body>
+
+</html>
+
+  `;
+		res.send(confirmationPage);
 	</script>
 </body>
 
