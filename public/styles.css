@@ -481,7 +481,7 @@ body {
 
 #canvas {
   position: absolute;
-  background-color: rgb(237, 24, 24);
+  background-color: white;
   image-rendering: pixelated;
 }
 
@@ -555,6 +555,11 @@ body {
 
 .button:active {
   transform: scale(0.95);
+}
+
+.blue {
+  color: white;
+  background-color: #0037ff;
 }
 
 .orange {
