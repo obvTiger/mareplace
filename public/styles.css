@@ -450,7 +450,7 @@ body {
 }
 
 body {
-  background-color: #333333;
+  background-color: #006381;
   overflow: hidden;
   font-family: "Noto Sans", sans-serif;
 }
@@ -481,7 +481,7 @@ body {
 
 #canvas {
   position: absolute;
-  background-color: white;
+  background-color: rgb(255, 0, 0);
   image-rendering: pixelated;
 }
 
