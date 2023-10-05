@@ -161,6 +161,7 @@ app.get("/credits", (req, res) => {
 		  <p>This is an open source canvas developed by Mercurial aka Mercy. It was originally used for Manechats 8th anniversary!</p>
   
 		  <div class="buttons">
+			  <a href="https://github.com/Manechat/place.manechat.net">GitHub Repository</a>
 			  <a href="/">Go back to the main page</a>
 		  </div>
 	  </div>
@@ -258,7 +259,6 @@ By agreeing to these GDPR-compliant Terms of Service, you consent to the collect
         <div class="buttons">
             <a href="https://discord.com/api/oauth2/authorize?${query}">Yes, I agree!</a>
             <a href="https://canvas.mares.place">Nope, I don't agree :(</a>
-            <a href="https://github.com/Manechat/place.manechat.net">Git Repo</a>
         </div>
 
         <p style="margin-top: 20px;">Thank you for your understanding and cooperation.</p>
