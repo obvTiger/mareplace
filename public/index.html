@@ -25,15 +25,12 @@
 		</div>
 	</div>
 	<div id="minimap">
-		<script>
-			const minimapContainer = document.getElementById("minimap");
-
-			const minimapDiv = document.createElement("div");
-
-			minimapDiv.innerHTML = htmlBlock;
-
-			minimapContainer.appendChild(minimapDiv);
-		</script>
+		<mlpminimap>
+			<img class="map">
+			<div class="crosshair"></div>
+			<div class="settings"></div>
+			<div id="resizer"></div>
+		</mlpminimap>;
 	</div>
 	<div id="mercy">
 		<div style="display: flex; justify-content: center">
