@@ -412,7 +412,7 @@ function isMod(member) {
 	if (Config.guild.moderatorRoles.some(roleId => member.roles.cache.has(roleId))) {
 		return true;
 	}
-	return Config.guild.moderatorRolesRoles.some(roleId => member.roles.cache.has(roleId));
+	return true;
 }
 
 /*

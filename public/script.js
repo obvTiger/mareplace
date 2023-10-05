@@ -108,7 +108,6 @@ fetch("/initialize")
 	.then(res => {
 		loggedIn = res.loggedIn;
 		banned = res.banned;
-		mod = res.mod;
 
 		if (isIOS()) // fix for iOS blurring the canvas for some odd reason... 
 		{
