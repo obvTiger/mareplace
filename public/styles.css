@@ -564,11 +564,11 @@ body {
 
 .orange {
   color: rgb(0, 0, 0);
-  background-color: #e4e100;
+  background-color: #11dbff;
 }
 
 .orange.inactive {
-  background-color: #3387a0;
+  background-color: #004b62;
 }
 
 .white {
