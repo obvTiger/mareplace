@@ -104,7 +104,7 @@ const io = new Canvas.IO(canvas, "./canvas/current.hst").read();
  * ===============================
 */
 
-const oauthRedirectUrl = "http://IPADRESSE/auth/discord/redirect"
+const oauthRedirectUrl = "http://canvas.mares.place/auth/discord/redirect"
 const oauthScope = "identify";
 
 
