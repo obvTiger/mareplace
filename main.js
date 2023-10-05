@@ -230,8 +230,8 @@ app.get("/auth/discord", (req, res) => {
 
 <body>
     <div class="container">
-        <h1>Welcome to maresplace!</h1>
-        <p>By clicking "OK," you acknowledge and agree to the collection and processing of your data in accordance with the General Data Protection Regulation (GDPR) and other applicable data protection laws. The data collected on this website includes:
+        <h1>Welcome to Mare Place!</h1>
+        <p>By clicking "Yes, i agree", you acknowledge and agree to the collection and processing of your data in accordance with the General Data Protection Regulation (GDPR) and other applicable data protection laws. The data collected on this website includes:
 <br><br>
     User Agent: Information about your web browser and device operating system, utilized to optimize our website for various devices and browsers.
 <br><br>
