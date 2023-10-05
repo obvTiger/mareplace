@@ -516,7 +516,7 @@ body {
 
 #mercy {
   position: absolute;
-  width: 100%;
+  width: 1%;
   height: max(10%, 130px);
   bottom: 100;
   display: flex;
