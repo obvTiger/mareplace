@@ -116,26 +116,94 @@ app.get("/auth/discord", (req, res) => {
       response_type: "code",
 						});
   const confirmationPage = `
-    <html>
-      <body>
-        <p>Welcome to Mare Place! A open source canvas developed by Mercy!
+<html lang="en">
 
-By clicking "OK," you agree that our website may collect certain data to enhance your user experience and optimize our services. The collected data includes:
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>maresplace - GDPR Compliant Terms of Service</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
-User Agent: Information about your web browser and device operating system, helping us optimize our website for different devices and browsers.
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-IP Address: Your IP address is collected to ensure the security of our website, detect fraudulent activities, analyze general demographic data, and understand the geographical distribution of our users.
+        h1 {
+            text-align: center;
+        }
 
-Timestamp: The time of your access to our website is logged to monitor website performance, troubleshoot errors, and analyze general user behavior.
+        .buttons {
+            margin-top: 20px;
+            text-align: center;
+        }
 
-Please note that we do not store any personally identifiable information (PII) such as names, addresses, or phone numbers. Your privacy is important to us, and we are committed to protecting all collected data in accordance with applicable data protection laws.
+        .buttons a {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px 25px;
+            background-color: #3498db;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
 
-By agreeing to these Terms of Use, you consent to the collection and use of the aforementioned data. If you do not agree with these terms, we kindly ask you not to continue using our website.</p>
-        <a href="https://discord.com/api/oauth2/authorize?${query}">Yes i agree!</a>
-								 <a href="https://canvas.mares.place"> Nope i dont agree :(</a>
-									<a href="https://github.com/Manechat/place.manechat.net"> Git Repository from Mercy if you want to selfhost!</a>
-      </body>
-    </html>
+        .buttons a:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Welcome to maresplace!</h1>
+        <p>By clicking "OK," you acknowledge and agree to the collection and processing of your data in accordance with the General Data Protection Regulation (GDPR) and other applicable data protection laws. The data collected on this website includes:
+<br><br>
+    User Agent: Information about your web browser and device operating system, utilized to optimize our website for various devices and browsers.
+<br><br>
+    IP Address: Your IP address is collected for website security, fraud detection, general demographic analysis, and understanding the geographical distribution of our users.
+<br><br>
+    Timestamp: The time of your access to our website is logged for monitoring website performance, troubleshooting errors, and analyzing general user behavior.
+<br><br>
+We do not collect or store any personally identifiable information (PII) such as names, addresses, or phone numbers. Your privacy is of utmost importance to us, and we are committed to safeguarding your data.
+<br><br>
+Legal Basis for Data Processing:
+<br><br>
+The processing of your data is based on your consent, which you provide by clicking "OK" on our website. You have the right to withdraw your consent at any time. Withdrawal of consent does not affect the lawfulness of processing based on consent before its withdrawal.
+<br><br>
+Data Retention:
+<br><br>
+The collected data will be retained only for as long as necessary (2 days) to fulfill the purposes for which it was collected, or as required by applicable laws and regulations.
+<br><br>
+Your Rights:
+<br><br>
+Under the GDPR, you have the right to request access to, rectification, or erasure of your personal data, as well as the right to restrict or object to processing, and the right to data portability. To exercise any of these rights, please contact us at <a href="mailto:myponylittleheart@gmail.com" style="color:aqua;">myponylittleheart@gmail.com</a>.</p>
+
+By agreeing to these GDPR-compliant Terms of Service, you consent to the collection and processing of the aforementioned data. If you do not agree with these terms, we kindly ask you not to continue using our website.
+</p>
+
+        <div class="buttons">
+            <a href="https://discord.com/api/oauth2/authorize?${query}">Yes, I agree!</a>
+            <a href="https://canvas.mares.place">Nope, I don't agree :(</a>
+            <a href="https://github.com/Manechat/place.manechat.net">Git Repo</a>
+        </div>
+
+        <p style="margin-top: 20px;">Thank you for your understanding and cooperation.</p>
+        <p>Sincerely,<br>maresplace<br>05.10.2023<br>Contact: <a href="mailto:myponylittleheart@gmail.com" style="color:aqua;">myponylittleheart@gmail.com</a></p>
+    </div>
+</body>
+
+</html>
+
   `;
 
   res.send(confirmationPage);
