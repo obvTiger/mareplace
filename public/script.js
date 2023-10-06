@@ -124,8 +124,16 @@ fetch("/initialize")
 	})
 	.then(repaintCanvas)
 	.then(() => {
-		const socket = new WebSocket("wss://" + window.location.host);
-
+		//const socket = new WebSocket("wss://" + window.location.host);
+		const socket = try{
+			const socket = new Websocket("wss://" + window.location.host);
+		}
+		catch(err){
+			console.log("Websocket Invalid")
+		}
+		socket.onerror = function error{
+			console.log(error)
+		}
 		socket.addEventListener("message", async e => {
 			const bytes = new Uint8Array(await e.data.arrayBuffer());
 
