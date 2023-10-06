@@ -104,7 +104,7 @@ const io = new Canvas.IO(canvas, "./canvas/current.hst").read();
  * ===============================
 */
 
-const oauthRedirectUrl = "http://canvas.mares.place/auth/discord/redirect"
+const oauthRedirectUrl = "https://canvas.mares.place/auth/discord/redirect"
 const oauthScope = "identify";
 app.get("/credits", (req, res) => {
 	const creditsPage = `
