@@ -449,16 +449,20 @@ canvas.addListener("pixel", (x, y, color) => {
 app.setUpSockets = () => // TODO: THis is really ugly because of Greenlock
 {
 
-	app.ws("/", ws => {
-		const clientId = idCounter++;
-		console.log("socket connected")
+	try {
+		app.ws("/", ws => {
+			const clientId = idCounter++;
+			console.log("socket connected")
 
-		clients.set(clientId, ws);
+			clients.set(clientId, ws);
 
-		ws.on("close", () => {
-			clients.delete(clientId);
+			ws.on("close", () => {
+				clients.delete(clientId);
+			});
 		});
-	});
+	} catch (error) {
+		console.log("some error. dont know dont care");
+	}
 
 }
 app.setUpSockets();
