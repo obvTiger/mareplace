@@ -525,6 +525,10 @@ body {
   pointer-events: none;
 }
 
+.placebutton {
+  min-width: 100px;
+}
+
 #ui {
   position: absolute;
   width: 100%;
@@ -576,7 +580,7 @@ body {
 }
 
 #place {
-  margin: 0 max(2.5%, 40px) 0 max(2.5%, 40px);
+  margin: 0 max(2.5%, 20px) 0 max(2.5%, 20px);
   width: clamp(150px, 10%, 200px);
   height: 60px;
 }
