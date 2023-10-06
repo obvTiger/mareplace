@@ -451,6 +451,7 @@ app.setUpSockets = () => // TODO: THis is really ugly because of Greenlock
 
 	app.ws("/", ws => {
 		const clientId = idCounter++;
+		console.log("socket connected")
 
 		clients.set(clientId, ws);
 
