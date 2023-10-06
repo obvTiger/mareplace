@@ -64,7 +64,7 @@ const defaultCanvasSettings = {
 	sizeX: 500,
 	sizeY: 500,
 	colors: [16711680, 65280, 255],
-	maxCooldown: 5
+	maxCooldown: 120
 };
 
 function hexToInt(hex) {
