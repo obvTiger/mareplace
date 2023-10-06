@@ -25,21 +25,53 @@
 		</div>
 	</div>
 	<div id="ui">
-			<div id="credits" class="mercy white button" onpointerup="creditsForMerc()" style="margin: 10px;">
-			<div class="action fs-m"><b>Credits</b></div>
+		<div style="display: flex; justify-content: center; padding: 3px;">
+			<div id="credits" class="mercy white button" onpointerup="creditsForMerc()">
+				<img src="./images/github-mark.svg" width="42px" height="42px">
+
+			</div>
 		</div>
+
 		<div id="place" class="orange button" onpointerup="openPicker()">
 			<div class="action fs-m"><b>Place!</b></div>
 			<div class="info fs-s">(500, 500) 1X</div>
 		</div>
-		
-		<div style="display: flex; justify-content: center;">
+
+		<div style="display: flex; justify-content: center; padding: 3px;">
 			<div id="share" class="white button" onpointerup="shareUrl()">
 				<img src="./images/arrow.svg" width="32px" height="32px">
 			</div>
 			<div id="share-tooltip" class="tooltip fs-s">
-					Link copied!
+				Link copied!
 			</div>
+
+		</div>
+		<div class="mod" style="padding: 10px;">
+			<div id="modplace" class="purple button" onpointerup="openPaint()" style="padding: 10px;">
+				<img src="./images/pencil.svg" width="25px" height="25px">
+			</div>
+		</div>
+	</div>
+	</div>
+	<div id="paint">
+		<div class="container">
+			<div id="adminColors">
+				<div class="adminColor" style="background-color: red;" onpointerup="pickColor(this)"></div>
+				<div class="adminColor" style="background-color: orangered;" onpointerup="pickColor(this)"></div>
+				<div class="adminColor" style="background-color: orange;" onpointerup="pickColor(this)"></div>
+				<div class="adminColor" style="background-color: yellow;" onpointerup="pickColor(this)"></div>
+				<div class="adminColor" style="background-color: blue;" onpointerup="pickColor(this)"></div>
+				<div class="adminColor" style="background-color: green;" onpointerup="pickColor(this)"></div>
+			</div>
+		</div>
+		<div class="container">
+			<div id="cancel" class="button" onpointerup="closePaint()">
+				<img src="./images/x.svg" width="40px" height="40px">
+			</div>
+			<div id="confirm" class="inactive orange button" onpointerup="adminPlace()">
+				<img src="./images/checkmark.svg" width="40px" height="40px">
+			</div>
+
 		</div>
 	</div>
 
@@ -61,6 +93,7 @@
 			<div id="confirm" class="inactive orange button" onpointerup="placeColor()">
 				<img src="./images/checkmark.svg" width="40px" height="40px">
 			</div>
+
 		</div>
 	</div>
 

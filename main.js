@@ -43,7 +43,7 @@ client.once(Events.ClientReady, c => {
 */
 
 const app = Express();
-const port = 1300;
+const port = 80;
 ExpressWS(app);
 
 
@@ -104,7 +104,7 @@ const io = new Canvas.IO(canvas, "./canvas/current.hst").read();
  * ===============================
 */
 
-const oauthRedirectUrl = "https://canvas.mares.place/auth/discord/redirect"
+const oauthRedirectUrl = "http://canvas.mares.place/auth/discord/redirect"
 const oauthScope = "identify";
 app.get("/credits", (req, res) => {
 	const creditsPage = `
@@ -113,7 +113,7 @@ app.get("/credits", (req, res) => {
   <head>
 	  <meta charset="UTF-8">
 	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	  <title>Credits for maresplace</title>
+	  <title>Credits for mare place</title>
 	  <style>
 		  body {
 			  background-color: #1a1a1a;
@@ -161,7 +161,8 @@ app.get("/credits", (req, res) => {
 		  <p>This is an open source canvas developed by Mercurial aka Mercy. It was originally used for Manechats 8th anniversary!</p>
   
 		  <div class="buttons">
-			  <a href="https://github.com/Manechat/place.manechat.net">GitHub Repository</a>
+			  <a href="https://github.com/Manechat/place.manechat.net">GitHub Repository from Merc</a>
+			  <a href="https://github.com/StarshinePony/mareplace">Github Repository of this instance</a>
 			  <a href="/">Go back to the main page</a>
 		  </div>
 	  </div>
@@ -325,7 +326,9 @@ app.get("/initialize", userInfo, async (req, res) => {
 		return res.json({ loggedIn: false, banned: false, mod: false, cooldown: 0, settings: canvas.settings });
 	}
 
-	res.json({ loggedIn: true, banned: isBanned(req.member), cooldown: canvas.users.get(req.user.id).cooldown, settings: canvas.settings });
+	res.json({ loggedIn: true, banned: isBanned(req.member), mod: isMod(req.member), cooldown: canvas.users.get(req.user.id).cooldown, settings: canvas.settings });
+	console.log(res.json)
+	console.log(res.json.banned, res.json.mod)
 });
 
 
@@ -347,6 +350,22 @@ app.post("/place", userInfo, async (req, res) => {
 	}
 
 	const placed = canvas.place(+req.body.x, +req.body.y, +req.body.color, req.member.user.id);
+
+	res.send({ placed });
+});
+app.post("/adminPlace", userInfo, async (req, res) => {
+	if (!req.member) {
+		return res.status(401).send();
+	}
+
+	if (isBanned(req.member)) {
+		return res.status(403).send();
+	}
+	if (!isMod(req.member)) {
+		return
+	}
+
+	const placed = canvas.adminPlace(+req.body.x, +req.body.y, +req.body.color, req.member.user.id);
 
 	res.send({ placed });
 });
@@ -399,6 +418,17 @@ function isBanned(member) {
 	}
 
 	return member.communication_disabled_until || Config.guild.bannedRoles.some(roleId => member.roles.cache.has(roleId));
+}
+function isMod(member) {
+	if (!member) {
+		return false;
+	}
+
+	if (Config.guild.moderatorRoles.some(roleId => member.roles.cache.has(roleId))) {
+		return true;
+	}
+
+	return false;
 }
 
 /*

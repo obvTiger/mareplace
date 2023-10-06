@@ -33,6 +33,7 @@ const placeButton = document.getElementById("place");
 const placeText = placeButton.querySelector(".action");
 const coordText = placeButton.querySelector(".info");
 const picker = document.getElementById("picker");
+const painter = document.getElementById("paint");
 const confirm = document.getElementById("confirm");
 const selectorBorder = selector.querySelector("#selector-border");
 const selectorPixel = selector.querySelector("#selector-pixel");
@@ -40,7 +41,9 @@ const pixelColor = selectorPixel.querySelector("#pixel-color");
 const shareTooltip = document.getElementById("share-tooltip");
 const placerTooltip = document.getElementById("placer-tooltip");
 const colorsContainer = document.getElementById("colors");
-
+const adminColorsContainer = document.getElementById("adminColors");
+const ui = document.getElementById("ui");
+const modtools = ui.querySelector("#modplace");
 
 
 function setSize(sizeX, sizeY) {
@@ -78,6 +81,7 @@ let placerTooltipTimer;
 
 let loggedIn = false;
 let banned = false;
+let mod = false;
 
 
 
@@ -107,6 +111,12 @@ fetch("/initialize")
 	.then(res => {
 		loggedIn = res.loggedIn;
 		banned = res.banned;
+		mod = res.mod;
+		console.log(mod)
+		modtools.classList.add("hidden")
+		if (mod) {
+			modtools.classList.remove("hidden")
+		}
 
 		if (isIOS()) // fix for iOS blurring the canvas for some odd reason... 
 		{
@@ -120,11 +130,12 @@ fetch("/initialize")
 		startCooldown(res.cooldown);
 
 		setColors(res.settings.colors);
+		setAdminColors(res.settings.colors);
 		updatePlaceButton();
 	})
 	.then(repaintCanvas)
 	.then(() => {
-		const socket = new WebSocket("wss://" + window.location.host);
+		const socket = new WebSocket("ws://" + window.location.host);
 		/*try{
 			const socket = new Websocket("wss://" + window.location.host);
 		}
@@ -151,7 +162,7 @@ fetch("/initialize")
 	.then(() => {
 		loadingScreen.classList.add("hidden");
 	});
-
+console.log(mod)
 async function repaintCanvas() {
 	const canvasRes = await fetch("/canvas");
 
@@ -337,6 +348,29 @@ function creditsForMerc() {
 	window.location.href = "/credits";
 	return;
 }
+function openPaint() {
+	selectSound.play();
+
+	if (!loggedIn) {
+		return;
+	}
+
+	if (banned) {
+		return;
+	}
+
+	if (mod) {
+		painter.classList.add("open");
+		const transform = instance.getTransform();
+		const scale = transform.scale;
+
+		if (scale < 20) {
+			instance.smoothZoom(document.body.clientWidth / 2.0, document.body.clientHeight / 2.0, 20 / scale, duration = 2000, easing = "easeInOut");
+		}
+		return;
+
+	}
+}
 function openPicker() {
 	selectSound.play();
 
@@ -349,7 +383,20 @@ function openPicker() {
 		return;
 	}
 
+	if (mod) {
+		picker.classList.add("open");
+		const transform = instance.getTransform();
+		const scale = transform.scale;
+
+		if (scale < 20) {
+			instance.smoothZoom(document.body.clientWidth / 2.0, document.body.clientHeight / 2.0, 20 / scale, duration = 2000, easing = "easeInOut");
+		}
+		return;
+
+	}
+	modtools.classList.add("hidden")
 	picker.classList.add("open");
+
 
 	const transform = instance.getTransform();
 	const scale = transform.scale;
@@ -364,7 +411,11 @@ function closePicker() {
 	cancelSound.play();
 	unpickColor();
 }
-
+function closePaint() {
+	painter.classList.remove("open");
+	cancelSound.play();
+	unpickColor();
+}
 
 
 let selectedColor;
@@ -396,7 +447,37 @@ function unpickColor() {
 }
 
 const ctx = canvas.getContext("2d");
+async function adminPlace() {
+	if (!selectedColor || cooldown > 0) {
+		return errorSound.play();
+	}
+	if (!mod) {
+		return;
+	}
 
+	const placedRes = await fetch("/adminPlace",
+		{
+			method: "POST",
+			headers: new Headers({ "content-type": "application/json" }),
+			body: JSON.stringify({ x: selectX, y: selectY, color: +selectedColor.dataset.color })
+		});
+
+	if (!placedRes.ok) {
+		return reloadPage();
+	}
+
+	const placed = (await placedRes.json()).placed;
+
+	if (!placed) {
+		return errorSound.play();
+	}
+
+
+
+	placeSound.play();
+	clearTimeout(cooldownInterval);
+
+}
 async function placeColor() {
 	if (!selectedColor || cooldown > 0) {
 		return errorSound.play();
@@ -448,6 +529,19 @@ function convertTimer() {
 
 let cooldownInterval;
 
+function enableModMenu() {
+	if (!loggedIn) {
+		return;
+	}
+
+	if (banned) {
+		return;
+	}
+	if (mod) {
+
+	}
+}
+
 function updatePlaceButton() {
 	if (!loggedIn) {
 		placeButton.style.background = `linear-gradient(to left, #2C3C41, #2C3C41 100%, #566F74 100%, #566F74)`;
@@ -460,6 +554,19 @@ function updatePlaceButton() {
 		placeText.innerHTML = "<b>Restricted</b>";
 		return;
 	}
+
+	if (mod) {
+		placeButton.style.background = `linear-gradient(to left, #df61ff, #df61ff 100%, #566F74 100%, #566F74)`;
+		placeText.innerHTML = "<b>Place</b>";
+		const progress = 100 - cooldown / maxCooldown * 100;
+		placeText.innerHTML = "<b>Place" + (cooldown > 0 ? ` in ${convertTimer()}` : "!") + "</b>";
+		if (progress < 100) {
+			placeButton.style.background = `linear-gradient(to left, #2C3C41, #2C3C41 ${progress}%, #566F74 ${progress}%, #566F74)`;
+			return;
+		}
+		return;
+	}
+	console.log(mod)
 
 	const progress = 100 - cooldown / maxCooldown * 100;
 
@@ -527,32 +634,24 @@ function shareUrl() {
 	clickSound.play();
 }
 
-async function adminDraw() {
-	if (!selectedColor || cooldown > 0) {
-		return errorSound.play();
+
+
+
+
+
+function setAdminColors(colors) {
+	adminColorsContainer.innerHTML = "";
+
+	for (const color of colors) {
+		const colorButton = document.createElement("div");
+
+		colorButton.className = "adminColor";
+		colorButton.dataset.color = color;
+		colorButton.style.backgroundColor = rgbIntToHex(color);
+		colorButton.onpointerup = () => pickColor(colorButton);
+
+		adminColorsContainer.appendChild(colorButton);
 	}
-
-	const placedRes = await fetch("/place",
-		{
-			method: "POST",
-			headers: new Headers({ "content-type": "application/json" }),
-			body: JSON.stringify({ x: selectX, y: selectY, color: +selectedColor.dataset.color })
-		});
-
-	if (!placedRes.ok) {
-		return reloadPage();
-	}
-
-	const placed = (await placedRes.json()).placed;
-
-	if (!placed) {
-		return errorSound.play();
-	}
-
-	picker.classList.remove("open");
-
-	placeSound.play();
-
 }
 function setColors(colors) {
 	colorsContainer.innerHTML = "";

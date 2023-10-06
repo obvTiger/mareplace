@@ -568,7 +568,11 @@ body {
 
 .orange {
   color: rgb(0, 0, 0);
-  background-color: #f82c00;
+  background-color: #f76217;
+}
+
+.purple {
+  background-color: #df61ff;
 }
 
 .orange.inactive {
@@ -589,6 +593,33 @@ body {
 #settings {
   width: 50px;
   height: 50px;
+}
+
+#paint {
+  position: absolute;
+  padding: 10px;
+  width: 100%;
+  background-color: white;
+  border-top: 3px solid #111111;
+  bottom: 0;
+  transition: transform 0.2s ease-out;
+  transform: translateY(100%);
+  pointer-events: all;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#paint.open {
+  transform: translateY(0px);
+}
+
+#paint .container {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #picker {
@@ -629,6 +660,17 @@ body {
   gap: 3px;
 }
 
+#adminColors {
+  width: min(700px, 100%);
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
 .color {
   border: 1px solid #E5E5E5;
   aspect-ratio: 1 / 1;
@@ -636,7 +678,20 @@ body {
   pointer-events: all;
 }
 
+.adminColor {
+  border: 1px solid #E5E5E5;
+  aspect-ratio: 1 / 1;
+  width: min(8%, 40px);
+  pointer-events: all;
+}
+
 .color.picked {
+  transform: scale(1.3);
+  border: 2px solid #111111;
+  box-shadow: 7px 7px #111111E0;
+}
+
+.adminColor.picked {
   transform: scale(1.3);
   border: 2px solid #111111;
   box-shadow: 7px 7px #111111E0;

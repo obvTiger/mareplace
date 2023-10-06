@@ -64,7 +64,7 @@ const defaultCanvasSettings = {
 	sizeX: 500,
 	sizeY: 500,
 	colors: [16711680, 65280, 255],
-	maxCooldown: 60
+	maxCooldown: 5
 };
 
 function hexToInt(hex) {
@@ -134,7 +134,25 @@ class Canvas extends EventEmitter {
 
 		return true;
 	}
+	adminPlace(x, y, color, userId) {
+		if (!this.isInBounds(x, y)) {
+			return false;
+		}
+
+		if (!this.settings.colors.includes(+color)) {
+			return false;
+		}
+
+		if (this.users.get(userId).cooldown > 0) {
+			return false;
+		}
+
+		this._setPixel(x, y, color, userId, Date.now());
+
+		return true;
+	}
 }
+
 
 
 
