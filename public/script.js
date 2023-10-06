@@ -124,8 +124,8 @@ fetch("/initialize")
 	})
 	.then(repaintCanvas)
 	.then(() => {
-		//const socket = new WebSocket("wss://" + window.location.host);
-		try{
+		const socket = new WebSocket("wss://" + window.location.host);
+		/*try{
 			const socket = new Websocket("wss://" + window.location.host);
 		}
 		catch(err){
@@ -133,7 +133,7 @@ fetch("/initialize")
 		}
 		socket.onerror = function error{
 			console.log(error)
-		}
+		}*/
 		socket.addEventListener("message", async e => {
 			const bytes = new Uint8Array(await e.data.arrayBuffer());
 
