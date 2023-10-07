@@ -329,7 +329,7 @@ function centerTo(x, y, s) {
 
 	return false;
 }
-const connectedClientsCountElement = document.getElementById("usercount");
+const connectedClientsCountElement = document.getElementById("usercount .info");
 
 // Function to update the connected clients count
 function updateConnectedClientsCount() {
@@ -337,7 +337,7 @@ function updateConnectedClientsCount() {
 		.then((response) => response.json())
 		.then((data) => {
 			const count = data.connectedClientsCount;
-			connectedClientsCountElement.textContent = `Connected Clients: ${count}`;
+			connectedClientsCountElement.innerHTML = `Connected Clients: ${count}`;
 		})
 		.catch((error) => {
 			console.error("Error fetching connected clients count:", error);
