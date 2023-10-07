@@ -347,7 +347,7 @@ function updateConnectedClientsCount() {
 updateConnectedClientsCount();
 
 
-setInterval(updateConnectedClientsCount, 10000);
+setInterval(updateConnectedClientsCount, 5000);
 
 function recenterCanvas() {
 	const dw = document.body.clientWidth - lastWidth;
@@ -560,6 +560,7 @@ function handleSelect() {
 		endX = Math.floor(centerX);
 		endY = Math.floor(centerY);
 		console.log(startX, startY, endX, endY)
+
 		const selectedPixels = getSelectedPixels(startX, startY, endX, endY);
 		selectedPixels.forEach((pixel, index) => {
 			processPixel(pixel, index);
@@ -580,6 +581,7 @@ function closePaint() {
 	endY = null;
 
 }
+
 function processPixel(pixel, index) {
 	setTimeout(() => {
 		console.log(`${pixel.x};${pixel.y}`);

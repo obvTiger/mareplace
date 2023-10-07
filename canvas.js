@@ -110,6 +110,20 @@ class Canvas extends EventEmitter {
 		this.info[x][y] = { userId, timestamp };
 		this.emit("pixel", x, y, color, userId, timestamp);
 	}
+	_drawRectangle(x1, y1, x2, y2, color, userId, timestamp) {
+		const updatedPixels = [];
+
+		for (let x = Math.min(x1, x2); x <= Math.max(x1, x2); x++) {
+			for (let y = Math.min(y1, y2); y <= Math.max(y1, y2); y++) {
+				this.pixels.setColor(x, y, color);
+				this.info[x][y] = { userId, timestamp };
+				updatedPixels.push({ x, y, color, userId, timestamp });
+
+			}
+		}
+		console.log(updatedPixels)
+		this.emit("pixel", updatedPixels);
+	}
 
 	isInBounds(x, y) {
 		return parseInt(x) == x && parseInt(y) == y && x >= 0 && x < this.settings.sizeX && y >= 0 && y < this.settings.sizeY;
@@ -140,10 +154,6 @@ class Canvas extends EventEmitter {
 		}
 
 		if (!this.settings.colors.includes(+color)) {
-			return false;
-		}
-
-		if (this.users.get(userId).cooldown > 0) {
 			return false;
 		}
 
