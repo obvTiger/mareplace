@@ -344,12 +344,10 @@ function updateConnectedClientsCount() {
 		});
 }
 
-// Call the function to update the count initially
 updateConnectedClientsCount();
 
-// Optionally, you can set up a timer to periodically update the count
-// For example, update it every 10 seconds
-setInterval(updateConnectedClientsCount, 10000); // 10000 milliseconds = 10 seconds
+
+setInterval(updateConnectedClientsCount, 10000);
 
 function recenterCanvas() {
 	const dw = document.body.clientWidth - lastWidth;
@@ -432,11 +430,7 @@ function closePicker() {
 	cancelSound.play();
 	unpickColor();
 }
-function closePaint() {
-	painter.classList.remove("open");
-	cancelSound.play();
-	unpickColor();
-}
+
 
 
 let selectedColor;
@@ -575,6 +569,16 @@ function handleSelect() {
 		endX = null;
 		endY = null;
 	}
+}
+function closePaint() {
+	painter.classList.remove("open");
+	cancelSound.play();
+	unpickColor();
+	startX = null;
+	startY = null;
+	endX = null;
+	endY = null;
+
 }
 function processPixel(pixel, index) {
 	setTimeout(() => {
