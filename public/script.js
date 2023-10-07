@@ -329,7 +329,7 @@ function centerTo(x, y, s) {
 
 	return false;
 }
-const connectedClientsCountElement = document.getElementById("usercount .info");
+const connectedClientsCountElement = document.getElementById("displayusers");
 
 // Function to update the connected clients count
 function updateConnectedClientsCount() {
