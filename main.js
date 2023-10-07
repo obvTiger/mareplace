@@ -372,6 +372,8 @@ app.post("/adminPlace", userInfo, async (req, res) => {
 
 
 
+
+
 app.post("/placer", async (req, res) => {
 	if (!canvas.isInBounds(+req.body.x, +req.body.y)) {
 		return res.json({ username: "" });
@@ -445,7 +447,7 @@ canvas.addListener("pixel", (x, y, color) => {
 		socket.send(buf);
 	}
 });
-
+/*
 app.setUpSockets = () => // TODO: THis is really ugly because of Greenlock
 {
 
@@ -464,8 +466,37 @@ app.setUpSockets = () => // TODO: THis is really ugly because of Greenlock
 		console.log("some error. dont know dont care");
 	}
 
-}
+}*/
+let connectedClientsCount = 0;
+app.setUpSockets = () => {
+	try {
+		app.ws("/", ws => {
+			const clientId = idCounter++;
+			console.log("socket connected");
+
+			// Increment the connected clients count
+			connectedClientsCount++;
+
+			// Add the WebSocket client to the clients map
+			clients.set(clientId, ws);
+
+			// Handle WebSocket close event
+			ws.on("close", () => {
+				// Decrement the connected clients count
+				connectedClientsCount--;
+
+				// Remove the WebSocket client from the clients map
+				clients.delete(clientId);
+			});
+		});
+	} catch (error) {
+		console.log("some error. don't know, don't care");
+	}
+};
 app.setUpSockets();
+app.get("/connectedClientsCount", (req, res) => {
+	res.json({ connectedClientsCount });
+});
 
 /*
  * ===============================

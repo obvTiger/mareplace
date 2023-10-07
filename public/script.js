@@ -329,6 +329,27 @@ function centerTo(x, y, s) {
 
 	return false;
 }
+const connectedClientsCountElement = document.getElementById("usercount");
+
+// Function to update the connected clients count
+function updateConnectedClientsCount() {
+	fetch("/connectedClientsCount") // Assuming you have an endpoint to fetch the count
+		.then((response) => response.json())
+		.then((data) => {
+			const count = data.connectedClientsCount;
+			connectedClientsCountElement.textContent = `Connected Clients: ${count}`;
+		})
+		.catch((error) => {
+			console.error("Error fetching connected clients count:", error);
+		});
+}
+
+// Call the function to update the count initially
+updateConnectedClientsCount();
+
+// Optionally, you can set up a timer to periodically update the count
+// For example, update it every 10 seconds
+setInterval(updateConnectedClientsCount, 10000); // 10000 milliseconds = 10 seconds
 
 function recenterCanvas() {
 	const dw = document.body.clientWidth - lastWidth;
