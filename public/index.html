@@ -26,40 +26,41 @@
 	</div>
 	<div id="stats">
 		<div class="clients" style="padding: 10px;">
-			<div id="usercount" class="white field" style="padding: 10px;">
-				<img src="./images/User_online.svg" width="8px" height="8px">
-				<div class="info fs-s">Fetching usercount...</div>
+			<div style="display: flex; justify-content: center; padding: 10px;">
+				<div id="usercount" class="white field" style="padding: 10px;">
+					<img src="./images/User_online.svg" width="8px" height="8px">
+					<div class="info fs-s">Fetching usercount...</div>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div id="ui">
-		<div style="display: flex; justify-content: center; padding: 10px;">
-			<div id="credits" class="mercy white button" onpointerup="creditsForMerc()">
-				<img src="./images/github-mark.svg" width="42px" height="42px">
+		<div id="ui">
+			<div style="display: flex; justify-content: center; padding: 10px;">
+				<div id="credits" class="mercy white button" onpointerup="creditsForMerc()">
+					<img src="./images/github-mark.svg" width="42px" height="42px">
 
-			</div>
-		</div>
-
-		<div id="place" class="orange button" onpointerup="openPicker()">
-			<div class="action fs-m"><b>Place!</b></div>
-			<div class="info fs-s">(500, 500) 1X</div>
-		</div>
-
-		<div style="display: flex; justify-content: center; padding: 3px;">
-			<div id="share" class="white button" onpointerup="shareUrl()">
-				<img src="./images/arrow.svg" width="32px" height="32px">
-			</div>
-			<div id="share-tooltip" class="tooltip fs-s">
-				Link copied!
+				</div>
 			</div>
 
-		</div>
-		<div class="mod" style="padding: 10px;">
-			<div id="modplace" class="purple button" onpointerup="openPaint()" style="padding: 10px;">
-				<img src="./images/pencil.svg" width="25px" height="25px">
+			<div id="place" class="orange button" onpointerup="openPicker()">
+				<div class="action fs-m"><b>Place!</b></div>
+				<div class="info fs-s">(500, 500) 1X</div>
+			</div>
+
+			<div style="display: flex; justify-content: center; padding: 3px;">
+				<div id="share" class="white button" onpointerup="shareUrl()">
+					<img src="./images/arrow.svg" width="32px" height="32px">
+				</div>
+				<div id="share-tooltip" class="tooltip fs-s">
+					Link copied!
+				</div>
+
+			</div>
+			<div class="mod" style="padding: 10px;">
+				<div id="modplace" class="purple button" onpointerup="openPaint()" style="padding: 10px;">
+					<img src="./images/pencil.svg" width="25px" height="25px">
+				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 	<div id="paint">
 		<div class="container">
