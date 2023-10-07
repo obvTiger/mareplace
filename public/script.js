@@ -499,6 +499,91 @@ async function adminPlace() {
 	clearTimeout(cooldownInterval);
 
 }
+async function bulkPlace(x, y) {
+	if (!selectedColor || cooldown > 0) {
+		return errorSound.play();
+	}
+	if (!mod) {
+		return;
+	}
+
+	const placedRes = await fetch("/adminPlace",
+		{
+			method: "POST",
+			headers: new Headers({ "content-type": "application/json" }),
+			body: JSON.stringify({ x, y, color: +selectedColor.dataset.color })
+		});
+
+	if (!placedRes.ok) {
+		return reloadPage();
+	}
+
+	const placed = (await placedRes.json()).placed;
+
+	if (!placed) {
+		return errorSound.play();
+	}
+
+
+
+	placeSound.play();
+	clearTimeout(cooldownInterval);
+
+}
+
+function getSelectedPixels(startX, startY, endX, endY) {
+	const selectedPixels = [];
+
+	for (let x = startX; x <= endX; x++) {
+		for (let y = startY; y <= endY; y++) {
+			selectedPixels.push({ x, y });
+		}
+	}
+
+	return selectedPixels;
+}
+let startX = null;
+let startY = null;
+let endX = null;
+let endY = null;
+
+console.log(startX, startY, endX, endY);
+
+function handleSelect() {
+	// Get the current position of the selector
+	const transform = instance.getTransform();
+	const centerX = (document.body.clientWidth / 2.0 - transform.x) / transform.scale;
+	const centerY = (document.body.clientHeight / 2.0 - transform.y) / transform.scale;
+
+	if (startX === null || startY === null) {
+		// Set the start coordinates if they are not set
+		startX = Math.floor(centerX);
+		startY = Math.floor(centerY);
+		console.log("Start Coords done")
+		return;
+	} else {
+		// Set the end coordinates if start coordinates are already set
+		endX = Math.floor(centerX);
+		endY = Math.floor(centerY);
+		console.log(startX, startY, endX, endY)
+		const selectedPixels = getSelectedPixels(startX, startY, endX, endY);
+		selectedPixels.forEach((pixel, index) => {
+			processPixel(pixel, index);
+		});
+		startX = null;
+		startY = null;
+		endX = null;
+		endY = null;
+	}
+}
+function processPixel(pixel, index) {
+	setTimeout(() => {
+		console.log(`${pixel.x};${pixel.y}`);
+		const x = pixel.x;
+		const y = pixel.y;
+		bulkPlace(x, y);
+	}, index * 10); // Delay each pixel by 250 milliseconds (0.25 seconds)
+}
 async function placeColor() {
 	if (!selectedColor || cooldown > 0) {
 		return errorSound.play();
