@@ -157,13 +157,18 @@ app.get("/credits", (req, res) => {
   
   <body>
 	  <div class="container">
-		  <h1>Credits</h1>
+		  <h1>Credits + Minimap download</h1>
 		  <p>This is an open source canvas developed by Mercurial aka Mercy. It was originally used for Manechats 8th anniversary!</p>
   
 		  <div class="buttons">
 			  <a href="https://github.com/Manechat/place.manechat.net">GitHub Repository from Merc</a>
 			  <a href="https://github.com/StarshinePony/mareplace">Github Repository of this instance</a>
 			  <a href="/">Go back to the main page</a>
+		  </div>
+		  <p>Wanna use a template overlay? Download the Minimap here! [FYI] > You need the tampermonkey extension for this to work!</p>
+		  <div class="buttons">
+			  <a href="https://www.tampermonkey.net/">Tampermonkey extention</a>
+			  <a href="https://github.com/StarshinePony/2023-minimap/raw/main/minimap.user.js">Download Script</a>
 		  </div>
 	  </div>
   </body>
