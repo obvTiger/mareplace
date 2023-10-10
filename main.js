@@ -336,7 +336,10 @@ app.get("/initialize", userInfo, async (req, res) => {
 	console.log(res.json.banned, res.json.mod)
 });
 
-
+app.get('/', function (req, res) {
+    res.redirect('/ui');
+});
+	
 
 app.get("/canvas", ExpressCompression(), (req, res) => {
 	res.contentType("application/octet-stream");
