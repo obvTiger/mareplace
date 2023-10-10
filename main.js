@@ -164,7 +164,7 @@ app.get("/credits", (req, res) => {
 			  <a href="https://github.com/Manechat/place.manechat.net">GitHub Repository from Merc</a>
 			  <a href="https://github.com/StarshinePony/mareplace">Github Repository of this instance</a>
 		  </div>
-		  <p>Wanna use a template overlay? Download the Minimap here! [FYI] > You need the tampermonkey extension for this to work!</p>
+		  <p>Wanna use a template overlay? Download the Minimap here! [FYI] > You need the tampermonkey extension for this to work! (Info: We are trying to implement the minimap into the website itself so you can use it on mobile aswell!</p>
 		  <div class="buttons">
 			  <a href="https://www.tampermonkey.net/">Tampermonkey extention</a>
 			  <a href="https://github.com/StarshinePony/2023-minimap/raw/main/minimap.user.js">Download Script</a>
