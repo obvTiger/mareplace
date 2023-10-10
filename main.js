@@ -304,7 +304,7 @@ app.get("/auth/discord/redirect", async (req, res) => {
 		});
 
 	if (!authRes.ok) {
-		return res.redirect("/");
+		return res.redirect("/ui");
 	}
 
 	const auth = await authRes.json();
@@ -315,13 +315,13 @@ app.get("/auth/discord/redirect", async (req, res) => {
 		});
 
 	if (!userRes.ok) {
-		return res.redirect("/");
+		return res.redirect("/ui");
 	}
 
 	await promisify(req.session.regenerate.bind(req.session))(); // TODO: Clean old sessions associated with this user/id
 	req.session.user = await userRes.json();
 
-	res.redirect("/");
+	res.redirect("/ui");
 });
 
 
