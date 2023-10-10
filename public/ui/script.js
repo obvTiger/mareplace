@@ -689,7 +689,7 @@ function updatePlaceButton() {
 	placeText.innerHTML = "<b>Place" + (cooldown > 0 ? ` in ${convertTimer()}` : "!") + "</b>";
 
 	if (progress < 100) {
-		placeButton.style.background = `linear-gradient(to left, #2C3C41, #2C3C41 ${progress}%, #566F74 ${progress}%, #566F74)`;
+		placeButton.style.background = `linear-gradient(to right, #f76217, #f76217 ${progress}%, #2C3C41 ${progress}%, #2C3C41)`;
 		return;
 	}
 
