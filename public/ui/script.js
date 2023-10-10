@@ -42,8 +42,10 @@ const shareTooltip = document.getElementById("share-tooltip");
 const placerTooltip = document.getElementById("placer-tooltip");
 const colorsContainer = document.getElementById("colors");
 const adminColorsContainer = document.getElementById("adminColors");
-const ui = document.getElementById("ui");
-const modtools = ui.querySelector("#modplace");
+const modUi = document.getElementById("modUi");
+const modtools = modUi.querySelector("#modplace");
+const modPlace = document.getElementById("modplace")
+const mappi = document.getElementById("minimapui")
 
 
 function setSize(sizeX, sizeY) {
@@ -413,7 +415,7 @@ function openPicker() {
 		return;
 
 	}
-	modtools.classList.add("hidden")
+	//modtools.classList.add("hidden")
 	picker.classList.add("open");
 
 
@@ -463,9 +465,6 @@ function unpickColor() {
 
 const ctx = canvas.getContext("2d");
 async function adminPlace() {
-	if (!selectedColor || cooldown > 0) {
-		return errorSound.play();
-	}
 	if (!mod) {
 		return;
 	}
@@ -494,9 +493,6 @@ async function adminPlace() {
 
 }
 async function bulkPlace(x, y) {
-	if (!selectedColor || cooldown > 0) {
-		return errorSound.play();
-	}
 	if (!mod) {
 		return;
 	}
@@ -580,6 +576,13 @@ function closePaint() {
 	endX = null;
 	endY = null;
 
+}
+function toggleMap() {
+	if (mappi.classList.contains("open")) {
+		mappi.classList.remove("open");
+		return;
+	}
+	mappi.classList.add("open");
 }
 
 function processPixel(pixel, index) {
@@ -673,9 +676,10 @@ function updatePlaceButton() {
 		const progress = 100 - cooldown / maxCooldown * 100;
 		placeText.innerHTML = "<b>Place" + (cooldown > 0 ? ` in ${convertTimer()}` : "!") + "</b>";
 		if (progress < 100) {
-			placeButton.style.background = `linear-gradient(to left, #2C3C41, #2C3C41 ${progress}%, #566F74 ${progress}%, #566F74)`;
+			placeButton.style.background = `linear-gradient(to right, #df61ff, #df61ff ${progress}%, #2C3C41 ${progress}%, #2C3C41)`;
 			return;
 		}
+		modPlace.style.background = null
 		return;
 	}
 	console.log(mod)
@@ -690,6 +694,7 @@ function updatePlaceButton() {
 	}
 
 	placeButton.style.background = null;
+
 }
 
 function startCooldown(newCooldown) {
@@ -719,8 +724,6 @@ function stopCooldown() {
 	refreshSound.play();
 }
 
-
-
 function shareUrl() {
 	const transform = instance.getTransform();
 
@@ -745,11 +748,6 @@ function shareUrl() {
 
 	clickSound.play();
 }
-
-
-
-
-
 
 function setAdminColors(colors) {
 	adminColorsContainer.innerHTML = "";

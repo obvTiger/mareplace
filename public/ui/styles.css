@@ -540,6 +540,28 @@ body {
   pointer-events: none;
 }
 
+#modUi {
+  position: absolute;
+  width: 180%;
+  height: max(10%, 130px);
+  bottom: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+#mapUi {
+  position: absolute;
+  width: 180%;
+  height: max(10%, 130px);
+  bottom: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
 #stats {
   position: absolute;
   width: 100%;
@@ -602,6 +624,76 @@ body {
 
 .white {
   background-color: white;
+}
+
+#minimapui {
+  display: block;
+  color: white;
+  width: 30%;
+  height: 30%;
+  position: absolute;
+  top: 0%;
+  right: 0%;
+  background-color: rgba(0, 0, 0, .75);
+  transition: transform 0.2s ease-out;
+  transform: translateY(0%);
+  border: 1px solid black;
+  overflow: hidden;
+}
+
+#minimapui.open {
+  transform: translateY(-200%);
+}
+
+#minimapui .map {
+  position: absolute;
+  margin: 0;
+  max-width: unset;
+  display: block;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+#minimapui .crosshair {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 2px solid red;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+#minimapui #resizer {
+  position: absolute;
+  bottom: 0%;
+  left: 0%;
+  width: 0px;
+  height: 0px;
+  border-bottom: 10px solid red;
+  border-left: 10px solid red;
+  border-top: 10px solid transparent;
+  border-right: 10px solid transparent;
+}
+
+#minimapui .settings {
+  position: absolute;
+  background-color: rgba(0, 0, 0, .75);
+}
+
+#minimapui .settings>div {
+  display: none;
+}
+
+#minimapui .settings>.alwaysshow {
+  display: block;
+}
+
+#minimapui:hover .settings>div {
+  display: block;
+}
+
+#minimapui .settings .clickable {
+  cursor: pointer;
+  user-select: none;
 }
 
 #place {
