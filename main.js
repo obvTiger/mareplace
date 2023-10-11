@@ -370,6 +370,7 @@ app.get('/', function (req, res) {
 		  }
 		  .countdown {
 			text-align: center;
+			font-size: 36px;
 		  }
   
 		  .buttons {
