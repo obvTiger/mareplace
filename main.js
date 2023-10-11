@@ -368,6 +368,9 @@ app.get('/', function (req, res) {
 		  h1 {
 			  text-align: center;
 		  }
+		  .countdown {
+			text-align: center;
+		  }
   
 		  .buttons {
 			  margin-top: 20px;
