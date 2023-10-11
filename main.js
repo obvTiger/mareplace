@@ -376,6 +376,9 @@ app.get('/', function (req, res) {
 		  h1 {
 			  text-align: center;
 		  }
+		  p {
+			text-align: center;
+		  }
 		  .countdown {
 			text-align: center;
 			font-size: 36px;
