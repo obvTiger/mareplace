@@ -422,6 +422,7 @@ app.get('/', function (req, res) {
 		  	<div class="buttons">
 			  	<a href="https://www.tampermonkey.net/">Tampermonkey</a>
 			  	<a href="https://github.com/StarshinePony/2023-minimap/raw/main/minimap.user.js">Download Script</a>
+				<a href="https://discord.gg/bronyplace">Join the Discord!</a>
 		  	</div>
 	</div>
     <script>
