@@ -410,13 +410,13 @@ app.get('/', function (req, res) {
 	<div id="loading-screen" class="countdown">
 		<img src="./Server_Icon.gif">
 	</div>
-	<p>If you are bored you can already install the template overlay here!</p>
-		  <div class="buttons">
-			  <a href="https://www.tampermonkey.net/">Tampermonkey</a>
-			  <a href="https://github.com/StarshinePony/2023-minimap/raw/main/minimap.user.js">Download Script</a>
-			  <a href="/ui">Go back to the main page</a>
-		  </div>
-
+	<div id="minimapinfo" class"countdown">
+		<p>If you are bored you can already install the template overlay here!</p>
+		  	<div class="buttons">
+			  	<a href="https://www.tampermonkey.net/">Tampermonkey</a>
+			  	<a href="https://github.com/StarshinePony/2023-minimap/raw/main/minimap.user.js">Download Script</a>
+		  	</div>
+	</div>
     <script>
         const targetTimestamp = 1697288400; // Replace with your desired Unix timestamp
  
