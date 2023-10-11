@@ -345,6 +345,7 @@ app.get('/', function (req, res) {
 		return;
 	}
 	console.log(Config.test, currentTimestampSeconds)
+	app.use(Express.static('gifs'));
 	const watingPage = `
 <!DOCTYPE html>
 <html>
@@ -364,6 +365,13 @@ app.get('/', function (req, res) {
 			  margin: 0 auto;
 			  padding: 20px;
 		  }
+		  loading-screen {
+			position: absolute;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			image-align: center;
+		  }
   
 		  h1 {
 			  text-align: center;
@@ -371,20 +379,6 @@ app.get('/', function (req, res) {
 		  .countdown {
 			text-align: center;
 			font-size: 36px;
-		  }
-		  .icon {
-			position: absolute;
-		  
-			width: 100%;
-			height: 100%;
-		  
-			background-color: #E5E5E5;
-		  
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			flex-direction: column;
-			transition: 0.5s ease;
 		  }
   
 		  .buttons {
@@ -411,10 +405,10 @@ app.get('/', function (req, res) {
 <body>
     <h1>Mare Place opens in:</h1>
     <div id="countdown" class="countdown"></div>
-	<div id="icon" class="icon"
 
-	<img src="./gifs/loading.gif">
 
+	<div id="loading-screen" class="countdown">
+		<img src="./Server_Icon.gif">
 	</div>
 
     <script>
