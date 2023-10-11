@@ -395,7 +395,7 @@ app.get('/', function (req, res) {
 </head>
 <body>
     <h1>Mare Place opens in:</h1>
-    <div id="countdown"></div>
+    <div id="countdown" class="countdown"></div>
 
     <script>
         const targetTimestamp = 1697288400; // Replace with your desired Unix timestamp
