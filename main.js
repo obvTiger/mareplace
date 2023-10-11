@@ -287,7 +287,7 @@ app.get("/auth/discord/redirect", async (req, res) => {
 	const code = req.query.code;
 
 	if (!code) {
-		return res.redirect("/ui");
+		return res.redirect("/uiplskeepthissecret");
 	}
 
 	const authRes = await fetch("https://discord.com/api/oauth2/token",
@@ -306,7 +306,7 @@ app.get("/auth/discord/redirect", async (req, res) => {
 		});
 
 	if (!authRes.ok) {
-		return res.redirect("/ui");
+		return res.redirect("/uiplskeepthissecret");
 	}
 
 	const auth = await authRes.json();
@@ -317,13 +317,13 @@ app.get("/auth/discord/redirect", async (req, res) => {
 		});
 
 	if (!userRes.ok) {
-		return res.redirect("/ui");
+		return res.redirect("/uiplskeepthissecret");
 	}
 
 	await promisify(req.session.regenerate.bind(req.session))(); // TODO: Clean old sessions associated with this user/id
 	req.session.user = await userRes.json();
 
-	res.redirect("/ui");
+	res.redirect("/uiplskeepthissecret");
 });
 
 
@@ -341,7 +341,7 @@ app.get("/initialize", userInfo, async (req, res) => {
 app.get('/', function (req, res) {
 	const currentTimestampSeconds = Math.floor(Date.now() / 1000);
 	if (!Config.canvasEnablesAt > currentTimestampSeconds) {
-		res.redirect('/ui');
+		res.redirect('/uiplskeepthissecret');
 		return;
 	}
 	console.log(Config.test, currentTimestampSeconds)
