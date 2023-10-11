@@ -372,6 +372,20 @@ app.get('/', function (req, res) {
 			text-align: center;
 			font-size: 36px;
 		  }
+		  .icon {
+			position: absolute;
+		  
+			width: 100%;
+			height: 100%;
+		  
+			background-color: #E5E5E5;
+		  
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			transition: 0.5s ease;
+		  }
   
 		  .buttons {
 			  margin-top: 20px;
@@ -397,7 +411,7 @@ app.get('/', function (req, res) {
 <body>
     <h1>Mare Place opens in:</h1>
     <div id="countdown" class="countdown"></div>
-	<div id="icon" class="countdown"
+	<div id="icon" class="icon"
 
 	<img src="./gifs/loading.gif">
 
