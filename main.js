@@ -380,6 +380,10 @@ app.get('/', function (req, res) {
 			text-align: center;
 			font-size: 36px;
 		  }
+		  .minimapinfo {
+			text-align: center;
+			font-size: 36px;
+		  }
   
 		  .buttons {
 			  margin-top: 20px;
