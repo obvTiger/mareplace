@@ -397,7 +397,7 @@ app.get('/', function (req, res) {
 <body>
     <h1>Mare Place opens in:</h1>
     <div id="countdown" class="countdown"></div>
-	<img src="loading.gif" width="32px" height="32px">
+	<img src="loading.gif" class="countdown">
 
     <script>
         const targetTimestamp = 1697288400; // Replace with your desired Unix timestamp
