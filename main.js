@@ -17,6 +17,8 @@ const Canvas = require("./canvas");
 
 // Configs
 const Config = require("./config.json");
+const { config } = require("dotenv");
+const { timeStamp } = require("console");
 require("dotenv").config();
 
 
@@ -337,9 +339,69 @@ app.get("/initialize", userInfo, async (req, res) => {
 });
 
 app.get('/', function (req, res) {
-    res.redirect('/ui');
+	const currentTimestampSeconds = Math.floor(Date.now() / 1000);
+	if (!Config.canvasEnablesAt > currentTimestampSeconds) {
+		res.redirect('/ui');
+		return;
+	}
+	console.log(Config.test, currentTimestampSeconds)
+	const watingPage = `
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Soon :D</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #countdown {
+            font-size: 24px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mare Place opens in:</h1>
+    <div id="countdown"></div>
+
+    <script>
+        const targetTimestamp = 1697288400; // Replace with your desired Unix timestamp
+ 
+        function updateCountdown() {
+            const currentTimestamp = Math.floor(Date.now() / 1000); // Convert current time to Unix timestamp
+            const timeRemaining = targetTimestamp - currentTimestamp;
+
+            if (timeRemaining <= 0) {
+                document.getElementById('countdown').innerHTML = "Countdown expired!";
+            } else {
+                const days = Math.floor(timeRemaining / (60 * 60 * 24));
+                const hours = Math.floor((timeRemaining % (60 * 60 * 24)) / (60 * 60));
+                const minutes = Math.floor((timeRemaining % (60 * 60)) / 60);
+                const seconds = timeRemaining % 60;
+
+                const countdownText = \`\${days}d \${hours}h \${minutes}m \${seconds}s\`;
+                document.getElementById('countdown').innerHTML = '<strong>' + countdownText + '</strong>';
+            }
+        }
+        updateCountdown();
+
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
+`;
+
+
+	res.send(watingPage);
+
+
 });
-	
+
 
 app.get("/canvas", ExpressCompression(), (req, res) => {
 	res.contentType("application/octet-stream");
