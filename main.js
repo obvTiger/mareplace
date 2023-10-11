@@ -351,19 +351,44 @@ app.get('/', function (req, res) {
 <head>
     <title>Soon :D</title>
     <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
-        #countdown {
-            font-size: 24px;
-            text-align: center;
-        }
-    </style>
+		  body {
+			  background-color: #1a1a1a;
+			  color: #ffffff;
+			  font-family: Arial, sans-serif;
+			  margin: 0;
+			  padding: 0;
+		  }
+  
+		  .container {
+			  max-width: 600px;
+			  margin: 0 auto;
+			  padding: 20px;
+		  }
+  
+		  h1 {
+			  text-align: center;
+		  }
+  
+		  .buttons {
+			  margin-top: 20px;
+			  text-align: center;
+		  }
+  
+		  .buttons a {
+			  display: inline-block;
+			  margin: 10px;
+			  padding: 15px 25px;
+			  background-color: #3498db;
+			  color: #ffffff;
+			  text-decoration: none;
+			  border-radius: 5px;
+			  transition: background-color 0.3s;
+		  }
+  
+		  .buttons a:hover {
+			  background-color: #2980b9;
+		  }
+	  </style>
 </head>
 <body>
     <h1>Mare Place opens in:</h1>
