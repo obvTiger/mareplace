@@ -426,10 +426,10 @@ app.get('/', function (req, res) {
 		  	</div>
 	</div>
     <script>
-        const targetTimestamp = 1697288400; // Replace with your desired Unix timestamp
+        const targetTimestamp = 1697288400;
  
         function updateCountdown() {
-            const currentTimestamp = Math.floor(Date.now() / 1000); // Convert current time to Unix timestamp
+            const currentTimestamp = Math.floor(Date.now() / 1000);
             const timeRemaining = targetTimestamp - currentTimestamp;
 
             if (timeRemaining <= 0) {
