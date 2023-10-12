@@ -130,9 +130,11 @@ fetch("/initialize")
 
 		maxCooldown = res.settings.maxCooldown;
 		startCooldown(res.cooldown);
+		document.title = `Mare Place - Ready!`;
 
 		setColors(res.settings.colors);
-		setAdminColors(res.settings.colors);
+		const adminColors = [16777215]
+		setAdminColors(adminColors);
 		updatePlaceButton();
 	})
 	.then(repaintCanvas)
@@ -696,6 +698,13 @@ function updatePlaceButton() {
 	placeButton.style.background = null;
 
 }
+function updateDocumentTitle(countdown) {
+	if (countdown === "0:00") {
+		document.title = `Mare Place - Ready!`;
+	} else {
+		document.title = `Mare Place - ${countdown}`;
+	}
+}
 
 function startCooldown(newCooldown) {
 	cooldown = newCooldown;
@@ -705,16 +714,19 @@ function startCooldown(newCooldown) {
 		return;
 	}
 
+	updateDocumentTitle(convertTimer());
 	setTimeout(stopCooldown, newCooldown * 1000);
 	cooldownInterval = setInterval(() => {
 		--cooldown;
 		updatePlaceButton();
+		updateDocumentTitle(convertTimer());
 	}, 1000);
 }
 
 function stopCooldown() {
 	cooldown = 0;
 	updatePlaceButton();
+	document.title = `Mare Place - Ready!`
 	clearTimeout(cooldownInterval);
 
 	if (picker.classList.contains("open") && selectedColor) {
@@ -723,6 +735,8 @@ function stopCooldown() {
 
 	refreshSound.play();
 }
+
+
 
 function shareUrl() {
 	const transform = instance.getTransform();

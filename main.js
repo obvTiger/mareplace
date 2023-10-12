@@ -94,6 +94,7 @@ const canvas = new Canvas().initialize({ sizeX: 500, sizeY: 500, colors: ["#ff45
 const io = new Canvas.IO(canvas, "./canvas/current.hst").read();
 
 // day 2 colors
+
 // const colors = [ "#ff4500", "#ffa800", "#ffd635", "#00a368", "#7eed56", "#2450a4", "#3690ea", "#51e9f4", "#811e9f", "#b44ac0", "#ff99aa", "#9c6926", "#000000", "#898d90", "#d4d7d9", "ffffff" ];
 
 // day 3 colors
@@ -170,7 +171,7 @@ app.get("/credits", (req, res) => {
 		  <div class="buttons">
 			  <a href="https://www.tampermonkey.net/">Tampermonkey</a>
 			  <a href="https://github.com/StarshinePony/2023-minimap/raw/main/minimap.user.js">Download Script</a>
-			  <a href="/ui">Go back to the main page</a>
+			  <a href="/uiplskeepthissecret">Go back to the main page</a>
 		  </div>
 	  </div>
   </body>
@@ -266,7 +267,7 @@ By agreeing to these GDPR-compliant Terms of Service, you consent to the collect
 
         <div class="buttons">
             <a href="https://discord.com/api/oauth2/authorize?${query}">Yes, I agree!</a>
-            <a href="/ui">Nope, I don't agree :(</a>
+            <a href="/uiplskeepthissecret">Nope, I don't agree :(</a>
         </div>
 
         <p style="margin-top: 20px;">Thank you for your understanding and cooperation.</p>
@@ -340,11 +341,11 @@ app.get("/initialize", userInfo, async (req, res) => {
 
 app.get('/', function (req, res) {
 	const currentTimestampSeconds = Math.floor(Date.now() / 1000);
-	if (!Config.canvasEnablesAt > currentTimestampSeconds) {
+	if (Config.canvasEnablesAt < currentTimestampSeconds) {
 		res.redirect('/uiplskeepthissecret');
 		return;
 	}
-	console.log(Config.test, currentTimestampSeconds)
+	console.log(Config.canvasEnablesAt, currentTimestampSeconds)
 	app.use(Express.static('gifs'));
 	const watingPage = `
 <!DOCTYPE html>
@@ -433,12 +434,13 @@ app.get('/', function (req, res) {
             const timeRemaining = targetTimestamp - currentTimestamp;
 
             if (timeRemaining <= 0) {
-                document.getElementById('countdown').innerHTML = "Countdown expired!";
+                document.getElementById('countdown').innerHTML = "Mare Place is now open! Refresh you page!";
             } else {
                 const days = Math.floor(timeRemaining / (60 * 60 * 24));
                 const hours = Math.floor((timeRemaining % (60 * 60 * 24)) / (60 * 60));
                 const minutes = Math.floor((timeRemaining % (60 * 60)) / 60);
                 const seconds = timeRemaining % 60;
+				
 
                 const countdownText = \`\${days}d \${hours}h \${minutes}m \${seconds}s\`;
                 document.getElementById('countdown').innerHTML = '<strong>' + countdownText + '</strong>';
@@ -599,19 +601,14 @@ app.setUpSockets = () => {
 		app.ws("/", ws => {
 			const clientId = idCounter++;
 			console.log("socket connected");
-
-			// Increment the connected clients count
 			connectedClientsCount++;
 
-			// Add the WebSocket client to the clients map
 			clients.set(clientId, ws);
 
-			// Handle WebSocket close event
 			ws.on("close", () => {
-				// Decrement the connected clients count
 				connectedClientsCount--;
 
-				// Remove the WebSocket client from the clients map
+
 				clients.delete(clientId);
 			});
 		});
