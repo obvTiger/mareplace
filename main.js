@@ -345,7 +345,6 @@ app.get('/', function (req, res) {
 		res.redirect('/ui');
 		return;
 	}
-	console.log(Config.canvasEnablesAt, currentTimestampSeconds)
 	app.use(Express.static('gifs'));
 	const watingPage = `
 <!DOCTYPE html>
@@ -614,7 +613,7 @@ app.setUpSockets = () => {
 			});
 		});
 	} catch (error) {
-		console.log("some error. don't know, don't care");
+		console.log("Error while setting up websocket:",error);
 	}
 };
 app.setUpSockets();
@@ -626,7 +625,7 @@ app.get("/connectedClientsCount", (req, res) => {
  * ===============================
 */
 app.listen(port, () => {
-	console.log(`Example app listening on port ${port}`);
+	console.log(`Place Server running at http://localhost:${port}`);
 });
 
 
