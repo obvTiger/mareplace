@@ -351,7 +351,7 @@ app.get('/', function (req, res) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Soon :D</title>
+    <title>Starting Soon :D</title>
     <style>
 		  body {
 			  background-color: #1a1a1a;
@@ -435,6 +435,7 @@ app.get('/', function (req, res) {
 
             if (timeRemaining <= 0) {
                 document.getElementById('countdown').innerHTML = "Mare Place is now open! Refresh you page!";
+				location.reload(); 
             } else {
                 const days = Math.floor(timeRemaining / (60 * 60 * 24));
                 const hours = Math.floor((timeRemaining % (60 * 60 * 24)) / (60 * 60));
