@@ -345,7 +345,6 @@ app.get('/', function (req, res) {
 		res.redirect('/ui');
 		return;
 	}
-	console.log(Config.canvasEnablesAt, currentTimestampSeconds)
 	app.use(Express.static('gifs'));
 	const watingPage = `
 <!DOCTYPE html>
