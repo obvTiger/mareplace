@@ -435,7 +435,7 @@ app.get('/', function (req, res) {
 
             if (timeRemaining <= 0) {
                 document.getElementById('countdown').innerHTML = "Mare Place is now open! Refresh you page!";
-				location.reload(); 
+				location.reload(); //Test Push
             } else {
                 const days = Math.floor(timeRemaining / (60 * 60 * 24));
                 const hours = Math.floor((timeRemaining % (60 * 60 * 24)) / (60 * 60));
