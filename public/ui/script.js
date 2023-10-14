@@ -139,7 +139,21 @@ fetch("/initialize")
 	})
 	.then(repaintCanvas)
 	.then(() => {
-		const socket = new WebSocket("wss://" + window.location.host);
+
+
+		var secureProtocol;
+		let socket;
+
+		if (window.location.protocol === "https:") {
+		    secureProtocol = true;
+			socket = new WebSocket("wss://" + window.location.host);
+			console.log("Using secure protocol")
+		} else {
+		    secureProtocol = false;
+			socket = new WebSocket("ws://" + window.location.host);
+			console.warn("Using unsecure protocol.")
+		}
+		
 		/*try{
 			const socket = new Websocket("wss://" + window.location.host);
 		}
@@ -341,7 +355,7 @@ function updateConnectedClientsCount() {
 		.then((response) => response.json())
 		.then((data) => {
 			const count = data.connectedClientsCount;
-			connectedClientsCountElement.innerHTML = `Connected Clients: ${count}`;
+			connectedClientsCountElement.innerHTML = `Online: ${count}`;
 		})
 		.catch((error) => {
 			console.error("Error fetching connected clients count:", error);
