@@ -4,6 +4,7 @@ const ExpressSession = require("express-session");
 const ExpressCompression = require("compression");
 const SessionFileStore = require("session-file-store")(ExpressSession);
 const ExpressWS = require("express-ws");
+
 // Discord
 const { Client, Events, GatewayIntentBits } = require("discord.js");
 
@@ -17,8 +18,6 @@ const Canvas = require("./canvas");
 
 // Configs
 const Config = require("./config.json");
-const { config } = require("dotenv");
-const { timeStamp } = require("console");
 require("dotenv").config();
 
 
@@ -90,11 +89,15 @@ async function userInfo(req, res, next) {
  * ===============================
 */
 
+const clients = new Map();
+
 const canvas = new Canvas().initialize({ sizeX: 500, sizeY: 500, colors: ["#6d001a", "#be0039", "#ff4500", "#ffa800", "#ffd635", "#fff8b8", "#00a368", "#00cc78", "#7eed56", "#d9e650", "#00756f", "#009eaa", "#00ccc0", "#2450a4", "#3690ea", "#51e9f4", "#293873", "#493ac1", "#6a5cff", "#94b3ff", "#811e9f", "#b44ac0", "#e4abff", "#de107f", "#ff3881", "#ff99aa", "#6d482f", "#9c6926", "#ffb470", "#000000", "#515252", "#898d90", "#d4d7d9", "#ffffff"] });
-const io = new Canvas.IO(canvas, "./canvas/current.hst").read();
+const io = new Canvas.IO(canvas, "./canvas/current.hst");
+const stats = new Canvas.Stats(canvas, io, () => clients.size);
+io.read();
+stats.startRecording(10 * 60 * 1000 /* 10 min */, 24 * 60 * 60 * 1000 /* 24 hrs */);
 
 // day 2 colors
-
 // const colors = [ "#ff4500", "#ffa800", "#ffd635", "#00a368", "#7eed56", "#2450a4", "#3690ea", "#51e9f4", "#811e9f", "#b44ac0", "#ff99aa", "#9c6926", "#000000", "#898d90", "#d4d7d9", "ffffff" ];
 
 // day 3 colors
@@ -109,86 +112,18 @@ const io = new Canvas.IO(canvas, "./canvas/current.hst").read();
 
 const oauthRedirectUrl = "https://canvas.mares.place/auth/discord/redirect"
 const oauthScope = "identify";
-app.get("/credits", (req, res) => {
-	const creditsPage = `
-  <html lang="en">
-  
-  <head>
-	  <meta charset="UTF-8">
-	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	  <title>Credits for mare place</title>
-	  <style>
-		  body {
-			  background-color: #1a1a1a;
-			  color: #ffffff;
-			  font-family: Arial, sans-serif;
-			  margin: 0;
-			  padding: 0;
-		  }
-  
-		  .container {
-			  max-width: 600px;
-			  margin: 0 auto;
-			  padding: 20px;
-		  }
-  
-		  h1 {
-			  text-align: center;
-		  }
-  
-		  .buttons {
-			  margin-top: 20px;
-			  text-align: center;
-		  }
-  
-		  .buttons a {
-			  display: inline-block;
-			  margin: 10px;
-			  padding: 15px 25px;
-			  background-color: #3498db;
-			  color: #ffffff;
-			  text-decoration: none;
-			  border-radius: 5px;
-			  transition: background-color 0.3s;
-		  }
-  
-		  .buttons a:hover {
-			  background-color: #2980b9;
-		  }
-	  </style>
-  </head>
-  
-  <body>
-	  <div class="container">
-		  <h1>Credits + Minimap Download</h1>
-		  <p>This is an open source canvas developed by Mercurial aka Mercy. It was originally used for Manechats 8th anniversary!</p>
-  
-		  <div class="buttons">
-			  <a href="https://github.com/Manechat/place.manechat.net">GitHub Repository from Merc</a>
-			  <a href="https://github.com/StarshinePony/mareplace">Github Repository of this instance</a>
-		  </div>
-		  <p>Wanna use a template overlay? Download the Minimap here! [FYI] > You need the tampermonkey extension for this to work! (Info: We are trying to implement the minimap into the website itself so you can use it on mobile aswell!</p>
-		  <div class="buttons">
-			  <a href="https://www.tampermonkey.net/">Tampermonkey</a>
-			  <a href="https://github.com/StarshinePony/2023-minimap/raw/main/minimap.user.js">Download Script</a>
-			  <a href="/ui">Go back to the main page</a>
-		  </div>
-	  </div>
-  </body>
-  
-  </html>
-  `;
 
-	res.send(creditsPage);
-});
+
+
 app.get("/auth/discord", (req, res) => {
-	// HTML-Seite mit Bestätigungsnachricht und Weiterleitungslink anzeigen
-	const query = QueryString.encode({
-		client_id: process.env.CLIENT_ID,
-		scope: oauthScope,
-		redirect_uri: oauthRedirectUrl,
-		response_type: "code",
-	});
+	const query = QueryString.encode(
+		{
+			client_id: process.env.CLIENT_ID,
+			scope: oauthScope,
+			redirect_uri: oauthRedirectUrl,
+			response_type: "code",
+			state: req.query.from
+		});
 	const confirmationPage = `
 <html lang="en">
 
@@ -287,8 +222,10 @@ By agreeing to these GDPR-compliant Terms of Service, you consent to the collect
 app.get("/auth/discord/redirect", async (req, res) => {
 	const code = req.query.code;
 
+	const redirectUrl = "/ui" + (req.query.state || "");
+
 	if (!code) {
-		return res.redirect("/ui");
+		return res.redirect(redirectUrl);
 	}
 
 	const authRes = await fetch("https://discord.com/api/oauth2/token",
@@ -307,7 +244,7 @@ app.get("/auth/discord/redirect", async (req, res) => {
 		});
 
 	if (!authRes.ok) {
-		return res.redirect("/ui");
+		return res.redirect(redirectUrl);
 	}
 
 	const auth = await authRes.json();
@@ -318,25 +255,136 @@ app.get("/auth/discord/redirect", async (req, res) => {
 		});
 
 	if (!userRes.ok) {
-		return res.redirect("/ui");
+		return res.redirect(redirectUrl);
 	}
 
 	await promisify(req.session.regenerate.bind(req.session))(); // TODO: Clean old sessions associated with this user/id
 	req.session.user = await userRes.json();
 
-	res.redirect("/ui");
+	res.redirect(redirectUrl);
 });
 
 
 
 app.get("/initialize", userInfo, async (req, res) => {
 	if (!req.user) {
-		return res.json({ loggedIn: false, banned: false, mod: false, cooldown: 0, settings: canvas.settings });
+		return res.json({ loggedIn: false, banned: false, cooldown: 0, settings: canvas.settings });
 	}
 
 	res.json({ loggedIn: true, banned: isBanned(req.member), mod: isMod(req.member), cooldown: canvas.users.get(req.user.id).cooldown, settings: canvas.settings });
 	console.log(res.json)
 	console.log(res.json.banned, res.json.mod)
+});
+
+
+
+app.get("/canvas", ExpressCompression(), (req, res) => {
+	res.contentType("application/octet-stream");
+	res.send(canvas.pixels.data);
+});
+
+
+
+app.post("/place", userInfo, async (req, res) => {
+	if (!req.member) {
+		return res.status(401).send();
+	}
+
+	if (isBanned(req.member)) {
+		return res.status(403).send();
+	}
+
+	const placed = canvas.place(+req.body.x, +req.body.y, +req.body.color, req.member.user.id);
+
+	res.send({ placed });
+});
+app.post("/adminPlace", userInfo, async (req, res) => {
+	/*if (!req.member) {
+		return res.status(401).send();
+	}
+
+	if (isBanned(req.member)) {
+		return res.status(403).send();
+	}
+	if (!isMod(req.member)) {
+		return
+	}*/
+
+	const placed = canvas.adminPlace(+req.body.x, +req.body.y, +req.body.color, req.member.user.id);
+
+	res.send({ placed });
+});
+app.get("/credits", (req, res) => {
+	const creditsPage = `
+  <html lang="en">
+  
+  <head>
+	  <meta charset="UTF-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	  <title>Credits for mare place</title>
+	  <style>
+		  body {
+			  background-color: #1a1a1a;
+			  color: #ffffff;
+			  font-family: Arial, sans-serif;
+			  margin: 0;
+			  padding: 0;
+		  }
+  
+		  .container {
+			  max-width: 600px;
+			  margin: 0 auto;
+			  padding: 20px;
+		  }
+  
+		  h1 {
+			  text-align: center;
+		  }
+  
+		  .buttons {
+			  margin-top: 20px;
+			  text-align: center;
+		  }
+  
+		  .buttons a {
+			  display: inline-block;
+			  margin: 10px;
+			  padding: 15px 25px;
+			  background-color: #3498db;
+			  color: #ffffff;
+			  text-decoration: none;
+			  border-radius: 5px;
+			  transition: background-color 0.3s;
+		  }
+  
+		  .buttons a:hover {
+			  background-color: #2980b9;
+		  }
+	  </style>
+  </head>
+  
+  <body>
+	  <div class="container">
+		  <h1>Credits + Minimap Download</h1>
+		  <p>This is an open source canvas developed by Mercurial aka Mercy. It was originally used for Manechats 8th anniversary!</p>
+  
+		  <div class="buttons">
+			  <a href="https://github.com/Manechat/place.manechat.net">GitHub Repository from Merc</a>
+			  <a href="https://github.com/StarshinePony/mareplace">Github Repository of this instance</a>
+		  </div>
+		  <p>Wanna use a template overlay? Download the Minimap here! [FYI] > You need the tampermonkey extension for this to work! (Info: We are trying to implement the minimap into the website itself so you can use it on mobile aswell!</p>
+		  <div class="buttons">
+			  <a href="https://www.tampermonkey.net/">Tampermonkey</a>
+			  <a href="https://github.com/StarshinePony/2023-minimap/raw/main/minimap.user.js">Download Script</a>
+			  <a href="/ui">Go back to the main page</a>
+		  </div>
+	  </div>
+  </body>
+  
+  </html>
+  `;
+
+	res.send(creditsPage);
 });
 
 app.get('/', function (req, res) {
@@ -460,48 +508,6 @@ app.get('/', function (req, res) {
 
 });
 
-
-app.get("/canvas", ExpressCompression(), (req, res) => {
-	res.contentType("application/octet-stream");
-	res.send(canvas.pixels.data);
-});
-
-
-
-app.post("/place", userInfo, async (req, res) => {
-	if (!req.member) {
-		return res.status(401).send();
-	}
-
-	if (isBanned(req.member)) {
-		return res.status(403).send();
-	}
-
-	const placed = canvas.place(+req.body.x, +req.body.y, +req.body.color, req.member.user.id);
-
-	res.send({ placed });
-});
-app.post("/adminPlace", userInfo, async (req, res) => {
-	if (!req.member) {
-		return res.status(401).send();
-	}
-
-	if (isBanned(req.member)) {
-		return res.status(403).send();
-	}
-	if (!isMod(req.member)) {
-		return
-	}
-
-	const placed = canvas.adminPlace(+req.body.x, +req.body.y, +req.body.color, req.member.user.id);
-
-	res.send({ placed });
-});
-
-
-
-
-
 app.post("/placer", async (req, res) => {
 	if (!canvas.isInBounds(+req.body.x, +req.body.y)) {
 		return res.json({ username: "" });
@@ -516,8 +522,8 @@ app.post("/placer", async (req, res) => {
 	try {
 		const member = await client.guilds.cache.get(Config.guild.id).members.fetch(pixelInfo.userId.toString());
 
-		if (member && member.nickname) {
-			return res.json({ username: member.nickname });
+		if (member) {
+			return res.json({ username: member.nickname ? member.nickname : member.user.globalName });
 		}
 	}
 	catch (e) {
@@ -538,6 +544,22 @@ app.post("/placer", async (req, res) => {
  * ===============================
 */
 
+app.get("/stats-json", ExpressCompression(), userInfo, (req, res) => {
+	const statsJson = { global: Object.assign({ userCount: clients.size, pixelCount: canvas.pixelEvents.length }, stats.global) };
+
+	if (req.member) {
+		statsJson.personal = stats.personal.get(req.member.user.id);
+	}
+
+	res.json(statsJson);
+});
+
+
+
+/*
+ * ===============================
+*/
+
 function isBanned(member) {
 	if (!member) {
 		return true;
@@ -549,6 +571,7 @@ function isBanned(member) {
 
 	return member.communication_disabled_until || Config.guild.bannedRoles.some(roleId => member.roles.cache.has(roleId));
 }
+
 function isMod(member) {
 	if (!member) {
 		return false;
@@ -566,7 +589,6 @@ function isMod(member) {
 */
 
 let idCounter = 0;
-const clients = new Map();
 
 canvas.addListener("pixel", (x, y, color) => {
 	console.log("Pixel sent to " + clients.size + " - " + new Date().toString());
@@ -575,26 +597,7 @@ canvas.addListener("pixel", (x, y, color) => {
 		socket.send(buf);
 	}
 });
-/*
-app.setUpSockets = () => // TODO: THis is really ugly because of Greenlock
-{
 
-	try {
-		app.ws("/", ws => {
-			const clientId = idCounter++;
-			console.log("socket connected")
-
-			clients.set(clientId, ws);
-
-			ws.on("close", () => {
-				clients.delete(clientId);
-			});
-		});
-	} catch (error) {
-		console.log("some error. dont know dont care");
-	}
-
-}*/
 let connectedClientsCount = 0;
 app.setUpSockets = () => {
 	try {
@@ -621,14 +624,15 @@ app.get("/connectedClientsCount", (req, res) => {
 	res.json({ connectedClientsCount });
 });
 
+
 /*
  * ===============================
 */
+
+
 app.listen(port, () => {
-	console.log(`Place Server running at http://localhost:${port}`);
+	console.log(`Example app listening on port ${port}`);
 });
 
 
 module.exports = app;
-
-

@@ -33,7 +33,6 @@ const placeButton = document.getElementById("place");
 const placeText = placeButton.querySelector(".action");
 const coordText = placeButton.querySelector(".info");
 const picker = document.getElementById("picker");
-const painter = document.getElementById("paint");
 const confirm = document.getElementById("confirm");
 const selectorBorder = selector.querySelector("#selector-border");
 const selectorPixel = selector.querySelector("#selector-pixel");
@@ -41,12 +40,13 @@ const pixelColor = selectorPixel.querySelector("#pixel-color");
 const shareTooltip = document.getElementById("share-tooltip");
 const placerTooltip = document.getElementById("placer-tooltip");
 const colorsContainer = document.getElementById("colors");
+const extraScreen = document.getElementById("extra-screen");
 const adminColorsContainer = document.getElementById("adminColors");
 const modUi = document.getElementById("modUi");
 const modtools = modUi.querySelector("#modplace");
 const modPlace = document.getElementById("modplace")
 const mappi = document.getElementById("minimapui")
-
+const painter = document.getElementById("paint");
 
 function setSize(sizeX, sizeY) {
 	main.style.width = sizeX + "px";
@@ -83,7 +83,7 @@ let placerTooltipTimer;
 
 let loggedIn = false;
 let banned = false;
-let mod = false;
+
 
 
 
@@ -104,7 +104,29 @@ function reloadPage() {
 }
 
 function delayedReloadPage() {
-	setTimeout(reloadPage, 2000);
+	setTimeout(reloadPage, 3000);
+}
+
+let socket;
+
+async function connectSocket() {
+	await repaintCanvas();
+
+	socket = new WebSocket("wss://" + window.location.host);
+
+	socket.addEventListener("message", async e => {
+		const bytes = new Uint8Array(await e.data.arrayBuffer());
+
+		const x = toUInt16(bytes[0], bytes[1]);
+		const y = toUInt16(bytes[2], bytes[3]);
+		const color = toUInt24(bytes[4], bytes[5], bytes[6]);
+
+		ctx.fillStyle = rgbIntToHex(color);
+		ctx.fillRect(x * pixelSize, y * pixelSize, pixelSize, pixelSize);
+	});
+
+	socket.addEventListener("error", reloadPage);
+	socket.addEventListener("close", connectSocket);
 }
 
 
@@ -137,50 +159,9 @@ fetch("/initialize")
 		setAdminColors(adminColors);
 		updatePlaceButton();
 	})
-	.then(repaintCanvas)
-	.then(() => {
+	.then(connectSocket)
+	.then(() => loadingScreen.classList.add("hidden"));
 
-
-		var secureProtocol;
-		let socket;
-
-		if (window.location.protocol === "https:") {
-		    secureProtocol = true;
-			socket = new WebSocket("wss://" + window.location.host);
-			console.log("Using secure protocol")
-		} else {
-		    secureProtocol = false;
-			socket = new WebSocket("ws://" + window.location.host);
-			console.warn("Using unsecure protocol.")
-		}
-		
-		/*try{
-			const socket = new Websocket("wss://" + window.location.host);
-		}
-		catch(err){
-			console.log("Websocket Invalid")
-		}
-		socket.onerror = function error{
-			console.log(error)
-		}*/
-		socket.addEventListener("message", async e => {
-			const bytes = new Uint8Array(await e.data.arrayBuffer());
-
-			const x = toUInt16(bytes[0], bytes[1]);
-			const y = toUInt16(bytes[2], bytes[3]);
-			const color = toUInt24(bytes[4], bytes[5], bytes[6]);
-
-			ctx.fillStyle = rgbIntToHex(color);
-			ctx.fillRect(x * pixelSize, y * pixelSize, pixelSize, pixelSize);
-		});
-
-		socket.addEventListener("error", delayedReloadPage);
-		socket.addEventListener("close", delayedReloadPage);
-	})
-	.then(() => {
-		loadingScreen.classList.add("hidden");
-	});
-console.log(mod)
 async function repaintCanvas() {
 	const canvasRes = await fetch("/canvas");
 
@@ -196,19 +177,24 @@ async function repaintCanvas() {
 	ctx.drawImage(await createImageBitmap(image, 0, 0, image.width, image.height), 0, 0, image.width * pixelSize, image.height * pixelSize);
 }
 
+/*
 let lastSwitchTime = 0;
 
-document.addEventListener("visibilitychange", () => {
-	if (document.visibilityState !== "visible") {
+document.addEventListener("visibilitychange", () =>
+{
+	if(document.visibilityState !== "visible")
+	{
 		return;
 	}
 
-	if (Date.now() - lastSwitchTime > 5000) {
+	if(Date.now() - lastSwitchTime > 5000)
+	{
 		repaintCanvas();
 	}
 
 	lastSwitchTime = Date.now();
 });
+*/
 
 
 
@@ -223,7 +209,16 @@ function updateBounds() {
 
 updateBounds();
 
-const instance = panzoom(main, { smoothScroll: false, zoomDoubleClickSpeed: 1, minZoom: 0.5, maxZoom: 40, bounds });
+const instance = panzoom(main, {
+	smoothScroll: false, zoomDoubleClickSpeed: 1, minZoom: 0.5, maxZoom: 40, bounds, filterKey: (e, x, y) => {
+		if (x || y) {
+			const scale = instance.getTransform().scale;
+			instance.moveBy(x * scale, y * scale);
+		}
+
+		return true;
+	}
+});
 
 instance.on("panend", e => {
 	e.moveBy(0, 0, smooth = true); // cancel movement from onpointerup
@@ -268,7 +263,6 @@ instance.on("transform", e => {
 
 	const transform = e.getTransform();
 
-	// TODO: move the bounding logic earlier so that it's smoother
 	// use document.body.client* instead of window.inner* because it's inaccurate on android devices for some odd reason?????
 	const centerX = (document.body.clientWidth / 2.0 - transform.x) / transform.scale;
 	const centerY = (document.body.clientHeight / 2.0 - transform.y) / transform.scale;
@@ -294,7 +288,27 @@ instance.on("transform", e => {
 	placerTooltipTimer = setTimeout(showPlacerTooltip, 200);
 });
 
+let preventNextContextMenu = false;
+
 main.onmouseup = e => {
+	if (e.button === 2 && picker.classList.contains("open")) {
+		closePicker();
+		preventNextContextMenu = true;
+	}
+
+	if (e.button !== 0 && e.button !== 1) {
+		return;
+	}
+
+	if (e.target.id === "selector-border") {
+		selectTimer = setTimeout(openPicker, 10);
+		return;
+	}
+	else if (e.target?.parentNode?.id === "selector-pixel") {
+		selectTimer = setTimeout(placeColor, 10);
+		return;
+	}
+
 	if (Date.now() - lastResizeTime <= 200) // prevent this from triggering in a rare scenario where the titlebar is double clicked to resize the window
 	{
 		return;
@@ -306,6 +320,13 @@ main.onmouseup = e => {
 	instance.moveBy(cx - e.x, cy - e.y, smooth = true, duration = 1300);
 
 	selectTimer = setTimeout(() => selectSound.play(), 10);
+}
+
+window.oncontextmenu = e => {
+	if (preventNextContextMenu) {
+		e.preventDefault();
+		preventNextContextMenu = false;
+	}
 }
 
 let lastWidth = 0;
@@ -363,27 +384,12 @@ function updateConnectedClientsCount() {
 }
 
 updateConnectedClientsCount();
-
-
-setInterval(updateConnectedClientsCount, 5000);
-
-function recenterCanvas() {
-	const dw = document.body.clientWidth - lastWidth;
-	const dh = document.body.clientHeight - lastHeight;
-
-	instance.moveBy(dw / 2.0, dh / 2.0);
-
-	lastWidth = document.body.clientWidth;
-	lastHeight = document.body.clientHeight;
-	lastResizeTime = Date.now();
-
-	updateBounds();
-}
-
-window.onresize = recenterCanvas;
-function creditsForMerc() {
-	window.location.href = "/credits";
-	return;
+function updateDocumentTitle(countdown) {
+	if (countdown === "0:00") {
+		document.title = `Mare Place - Ready!`;
+	} else {
+		document.title = `Mare Place - ${countdown}`;
+	}
 }
 function openPaint() {
 	selectSound.play();
@@ -408,78 +414,20 @@ function openPaint() {
 
 	}
 }
-function openPicker() {
-	selectSound.play();
+function recenterCanvas() {
+	const dw = document.body.clientWidth - lastWidth;
+	const dh = document.body.clientHeight - lastHeight;
 
-	if (!loggedIn) {
-		window.location.href = "/auth/discord";
-		return;
-	}
+	instance.moveBy(dw / 2.0, dh / 2.0);
 
-	if (banned) {
-		return;
-	}
+	lastWidth = document.body.clientWidth;
+	lastHeight = document.body.clientHeight;
+	lastResizeTime = Date.now();
 
-	if (mod) {
-		picker.classList.add("open");
-		const transform = instance.getTransform();
-		const scale = transform.scale;
-
-		if (scale < 20) {
-			instance.smoothZoom(document.body.clientWidth / 2.0, document.body.clientHeight / 2.0, 20 / scale, duration = 2000, easing = "easeInOut");
-		}
-		return;
-
-	}
-	//modtools.classList.add("hidden")
-	picker.classList.add("open");
-
-
-	const transform = instance.getTransform();
-	const scale = transform.scale;
-
-	if (scale < 20) {
-		instance.smoothZoom(document.body.clientWidth / 2.0, document.body.clientHeight / 2.0, 20 / scale, duration = 2000, easing = "easeInOut");
-	}
+	updateBounds();
 }
 
-function closePicker() {
-	picker.classList.remove("open");
-	cancelSound.play();
-	unpickColor();
-}
-
-
-
-let selectedColor;
-
-function pickColor(e) {
-	unpickColor();
-	selectedColor = e;
-
-	e.classList.add("picked");
-
-	if (cooldown <= 0) {
-		confirm.classList.remove("inactive");
-	}
-
-	showSelectorPixel();
-
-	pickSound.play();
-}
-
-function unpickColor() {
-	if (selectedColor) {
-		selectedColor.classList.remove("picked");
-		selectedColor = null;
-	}
-
-	confirm.classList.add("inactive");
-
-	showSelectorBorder();
-}
-
-const ctx = canvas.getContext("2d");
+window.onresize = recenterCanvas;
 async function adminPlace() {
 	if (!mod) {
 		return;
@@ -508,6 +456,7 @@ async function adminPlace() {
 	clearTimeout(cooldownInterval);
 
 }
+let lastSelectedColor;
 async function bulkPlace(x, y) {
 	if (!mod) {
 		return;
@@ -536,7 +485,31 @@ async function bulkPlace(x, y) {
 	clearTimeout(cooldownInterval);
 
 }
+function openPicker() {
+	selectSound.play();
 
+	if (!loggedIn) {
+		window.location.href = "/auth/discord";
+		return;
+	}
+
+	if (banned) {
+		return;
+	}
+
+	if (lastSelectedColor) {
+		pickColor(lastSelectedColor, noSound = true);
+	}
+
+	picker.classList.add("open");
+
+	const transform = instance.getTransform();
+	const scale = transform.scale;
+
+	if (scale < 20) {
+		instance.smoothZoom(document.body.clientWidth / 2.0, document.body.clientHeight / 2.0, 20 / scale, duration = 2000, easing = "easeInOut");
+	}
+}
 function getSelectedPixels(startX, startY, endX, endY) {
 	const selectedPixels = [];
 
@@ -552,9 +525,6 @@ let startX = null;
 let startY = null;
 let endX = null;
 let endY = null;
-
-console.log(startX, startY, endX, endY);
-
 function handleSelect() {
 	// Get the current position of the selector
 	const transform = instance.getTransform();
@@ -593,12 +563,10 @@ function closePaint() {
 	endY = null;
 
 }
-function toggleMap() {
-	if (mappi.classList.contains("open")) {
-		mappi.classList.remove("open");
-		return;
-	}
-	mappi.classList.add("open");
+function closePicker() {
+	picker.classList.remove("open");
+	cancelSound.play();
+	unpickColor();
 }
 
 function processPixel(pixel, index) {
@@ -607,12 +575,50 @@ function processPixel(pixel, index) {
 		const x = pixel.x;
 		const y = pixel.y;
 		bulkPlace(x, y);
-	}, index * 10); // Delay each pixel by 250 milliseconds (0.25 seconds)
+	}, index * 10);
 }
+
+let selectedColor;
+
+function pickColor(e, noSound) {
+	unpickColor();
+	lastSelectedColor = e;
+	selectedColor = e;
+
+	e.classList.add("picked");
+
+	if (cooldown <= 0) {
+		confirm.classList.remove("inactive");
+	}
+
+	showSelectorPixel();
+
+	if (!noSound) {
+		pickSound.play();
+	}
+}
+
+function unpickColor() {
+	if (selectedColor) {
+		selectedColor.classList.remove("picked");
+		selectedColor = null;
+	}
+
+	confirm.classList.add("inactive");
+
+	showSelectorBorder();
+}
+
+const ctx = canvas.getContext("2d");
+
 async function placeColor() {
 	if (!selectedColor || cooldown > 0) {
 		return errorSound.play();
 	}
+
+	const sentX = selectX;
+	const sentY = selectY;
+	const sentColor = +selectedColor.dataset.color;
 
 	const placedRes = await fetch("/place",
 		{
@@ -631,8 +637,10 @@ async function placeColor() {
 		return errorSound.play();
 	}
 
-	picker.classList.remove("open");
+	ctx.fillStyle = rgbIntToHex(sentColor);
+	ctx.fillRect(sentX * pixelSize, sentY * pixelSize, pixelSize, pixelSize);
 
+	picker.classList.remove("open");
 	placeSound.play();
 
 	unpickColor();
@@ -650,16 +658,6 @@ function showSelectorPixel() {
 	pixelColor.style.backgroundColor = selectedColor.style.backgroundColor;
 }
 
-
-
-function convertTimer() {
-	const date = new Date(0);
-	date.setSeconds(cooldown);
-	return timeString = date.toISOString().substring(14, 19);
-}
-
-let cooldownInterval;
-
 function enableModMenu() {
 	if (!loggedIn) {
 		return;
@@ -672,6 +670,16 @@ function enableModMenu() {
 
 	}
 }
+
+function convertTimer() {
+	const date = new Date(0);
+	date.setSeconds(cooldown);
+	return timeString = date.toISOString().substring(14, 19);
+}
+
+let cooldownInterval;
+
+const basePageTitle = document.title;
 
 function updatePlaceButton() {
 	if (!loggedIn) {
@@ -712,13 +720,6 @@ function updatePlaceButton() {
 	placeButton.style.background = null;
 
 }
-function updateDocumentTitle(countdown) {
-	if (countdown === "0:00") {
-		document.title = `Mare Place - Ready!`;
-	} else {
-		document.title = `Mare Place - ${countdown}`;
-	}
-}
 
 function startCooldown(newCooldown) {
 	cooldown = newCooldown;
@@ -728,7 +729,6 @@ function startCooldown(newCooldown) {
 		return;
 	}
 
-	updateDocumentTitle(convertTimer());
 	setTimeout(stopCooldown, newCooldown * 1000);
 	cooldownInterval = setInterval(() => {
 		--cooldown;
@@ -740,7 +740,6 @@ function startCooldown(newCooldown) {
 function stopCooldown() {
 	cooldown = 0;
 	updatePlaceButton();
-	document.title = `Mare Place - Ready!`
 	clearTimeout(cooldownInterval);
 
 	if (picker.classList.contains("open") && selectedColor) {
@@ -776,7 +775,6 @@ function shareUrl() {
 
 	clickSound.play();
 }
-
 function setAdminColors(colors) {
 	adminColorsContainer.innerHTML = "";
 
@@ -791,6 +789,8 @@ function setAdminColors(colors) {
 		adminColorsContainer.appendChild(colorButton);
 	}
 }
+
+
 function setColors(colors) {
 	colorsContainer.innerHTML = "";
 
@@ -804,4 +804,65 @@ function setColors(colors) {
 
 		colorsContainer.appendChild(colorButton);
 	}
+}
+
+
+
+function openExtra(noSound) {
+	if (!noSound) {
+		clickSound.play();
+	}
+
+	extraScreen.classList.remove("hidden");
+}
+
+function closeExtra(noSound) {
+	if (!noSound) {
+		clickSound.play();
+	}
+
+	extraScreen.classList.add("hidden");
+}
+
+function noop(e) {
+	e.stopPropagation();
+	// e.preventDefault();
+}
+
+document.onkeydown = (e) => {
+	if (e.key === "Escape") {
+		if (!extraScreen.classList.contains("hidden")) {
+			closeExtra(noSound = true);
+		}
+		else if (picker.classList.contains("open")) {
+			closePicker();
+		}
+	}
+	else if (e.key === "Enter") {
+		if (extraScreen.classList.contains("hidden")) {
+			if (picker.classList.contains("open")) {
+				placeColor();
+			}
+			else {
+				openPicker();
+			}
+		}
+	}
+}
+
+
+
+function openGithub() {
+	clickSound.play();
+	window.location.href = "/credits";
+}
+
+function openManechat() {
+	clickSound.play();
+	window.location.href = "https://discord.gg/bronyplace";
+}
+
+function openStats() {
+	clickSound.play();
+	window.location.href = "/stats";
 }
