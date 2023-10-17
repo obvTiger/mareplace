@@ -299,7 +299,7 @@ app.post("/place", userInfo, async (req, res) => {
 	res.send({ placed });
 });
 app.post("/adminPlace", userInfo, async (req, res) => {
-	/*if (!req.member) {
+	if (!req.member) {
 		return res.status(401).send();
 	}
 
@@ -308,7 +308,7 @@ app.post("/adminPlace", userInfo, async (req, res) => {
 	}
 	if (!isMod(req.member)) {
 		return
-	}*/
+	}
 
 	const placed = canvas.adminPlace(+req.body.x, +req.body.y, +req.body.color, req.member.user.id);
 

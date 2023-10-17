@@ -89,4 +89,4 @@ async function create(width, height, scale, speed, frameRate, pathToCanvas, path
 	FileSystem.writeFileSync(pathToTimelapse, out);
 }
 
-create(500, 500, 4, 10, 60, "../canvas/current.hst", "./timelapse.mp4");
+create(500, 500, 4, 10000, 60, "../canvas/current.hst", "./timelapse.mp4");
