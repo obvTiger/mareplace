@@ -386,7 +386,7 @@ function updateConnectedClientsCount() {
 
 updateConnectedClientsCount();
 function updateDocumentTitle(countdown) {
-	if (countdown === "0:00") {
+	if (countdown === "0:01") {
 		document.title = `Mare Place - Ready!`;
 	} else {
 		document.title = `Mare Place - ${countdown}`;
