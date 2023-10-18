@@ -34,6 +34,7 @@ const placeText = placeButton.querySelector(".action");
 const coordText = placeButton.querySelector(".info");
 const picker = document.getElementById("picker");
 const confirm = document.getElementById("confirm");
+const confirmm = document.getElementById("confirmm")
 const selectorBorder = selector.querySelector("#selector-border");
 const selectorPixel = selector.querySelector("#selector-pixel");
 const pixelColor = selectorPixel.querySelector("#pixel-color");
@@ -589,6 +590,7 @@ function pickColor(e, noSound) {
 
 	if (cooldown <= 0) {
 		confirm.classList.remove("inactive");
+		confirmm.classList.remove("inactive")
 	}
 
 	showSelectorPixel();
@@ -605,6 +607,7 @@ function unpickColor() {
 	}
 
 	confirm.classList.add("inactive");
+	confirmm.classList.add("inactive")
 
 	showSelectorBorder();
 }
@@ -744,6 +747,7 @@ function stopCooldown() {
 
 	if (picker.classList.contains("open") && selectedColor) {
 		confirm.classList.remove("inactive");
+		confirmm.classList.remove("inactive")
 	}
 
 	refreshSound.play();
