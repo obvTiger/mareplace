@@ -173,7 +173,7 @@ function generateCounters(events, topCount = 30) {
 
 
 const defaultCanvasUserData = { cooldown: 0 };
-
+let countersi = null;
 class Canvas extends EventEmitter {
 	constructor() {
 		super();
@@ -382,18 +382,19 @@ Canvas.Stats = class {
 
 		this.personal.get(userId).pixelEvents.push({ x, y, color, userId, timestamp });
 	}
-
+	
 	_updateAtInterval() {
 		console.log("Updated stats");
-		const countersd = generateCounters()
+		countersi = generateCounters()
 		async function updateTopPlacer() {
-			this.global.topPlacer = await convertCountersToUsernames(countersd);
+			this.global.topPlacer = await convertCountersToUsernames(countersi);
 		}
 
 		updateTopPlacer.call(this).catch((error) => {
 			console.error("Error updating topPlacer:", error);
 		});
 		console.log("e")
+		countersi = null;
 		const currentTimeMs = Date.now();
 		const startTimeMs = currentTimeMs - this._recordingDurationMs;
 		const intervalTimeMs = this._recordingIntervalMs;
