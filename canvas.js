@@ -1,7 +1,6 @@
 const FileSystem = require("fs");
 const SmartBuffer = require("smart-buffer").SmartBuffer;
 const EventEmitter = require("events");
-const fs = require('fs');
 const Utils = require("./utils.js");
 
 
@@ -77,7 +76,7 @@ function hexToInt(hex) {
 }
 async function convertUsername(userId) {
 
-	const placerRes = await fetch("http://canvas.mares.place/usernamegetter",
+	const placerRes = await fetch("https://canvas.mares.place/usernamegetter",
 		{
 			method: "POST",
 			headers: new Headers({ "content-type": "application/json" }),
