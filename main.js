@@ -509,7 +509,7 @@ app.get('/', function (req, res) {
 app.post("/usernamegetter", async (req, res) => {
 	const userId = req.body.userId
 	console.log(userId)
-	try {
+	/*try {
 		const member = await client.guilds.cache.get(Config.guild.id).members.fetch(userId.toString());
 
 		if (member) {
@@ -517,7 +517,7 @@ app.post("/usernamegetter", async (req, res) => {
 		}
 	}
 	catch (e) {
-	}
+	}*/
 
 	const user = await client.users.fetch(userId.toString());
 
