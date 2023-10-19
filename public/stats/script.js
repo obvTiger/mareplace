@@ -6,6 +6,8 @@ let pixelsChart;
 
 const colorsChartElement = document.getElementById("colors-chart");
 let colorsChart;
+const topPlacerChartElement = document.getElementById("topPlacer-chart");
+let topPlacerChart;
 
 
 const pixelCount = document.getElementById("pixel-count");
@@ -104,12 +106,13 @@ function objectToDataset(dataset, mapKey, mapValue, mapColor, properties) {
 
 	return { labels, datasets: [Object.assign(properties || {}, { data, backgroundColor })] };
 }
-
 startInterval(5 * 60 * 1000 /* 5 mins */, async () => {
 	const res = await fetch("https://canvas.mares.place/stats-json");
 	const stats = await res.json();
 
 	console.log(stats);
+	const username = stats.global.topPlacer.userId
+	console.log(stats.global)
 
 	pixelCount.innerHTML = stats.global.pixelCount;
 	daysSpent.innerHTML = (stats.global.pixelCount / 24 / 60).toFixed(2);
@@ -156,6 +159,7 @@ startInterval(5 * 60 * 1000 /* 5 mins */, async () => {
 		colorsChart.destroy();
 	}
 
+
 	colorsChart = new Chart(colorsChartElement,
 		{
 			type: "bar",
@@ -166,8 +170,17 @@ startInterval(5 * 60 * 1000 /* 5 mins */, async () => {
 				plugins: { legend: { display: false } },
 			}
 		});
+	topPlacerChart = new Chart(topPlacerChartElement,
 
-
+		{
+			type: "bar",
+			data: objectToDataset(stats.global.topPlacer, username, null, generateNiceHexColor),
+			options:
+			{
+				maintainAspectRatio: false,
+				plugins: { legend: { display: false } },
+			}
+		});
 
 	if (!stats.personal) {
 		loginButtonContainer.classList.remove("hidden");

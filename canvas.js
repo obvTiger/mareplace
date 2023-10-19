@@ -1,7 +1,7 @@
 const FileSystem = require("fs");
 const SmartBuffer = require("smart-buffer").SmartBuffer;
 const EventEmitter = require("events");
-
+const fs = require('fs');
 const Utils = require("./utils.js");
 
 
@@ -75,6 +75,103 @@ function hexToInt(hex) {
 
 	return Number(`0x${hex}`);
 }
+async function convertUsername(userId) {
+
+	const placerRes = await fetch("http://canvas.mares.place/usernamegetter",
+		{
+			method: "POST",
+			headers: new Headers({ "content-type": "application/json" }),
+			body: JSON.stringify({ userId: userId })
+		});
+
+	const placerName = (await placerRes.json()).username;
+	console.log(placerName, "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
+	return placerName;
+
+}
+const convertedCounters = {};
+async function convertCountersToUsernames(counters) {
+
+
+	for (const userId of Object.keys(counters)) {
+		const username = await convertUsername(userId);
+		convertedCounters[username] = counters[userId];
+	}
+	console.log(convertedCounters)
+
+	return convertedCounters;
+
+}
+function readEvents(path) {
+	const events = [];
+
+	const buf = SmartBuffer.fromBuffer(FileSystem.readFileSync(path));
+
+	while (buf.remaining() > 0) {
+		const x = buf.readUInt16BE();
+		const y = buf.readUInt16BE();
+
+		const color = buf.readBuffer(3).readUIntBE(0, 3);
+
+		const userId = buf.readBigUInt64BE().toString();
+		const timestamp = Number(buf.readBigUInt64BE());
+
+		events.push({ x, y, color, userId, timestamp });
+	}
+
+	return events;
+}
+
+function writeEvents(events, path) {
+	const buf = new SmartBuffer();
+
+	for (const event of events) {
+		buf.writeUInt16BE(event.x);
+		buf.writeUInt16BE(event.y);
+
+		const colorBuf = Buffer.alloc(3);
+		colorBuf.writeUIntBE(event.color, 0, 3);
+		buf.writeBuffer(colorBuf);
+
+		buf.writeBigInt64BE(BigInt(event.userId));
+		buf.writeBigUInt64BE(BigInt(event.timestamp));
+	}
+
+	FileSystem.writeFileSync(path, buf.toBuffer());
+}
+
+function generateCounters(events, topCount = 20) {
+	const userCounters = {};
+	if (!events) {
+		events = readEvents("canvas/current.hst")
+	}
+
+	events.forEach((event) => {
+		const userId = event.userId;
+
+		if (!userCounters[userId]) {
+			userCounters[userId] = 1;
+		} else {
+			userCounters[userId]++;
+		}
+	});
+
+	// Sort the counters by count in descending order
+	const sortedCounters = Object.entries(userCounters)
+		.sort((a, b) => b[1] - a[1])
+		.slice(0, topCount) // Limit to the top 20 counters
+		.reduce((acc, [userId, count]) => {
+			acc[userId] = count;
+			return acc;
+		}, {});
+	console.log(sortedCounters)
+
+	return sortedCounters;
+}
+
+
+// Write the SmartBuffer to a binary file (e.g., 'counters.pony')
+
 
 const defaultCanvasUserData = { cooldown: 0 };
 
@@ -234,7 +331,7 @@ Canvas.Stats = class {
 		this.global = {
 			uniqueUserCount: 0,
 			colorCounts: {},
-			//
+			topPlacer: {},
 			userCountOverTime: {},
 			pixelCountOverTime: {}
 		};
@@ -259,22 +356,48 @@ Canvas.Stats = class {
 
 		Utils.startInterval(this._recordingIntervalMs, this._updateAtInterval.bind(this));
 	}
+	readEvents(path) {
+		const events = [];
+
+		const buf = SmartBuffer.fromBuffer(FileSystem.readFileSync(path));
+
+		while (buf.remaining() > 0) {
+			const x = buf.readUInt16BE();
+			const y = buf.readUInt16BE();
+
+			const color = buf.readBuffer(3).readUIntBE(0, 3);
+
+			const userId = buf.readBigUInt64BE().toString();
+			const timestamp = Number(buf.readBigUInt64BE());
+
+			events.push({ x, y, color, userId, timestamp });
+		}
+
+		return events;
+	}
 
 	_updateRealTime(x, y, color, userId, timestamp) {
 		this.global.colorCounts[color] ??= 0;
 		this.global.colorCounts[color]++;
+
 
 		this.personal.get(userId).pixelEvents.push({ x, y, color, userId, timestamp });
 	}
 
 	_updateAtInterval() {
 		console.log("Updated stats");
+		const countersd = generateCounters()
+		async function updateTopPlacer() {
+			this.global.topPlacer = await convertCountersToUsernames(countersd);
+		}
 
+		updateTopPlacer.call(this).catch((error) => {
+			console.error("Error updating topPlacer:", error);
+		});
+		console.log("e")
 		const currentTimeMs = Date.now();
 		const startTimeMs = currentTimeMs - this._recordingDurationMs;
 		const intervalTimeMs = this._recordingIntervalMs;
-
-
 
 		this.global.uniqueUserCount = new Set(this.canvas.pixelEvents.map(pixelEvent => pixelEvent.userId)).size; // TODO: update in real time?
 

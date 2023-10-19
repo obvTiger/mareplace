@@ -284,7 +284,6 @@ app.get("/canvas", ExpressCompression(), (req, res) => {
 });
 
 
-
 app.post("/place", userInfo, async (req, res) => {
 	if (!req.member) {
 		return res.status(401).send();
@@ -507,6 +506,27 @@ app.get('/', function (req, res) {
 
 
 });
+app.post("/usernamegetter", async (req, res) => {
+	const userId = req.body.userId
+	console.log(userId)
+	try {
+		const member = await client.guilds.cache.get(Config.guild.id).members.fetch(userId.toString());
+
+		if (member) {
+			return res.json({ username: member.nickname ? member.nickname : member.user.globalName });
+		}
+	}
+	catch (e) {
+	}
+
+	const user = await client.users.fetch(userId.toString());
+
+	if (!user) {
+		return res.json({ username: "" });
+	}
+
+	res.json({ username: user.username });
+})
 
 app.post("/placer", async (req, res) => {
 	if (!canvas.isInBounds(+req.body.x, +req.body.y)) {
