@@ -139,7 +139,7 @@ function writeEvents(events, path) {
 	FileSystem.writeFileSync(path, buf.toBuffer());
 }
 
-function generateCounters(events, topCount = 10) {
+function generateCounters(events, topCount = 30) {
 	const userCounters = {};
 	if (!events) {
 		events = readEvents("canvas/current.hst")
