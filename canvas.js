@@ -380,16 +380,9 @@ Canvas.Stats = class {
 		this.personal.get(userId).pixelEvents.push({ x, y, color, userId, timestamp });
 	}
 	
-	_updateAtInterval() {
+	async _updateAtInterval() {
 		console.log("Updated stats");
-		async function updateTopPlacer() {
-			this.global.topPlacer = await generateCounters();
-		}
-
-		updateTopPlacer.call(this).catch((error) => {
-			console.error("Error updating topPlacer:", error);
-		});
-		console.log("e")
+		this.global.topPlacer = await generateCounters();
 		const currentTimeMs = Date.now();
 		const startTimeMs = currentTimeMs - this._recordingDurationMs;
 		const intervalTimeMs = this._recordingIntervalMs;
