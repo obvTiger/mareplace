@@ -250,7 +250,12 @@ body {
 .white {
 	background-color: white;
 }
-
+.green {
+	background-color: #00ff6c;
+	}
+.green.inactive {
+	background-color: #2C3C41;
+}
 .gray {
 	background-color: #E9EDEE;
 }
