@@ -381,7 +381,7 @@ Canvas.Stats = class {
 
 		this.personal.get(userId).pixelEvents.push({ x, y, color, userId, timestamp });
 	}
-	
+
 	async _updateAtInterval() {
 		console.log("Updated stats");
 		this.global.topPlacer = await generateCounters();

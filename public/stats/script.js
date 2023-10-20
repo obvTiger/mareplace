@@ -113,7 +113,13 @@ startInterval(5 * 60 * 1000 /* 5 mins */, async () => {
 	console.log(stats);
 	const username = stats.global.topPlacer.userId
 	console.log(stats.global)
-
+	console.log(username)
+	const dataArray = Object.entries(stats.global.topPlacer).map(([username, placedPixelsCount]) => ({ username, placedPixelsCount }));
+	const top20Placers = dataArray
+		.sort((a, b) => b.placedPixelsCount - a.placedPixelsCount)
+		.slice(0, 20);
+	const topPlacerUsernames = top20Placers.map(item => item.username);
+	const topPlacerPixelCounts = top20Placers.map(item => item.placedPixelsCount);
 	pixelCount.innerHTML = stats.global.pixelCount;
 	daysSpent.innerHTML = (stats.global.pixelCount / 24 / 60).toFixed(2);
 	hoursSpent.innerHTML = (stats.global.pixelCount / 60).toFixed(2);
@@ -173,17 +179,41 @@ startInterval(5 * 60 * 1000 /* 5 mins */, async () => {
 	if (topPlacerChart) {
 		topPlacerChart.destroy();
 	}
-	
+
 	topPlacerChart = new Chart(topPlacerChartElement,
 
 		{
-			type: "bar",
-			data: objectToDataset(stats.global.topPlacer, username, null, generateNiceHexColor),
-			options:
-			{
+			type: 'bar',
+			data: {
+				labels: topPlacerUsernames,
+				datasets: [
+					{
+						label: 'Top 30 Pixel Placers',
+						data: topPlacerPixelCounts,
+						backgroundColor: generateNiceHexColor(),
+						borderColor: generateNiceHexColor(),
+						borderWidth: 2,
+					},
+				],
+			},
+			options: {
 				maintainAspectRatio: false,
-				plugins: { legend: { display: false } },
-			}
+				scales: {
+					x: {
+						title: {
+							display: true,
+							text: 'Username',
+						},
+					},
+					y: {
+						beginAtZero: true,
+						title: {
+							display: true,
+							text: 'Placed Pixels Count',
+						},
+					},
+				},
+			},
 		});
 
 	if (!stats.personal) {
