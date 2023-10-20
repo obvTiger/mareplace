@@ -84,7 +84,7 @@ async function convertUsername(userId) {
 		});
 
 	const placerName = (await placerRes.json()).username;
-	console.log(placerName, "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
+	console.log("Fetched username for: ", userId, ": ", placerName)
 	return placerName;
 
 }
@@ -96,12 +96,25 @@ async function convertCountersToUsernames(counters) {
 		const username = await convertUsername(userId);
 		convertedCounters[username] = counters[userId];
 	}
-	console.log(convertedCounters)
+	console.log(convertedCounters, "EEEEEEEEEEEEE")
 
 	return convertedCounters;
 
 }
-function readEvents(path) {
+const convertedCountersDay = {};
+async function convertCountersToUsernamesDay(counters) {
+
+
+	for (const userId of Object.keys(counters)) {
+		const username = await convertUsername(userId);
+		convertedCountersDay[username] = counters[userId];
+	}
+	console.log(convertedCountersDay, "EEEEEEEEEEEEE")
+
+	return convertedCountersDay;
+
+}
+function readEventss(path) {
 	const events = [];
 
 	const buf = SmartBuffer.fromBuffer(FileSystem.readFileSync(path));
@@ -120,32 +133,18 @@ function readEvents(path) {
 
 	return events;
 }
-
-function writeEvents(events, path) {
-	const buf = new SmartBuffer();
-
-	for (const event of events) {
-		buf.writeUInt16BE(event.x);
-		buf.writeUInt16BE(event.y);
-
-		const colorBuf = Buffer.alloc(3);
-		colorBuf.writeUIntBE(event.color, 0, 3);
-		buf.writeBuffer(colorBuf);
-
-		buf.writeBigInt64BE(BigInt(event.userId));
-		buf.writeBigUInt64BE(BigInt(event.timestamp));
-	}
-
-	FileSystem.writeFileSync(path, buf.toBuffer());
-}
 let userCounters = {};
+let userCountersDay = {};
 let sortedConvertedCounters = {};
+let sortedConvertedCountersDay = {};
 let sortedCounters = {};
+let sortedCountersDay = {};
+let eventDate = null;
+let currentDateDay = null;
 async function generateCounters(events, topCount = 30) {
 	if (!events) {
-		events = readEvents("canvas/current.hst")
+		events = readEventss("canvas/current.hst")
 	}
-
 	events.forEach((event) => {
 		const userId = event.userId;
 
@@ -164,15 +163,53 @@ async function generateCounters(events, topCount = 30) {
 			acc[userId] = count;
 			return acc;
 		}, {});
-	console.log(sortedCounters);
+	console.log(sortedCounters, "SORTED COUNTERS");
 	sortedConvertedCounters = await convertCountersToUsernames(sortedCounters);
 	sortedCounters = {};
 	userCounters = {};
 	return sortedConvertedCounters;
 }
+async function generateCountersForCurrentDay(events, topCount = 30) {
+	if (!events) {
+		events = readEventss("canvas/current.hst")
+	}
+	currentDateDay = new Date();
+	events = events.filter((event) => {
+		eventDate = new Date(event.timestamp);
+		return (
+			eventDate.getDate() === currentDateDay.getDate() &&
+			eventDate.getMonth() === currentDateDay.getMonth() &&
+			eventDate.getFullYear() === currentDateDay.getFullYear()
+		);
+	});
 
+	events.forEach((event) => {
+		const userId = event.userId;
+
+		if (!userCountersDay[userId]) {
+			userCountersDay[userId] = 1;
+		} else {
+			userCountersDay[userId]++;
+		}
+	});
+
+	// Sort the counters by count in descending order
+	sortedCountersDay = Object.entries(userCountersDay)
+		.sort((a, b) => b[1] - a[1])
+		.slice(0, topCount) // Limit to the top 20 counters
+		.reduce((accc, [userId, count]) => {
+			accc[userId] = count;
+			return accc;
+		}, {});
+	console.log(sortedCountersDay, "SORTED COUNTERS DAY");
+	sortedConvertedCountersDay = await convertCountersToUsernamesDay(sortedCountersDay);
+	sortedCountersDay = {};
+	userCountersDay = {};
+	eventDate = null;
+	currentDateDay = null;
+	return sortedConvertedCountersDay;
+}
 const defaultCanvasUserData = { cooldown: 0 };
-let countersi = null;
 class Canvas extends EventEmitter {
 	constructor() {
 		super();
@@ -330,6 +367,7 @@ Canvas.Stats = class {
 			uniqueUserCount: 0,
 			colorCounts: {},
 			topPlacer: {},
+			topPlacerDay: {},
 			userCountOverTime: {},
 			pixelCountOverTime: {}
 		};
@@ -385,7 +423,9 @@ Canvas.Stats = class {
 	async _updateAtInterval() {
 		console.log("Updated stats");
 		this.global.topPlacer = await generateCounters();
+		this.global.topPlacerDay = await generateCountersForCurrentDay();
 		sortedConvertedCounters = {};
+		sortedConvertedCountersDay = {};
 		const currentTimeMs = Date.now();
 		const startTimeMs = currentTimeMs - this._recordingDurationMs;
 		const intervalTimeMs = this._recordingIntervalMs;

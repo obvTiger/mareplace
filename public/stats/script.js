@@ -8,6 +8,9 @@ const colorsChartElement = document.getElementById("colors-chart");
 let colorsChart;
 const topPlacerChartElement = document.getElementById("topPlacer-chart");
 let topPlacerChart;
+const topPlacerDayChartElement = document.getElementById("topPlacerDay-chart");
+let topPlacerDayChart;
+
 
 
 const pixelCount = document.getElementById("pixel-count");
@@ -109,11 +112,6 @@ function objectToDataset(dataset, mapKey, mapValue, mapColor, properties) {
 startInterval(5 * 60 * 1000 /* 5 mins */, async () => {
 	const res = await fetch("https://canvas.mares.place/stats-json");
 	const stats = await res.json();
-
-	console.log(stats);
-	const username = stats.global.topPlacer.userId
-	console.log(stats.global)
-	console.log(username)
 	const dataArray = Object.entries(stats.global.topPlacer).map(([username, placedPixelsCount]) => ({ username, placedPixelsCount }));
 	const top20Placers = dataArray
 		.sort((a, b) => b.placedPixelsCount - a.placedPixelsCount)
@@ -123,7 +121,12 @@ startInterval(5 * 60 * 1000 /* 5 mins */, async () => {
 	pixelCount.innerHTML = stats.global.pixelCount;
 	daysSpent.innerHTML = (stats.global.pixelCount / 24 / 60).toFixed(2);
 	hoursSpent.innerHTML = (stats.global.pixelCount / 60).toFixed(2);
-
+	const dataArrayDay = Object.entries(stats.global.topPlacerDay).map(([usernameDay, placedPixelsCountDay]) => ({ usernameDay, placedPixelsCountDay }));
+	const top20PlacersDay = dataArrayDay
+		.sort((a, b) => b.placedPixelsCountDay - a.placedPixelsCountDay)
+		.slice(0, 30);
+	const topPlacerUsernamesDay = top20PlacersDay.map(item => item.usernameDay);
+	const topPlacerPixelCountsDay = top20PlacersDay.map(item => item.placedPixelsCountDay);
 	userCount.innerHTML = stats.global.userCount;
 	uniqueUserCount.innerHTML = stats.global.uniqueUserCount;
 
@@ -190,6 +193,46 @@ startInterval(5 * 60 * 1000 /* 5 mins */, async () => {
 					{
 						label: 'Placed pixels',
 						data: topPlacerPixelCounts,
+						backgroundColor: generateNiceHexColor(),
+						borderColor: generateNiceHexColor(),
+						borderWidth: 2,
+					},
+				],
+			},
+			options: {
+				maintainAspectRatio: false,
+				scales: {
+					x: {
+						title: {
+							display: true,
+							text: 'Username',
+						},
+					},
+					y: {
+						beginAtZero: true,
+						title: {
+							display: true,
+							text: 'Placed Pixels Count',
+						},
+					},
+				},
+			},
+		});
+
+	if (topPlacerDayChart) {
+		topPlacerDayChart.destroy();
+	}
+
+	topPlacerDayChart = new Chart(topPlacerDayChartElement,
+
+		{
+			type: 'bar',
+			data: {
+				labels: topPlacerUsernamesDay,
+				datasets: [
+					{
+						label: 'Placed pixels',
+						data: topPlacerPixelCountsDay,
 						backgroundColor: generateNiceHexColor(),
 						borderColor: generateNiceHexColor(),
 						borderWidth: 2,
