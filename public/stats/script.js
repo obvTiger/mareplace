@@ -117,7 +117,7 @@ startInterval(5 * 60 * 1000 /* 5 mins */, async () => {
 	const dataArray = Object.entries(stats.global.topPlacer).map(([username, placedPixelsCount]) => ({ username, placedPixelsCount }));
 	const top20Placers = dataArray
 		.sort((a, b) => b.placedPixelsCount - a.placedPixelsCount)
-		.slice(0, 20);
+		.slice(0, 30);
 	const topPlacerUsernames = top20Placers.map(item => item.username);
 	const topPlacerPixelCounts = top20Placers.map(item => item.placedPixelsCount);
 	pixelCount.innerHTML = stats.global.pixelCount;
