@@ -386,6 +386,7 @@ Canvas.Stats = class {
 	_updateAtInterval() {
 		console.log("Updated stats");
 		countersi = generateCounters()
+		this.global.topPlacer = {};
 		async function updateTopPlacer() {
 			this.global.topPlacer = await convertCountersToUsernames(countersi);
 		}
