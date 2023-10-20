@@ -1,4 +1,4 @@
-qconst FileSystem = require("fs");
+const FileSystem = require("fs");
 const SmartBuffer = require("smart-buffer").SmartBuffer;
 const EventEmitter = require("events");
 const Utils = require("./utils.js");
