@@ -166,6 +166,8 @@ async function generateCounters(events, topCount = 30) {
 		}, {});
 	console.log(sortedCounters);
 	sortedConvertedCounters = await convertCountersToUsernames(sortedCounters);
+	sortedCounters = {};
+	userCounters = {};
 	return sortedConvertedCounters;
 }
 
@@ -383,6 +385,7 @@ Canvas.Stats = class {
 	async _updateAtInterval() {
 		console.log("Updated stats");
 		this.global.topPlacer = await generateCounters();
+		sortedConvertedCounters = {};
 		const currentTimeMs = Date.now();
 		const startTimeMs = currentTimeMs - this._recordingDurationMs;
 		const intervalTimeMs = this._recordingIntervalMs;
