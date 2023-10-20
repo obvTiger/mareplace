@@ -1,4 +1,4 @@
-const FileSystem = require("fs");
+qconst FileSystem = require("fs");
 const SmartBuffer = require("smart-buffer").SmartBuffer;
 const EventEmitter = require("events");
 const Utils = require("./utils.js");
@@ -139,7 +139,7 @@ function writeEvents(events, path) {
 	FileSystem.writeFileSync(path, buf.toBuffer());
 }
 let userCounters = {};
-let unsortedConvertedCounters = {};
+let sortedConvertedCounters = {};
 let sortedCounters = {};
 async function generateCounters(events, topCount = 30) {
 	if (!events) {
@@ -165,9 +165,7 @@ async function generateCounters(events, topCount = 30) {
 			return acc;
 		}, {});
 	console.log(sortedCounters);
-	unsortedConvertedCounters = await convertCountersToUsernames(sortedCounters);
-	userCounters = {};
-	sortedCounters = {};
+	sortedConvertedCounters = await convertCountersToUsernames(sortedCounters);
 	return unsortedConvertedCounters;
 }
 
@@ -384,19 +382,14 @@ Canvas.Stats = class {
 	
 	_updateAtInterval() {
 		console.log("Updated stats");
-		generateCounters();
-		//countersi = generateCounters()
-		this.global.topPlacer = {};
 		async function updateTopPlacer() {
 			this.global.topPlacer = await generateCounters();
-			unsortedConvertedCounters = null;
 		}
 
 		updateTopPlacer.call(this).catch((error) => {
 			console.error("Error updating topPlacer:", error);
 		});
 		console.log("e")
-		//#countersi = null;
 		const currentTimeMs = Date.now();
 		const startTimeMs = currentTimeMs - this._recordingDurationMs;
 		const intervalTimeMs = this._recordingIntervalMs;
