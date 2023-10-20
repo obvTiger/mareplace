@@ -138,8 +138,9 @@ function writeEvents(events, path) {
 
 	FileSystem.writeFileSync(path, buf.toBuffer());
 }
-let userCounters = null;
-let unsortedConvertedCounters = null;
+let userCounters = {};
+let unsortedConvertedCounters = {};
+let sortedCounters = {};
 async function generateCounters(events, topCount = 30) {
 	if (!events) {
 		events = readEvents("canvas/current.hst")
@@ -156,7 +157,7 @@ async function generateCounters(events, topCount = 30) {
 	});
 
 	// Sort the counters by count in descending order
-	const sortedCounters = Object.entries(userCounters)
+	sortedCounters = Object.entries(userCounters)
 		.sort((a, b) => b[1] - a[1])
 		.slice(0, topCount) // Limit to the top 20 counters
 		.reduce((acc, [userId, count]) => {
@@ -165,7 +166,8 @@ async function generateCounters(events, topCount = 30) {
 		}, {});
 	console.log(sortedCounters);
 	unsortedConvertedCounters = await convertCountersToUsernames(sortedCounters);
-	userCounters = null;
+	userCounters = {};
+	sortedCounters = {};
 	return unsortedConvertedCounters;
 }
 
