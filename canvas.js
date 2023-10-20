@@ -138,9 +138,9 @@ function writeEvents(events, path) {
 
 	FileSystem.writeFileSync(path, buf.toBuffer());
 }
-
-function generateCounters(events, topCount = 30) {
-	const userCounters = {};
+let userCounters = null;
+let unsortedConvertedCounters = null;
+async function generateCounters(events, topCount = 30) {
 	if (!events) {
 		events = readEvents("canvas/current.hst")
 	}
@@ -163,14 +163,11 @@ function generateCounters(events, topCount = 30) {
 			acc[userId] = count;
 			return acc;
 		}, {});
-	console.log(sortedCounters)
-
-	return sortedCounters;
+	console.log(sortedCounters);
+	unsortedConvertedCounters = await convertCountersToUsernames(sortedCounters);
+	userCounters = null;
+	return unsortedConvertedCounters;
 }
-
-
-// Write the SmartBuffer to a binary file (e.g., 'counters.pony')
-
 
 const defaultCanvasUserData = { cooldown: 0 };
 let countersi = null;
@@ -385,17 +382,19 @@ Canvas.Stats = class {
 	
 	_updateAtInterval() {
 		console.log("Updated stats");
-		countersi = generateCounters()
+		generateCounters();
+		//countersi = generateCounters()
 		this.global.topPlacer = {};
 		async function updateTopPlacer() {
-			this.global.topPlacer = await convertCountersToUsernames(countersi);
+			this.global.topPlacer = await generateCounters();
+			unsortedConvertedCounters = null;
 		}
 
 		updateTopPlacer.call(this).catch((error) => {
 			console.error("Error updating topPlacer:", error);
 		});
 		console.log("e")
-		countersi = null;
+		//#countersi = null;
 		const currentTimeMs = Date.now();
 		const startTimeMs = currentTimeMs - this._recordingDurationMs;
 		const intervalTimeMs = this._recordingIntervalMs;
