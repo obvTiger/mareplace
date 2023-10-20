@@ -170,6 +170,10 @@ startInterval(5 * 60 * 1000 /* 5 mins */, async () => {
 				plugins: { legend: { display: false } },
 			}
 		});
+	if (topPlacerChart) {
+		topPlacerChart.destroy();
+	}
+	
 	topPlacerChart = new Chart(topPlacerChartElement,
 
 		{
