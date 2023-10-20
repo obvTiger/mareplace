@@ -166,7 +166,7 @@ async function generateCounters(events, topCount = 30) {
 		}, {});
 	console.log(sortedCounters);
 	sortedConvertedCounters = await convertCountersToUsernames(sortedCounters);
-	return unsortedConvertedCounters;
+	return sortedConvertedCounters;
 }
 
 const defaultCanvasUserData = { cooldown: 0 };
