@@ -188,7 +188,7 @@ startInterval(5 * 60 * 1000 /* 5 mins */, async () => {
 				labels: topPlacerUsernames,
 				datasets: [
 					{
-						label: 'Top 30 Pixel Placers',
+						label: 'Placed pixels',
 						data: topPlacerPixelCounts,
 						backgroundColor: generateNiceHexColor(),
 						borderColor: generateNiceHexColor(),
