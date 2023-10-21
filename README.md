@@ -1,1 +1,1 @@
-# place.manechat.net
+# canvas.mares.place
