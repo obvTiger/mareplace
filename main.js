@@ -527,7 +527,117 @@ app.post("/usernamegetter", async (req, res) => {
 
 	res.json({ username: user.username });
 })
+app.get('/amogus', function (req, res) {
+	app.use(Express.static('gifs'));
+	const watingPage = `
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Starting Soon :D</title>
+    <style>
+		  body {
+			  background-color: #1a1a1a;
+			  color: #ffffff;
+			  font-family: Arial, sans-serif;
+			  margin: 0;
+			  padding: 0;
+		  }
+  
+		  .container {
+			  max-width: 600px;
+			  margin: 0 auto;
+			  padding: 20px;
+		  }
+		  loading-screen {
+			position: absolute;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			image-align: center;
+		  }
+  
+		  h1 {
+			  text-align: center;
+		  }
+		  p {
+			text-align: center;
+		  }
+		  .countdown {
+			text-align: center;
+			font-size: 36px;
+		  }
+		  .minimapinfo {
+			text-align: center;
+			font-size: 36px;
+		  }
+  
+		  .buttons {
+			  margin-top: 20px;
+			  text-align: center;
+		  }
+  
+		  .buttons a {
+			  display: inline-block;
+			  margin: 10px;
+			  padding: 15px 25px;
+			  background-color: #3498db;
+			  color: #ffffff;
+			  text-decoration: none;
+			  border-radius: 5px;
+			  transition: background-color 0.3s;
+		  }
+  
+		  .buttons a:hover {
+			  background-color: #2980b9;
+		  }
+	  </style>
+</head>
+<body>
+    <h1>SUUS SUUUS SUS</h1>
 
+	<div id="loading-screen" class="countdown">
+		<img src="./sussyha.gif">
+	</div>
+	<div id="minimapinfo" class"countdown">
+		<p>E</p>
+		  	<div class="buttons">
+				<a href="/">Go back you sussy baka!</a>
+		  	</div>
+	</div>
+    <script>
+        const targetTimestamp = 1697288400;
+ 
+        function updateCountdown() {
+            const currentTimestamp = Math.floor(Date.now() / 1000);
+            const timeRemaining = targetTimestamp - currentTimestamp;
+
+            if (timeRemaining <= 0) {
+                document.getElementById('countdown').innerHTML = "Mare Place is now open! Refresh you page!";
+				location.reload(); //Test Push E
+            } else {
+                const days = Math.floor(timeRemaining / (60 * 60 * 24));
+                const hours = Math.floor((timeRemaining % (60 * 60 * 24)) / (60 * 60));
+                const minutes = Math.floor((timeRemaining % (60 * 60)) / 60);
+                const seconds = timeRemaining % 60;
+				
+
+                const countdownText = \`\${days}d \${hours}h \${minutes}m \${seconds}s\`;
+                document.getElementById('countdown').innerHTML = '<strong>' + countdownText + '</strong>';
+            }
+        }
+        updateCountdown();
+
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
+`;
+
+
+	res.send(watingPage);
+
+
+});
 app.post("/placer", async (req, res) => {
 	if (!canvas.isInBounds(+req.body.x, +req.body.y)) {
 		return res.json({ username: "" });
