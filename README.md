@@ -1,3 +1,3 @@
 # canvas.mares.place
 
-Its all about placin pixels f/spez
+Its all about placin pixels
