@@ -372,24 +372,11 @@ function centerTo(x, y, s) {
 const connectedClientsCountElement = document.getElementById("displayusers");
 
 // Function to update the connected clients count
-function updateConnectedClientsCount() {
-	fetch("/connectedClientsCount") // Assuming you have an endpoint to fetch the count
-		.then((response) => response.json())
-		.then((data) => {
-			const count = data.connectedClientsCount;
-			connectedClientsCountElement.innerHTML = `Online: ${count}`;
-		})
-		.catch((error) => {
-			console.error("Error fetching connected clients count:", error);
-		});
-}
-
-updateConnectedClientsCount();
 function updateDocumentTitle(countdown) {
-	if (countdown === "0:01") {
+	if (countdown === "00:00") {
 		document.title = `Mare Place - Ready!`;
 	} else {
-		document.title = `Mare Place - ${countdown}`;
+		document.title = `Mare Place - ${countdown}`
 	}
 }
 function openPaint() {
@@ -727,8 +714,10 @@ function updatePlaceButton() {
 function startCooldown(newCooldown) {
 	cooldown = newCooldown;
 	updatePlaceButton();
+	updateDocumentTitle(convertTimer());
 
 	if (newCooldown === 0) {
+		updateDocumentTitle(convertTimer());
 		return;
 	}
 
@@ -743,6 +732,7 @@ function startCooldown(newCooldown) {
 function stopCooldown() {
 	cooldown = 0;
 	updatePlaceButton();
+	updateDocumentTitle(convertTimer());
 	clearTimeout(cooldownInterval);
 
 	if (picker.classList.contains("open") && selectedColor) {
