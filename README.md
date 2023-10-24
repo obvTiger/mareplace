@@ -1,3 +1,3 @@
 # canvas.mares.place
 
-Its all about placin pixels yay
+Its all about placin pixels 
