@@ -756,16 +756,6 @@ app.get("/stats-json", ExpressCompression(), userInfo, (req, res) => {
 	res.json(statsJson);
 });
 
-app.get("/stats-json_NC", ExpressCompression(), userInfo, (req, res) => {
-	const statsJson_NC = { global: Object.assign({ userCount: clients_NC.size, pixelCount: canvas_NC.pixelEvents.length }, stats_NC.global) };
-
-	if (req.member) {
-		statsJson_NC.personal = stats_NC.personal.get(req.member.user.id);
-	}
-
-	res.json(statsJson_NC);
-});
-
 
 
 
