@@ -630,7 +630,6 @@ async function placeColor() {
 	ctx.fillStyle = rgbIntToHex(sentColor);
 	ctx.fillRect(sentX * pixelSize, sentY * pixelSize, pixelSize, pixelSize);
 
-	picker.classList.remove("open");
 	placeSound.play();
 
 	unpickColor();
