@@ -225,6 +225,7 @@ class Canvas extends EventEmitter {
 
 		this.pixels = new ImageBuffer(this.settings.sizeX, this.settings.sizeY);
 		this.info = new Array(this.settings.sizeX).fill(null).map(() => new Array(this.settings.sizeY).fill(null));
+		console.log("E")
 
 		return this;
 	}

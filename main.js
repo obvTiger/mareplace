@@ -15,9 +15,9 @@ const promisify = require("util").promisify;
 
 // Our stuff
 const Canvas = require("./canvas");
-
 // Configs
 const Config = require("./config.json");
+const Canvas_NC = require("./canvas_NC");
 require("dotenv").config();
 
 
@@ -61,6 +61,14 @@ app.use(ExpressSession({
 			retries: 0,
 			encoder: data => JSON.stringify(data, null, "\t")
 		}),
+	store_NC: new SessionFileStore(
+		{
+			path: "./canvas_NC/sessions",
+			ttl: 7 * 24 * 60 * 60,
+			retries: 0,
+			encoder: data => JSON.stringify(data, null, "\t")
+		}
+	),
 	secret: process.env.SESSION_SECRET,
 	saveUninitialized: false,
 	resave: false
@@ -97,6 +105,14 @@ const stats = new Canvas.Stats(canvas, io, () => clients.size);
 io.read();
 stats.startRecording(10 * 60 * 1000 /* 10 min */, 24 * 60 * 60 * 1000 /* 24 hrs */);
 
+
+const clients_NC = new Map();
+
+const canvas_NC = new Canvas_NC().initialize({ sizeX: 2010, sizeY: 2010, colors: ["#6d001a", "#be0039", "#ff4500", "#ffa800", "#ffd635", "#fff8b8", "#00a368", "#00cc78", "#7eed56", "#d9e650", "#00756f", "#009eaa", "#00ccc0", "#2450a4", "#3690ea", "#51e9f4", "#293873", "#493ac1", "#6a5cff", "#94b3ff", "#811e9f", "#b44ac0", "#e4abff", "#de107f", "#ff3881", "#ff99aa", "#6d482f", "#9c6926", "#ffb470", "#000000", "#515252", "#898d90", "#d4d7d9", "#ffffff"] });
+const io_NC = new Canvas.IO(canvas_NC, "./canvas_NC/current.hst");
+const stats_NC = new Canvas.Stats(canvas_NC, io_NC, () => clients_NC.size);
+io_NC.read();
+stats_NC.startRecording(10 * 60 * 1000 /* 10 min */, 24 * 60 * 60 * 1000 /* 24 hrs */);
 // day 2 colors
 // const colors = [ "#ff4500", "#ffa800", "#ffd635", "#00a368", "#7eed56", "#2450a4", "#3690ea", "#51e9f4", "#811e9f", "#b44ac0", "#ff99aa", "#9c6926", "#000000", "#898d90", "#d4d7d9", "ffffff" ];
 
@@ -275,12 +291,25 @@ app.get("/initialize", userInfo, async (req, res) => {
 	console.log(res.json)
 	console.log(res.json.banned, res.json.mod)
 });
+app.get("/initialize_NC", userInfo, async (req, res) => {
+	if (!req.user) {
+		return res.json({ loggedIn: false, banned: false, cooldown: 0, settings: canvas_NC.settings });
+	}
 
+	res.json({ loggedIn: true, banned: isBanned(req.member), mod: isMod(req.member), cooldown: canvas_NC.users.get(req.user.id).cooldown, settings: canvas_NC.settings });
+	console.log(res.json)
+	console.log(res.json.banned, res.json.mod)
+});
 
 
 app.get("/canvas", ExpressCompression(), (req, res) => {
 	res.contentType("application/octet-stream");
 	res.send(canvas.pixels.data);
+});
+
+app.get("/canvas_NC", ExpressCompression(), (req, res) => {
+	res.contentType("application/octet-stream");
+	res.send(canvas_NC.pixels.data);
 });
 
 
@@ -294,6 +323,19 @@ app.post("/place", userInfo, async (req, res) => {
 	}
 
 	const placed = canvas.place(+req.body.x, +req.body.y, +req.body.color, req.member.user.id);
+
+	res.send({ placed });
+});
+app.post("/place_NC", userInfo, async (req, res) => {
+	if (!req.member) {
+		return res.status(401).send();
+	}
+
+	if (isBanned(req.member)) {
+		return res.status(403).send();
+	}
+
+	const placed = canvas_NC.place(+req.body.x, +req.body.y, +req.body.color, req.member.user.id);
 
 	res.send({ placed });
 });
@@ -668,6 +710,36 @@ app.post("/placer", async (req, res) => {
 	res.json({ username: user.username });
 });
 
+app.post("/placer_NC", async (req, res) => {
+	if (!canvas_NC.isInBounds(+req.body.x, +req.body.y)) {
+		return res.json({ username: "" });
+	}
+
+	const pixelInfo = canvas_NC.info[+req.body.x][+req.body.y];
+
+	if (!pixelInfo) {
+		return res.json({ username: "" });
+	}
+
+	try {
+		const member = await client.guilds.cache.get(Config.guild.id).members.fetch(pixelInfo.userId.toString());
+
+		if (member) {
+			return res.json({ username: member.nickname ? member.nickname : member.user.globalName });
+		}
+	}
+	catch (e) {
+	}
+
+	const user = await client.users.fetch(pixelInfo.userId.toString());
+
+	if (!user) {
+		return res.json({ username: "" });
+	}
+
+	res.json({ username: user.username });
+});
+
 
 
 /*
@@ -683,6 +755,17 @@ app.get("/stats-json", ExpressCompression(), userInfo, (req, res) => {
 
 	res.json(statsJson);
 });
+
+app.get("/stats-json_NC", ExpressCompression(), userInfo, (req, res) => {
+	const statsJson_NC = { global: Object.assign({ userCount: clients_NC.size, pixelCount: canvas_NC.pixelEvents.length }, stats_NC.global) };
+
+	if (req.member) {
+		statsJson_NC.personal = stats_NC.personal.get(req.member.user.id);
+	}
+
+	res.json(statsJson_NC);
+});
+
 
 
 
@@ -727,7 +810,13 @@ canvas.addListener("pixel", (x, y, color) => {
 		socket.send(buf);
 	}
 });
-
+canvas_NC.addListener("pixel", (x, y, color) => {
+	console.log("Pixel sent to " + clients_NC.size + " - " + new Date().toString());
+	const buf = io_NC.serializePixelWithoutTheOtherStuff(x, y, color);
+	for (const socket of clients.values()) {
+		socket.send(buf);
+	}
+});
 let connectedClientsCount = 0;
 app.setUpSockets = () => {
 	try {

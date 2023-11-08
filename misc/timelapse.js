@@ -74,11 +74,11 @@ async function create(width, height, scale, speed, frameRate, pathToCanvas, path
 
 		lastFrameNum = frameNum;
 
-		const progress = Math.floor((pixelNum / pixelEvents.length) * 10);
-		const newProgress = Math.floor((++pixelNum / pixelEvents.length) * 10);
+		const progress = Math.floor((pixelNum / pixelEvents.length) * 100);
+		const newProgress = Math.floor((++pixelNum / pixelEvents.length) * 100);
 
 		if (progress !== newProgress) {
-			console.log((newProgress * 10) + "%");
+			console.log((newProgress) + "%");
 		}
 	}
 

@@ -131,7 +131,7 @@ async function connectSocket() {
 }
 
 
-fetch("/initialize")
+fetch("/initialize_NC")
 	.then(res => res.json())
 	.then(res => {
 		loggedIn = res.loggedIn;
@@ -164,7 +164,7 @@ fetch("/initialize")
 	.then(() => loadingScreen.classList.add("hidden"));
 
 async function repaintCanvas() {
-	const canvasRes = await fetch("/canvas");
+	const canvasRes = await fetch("/canvas_NC");
 
 	if (!canvasRes.ok) {
 		return delayedReloadPage();
@@ -229,7 +229,7 @@ instance.on("panend", e => {
 
 
 async function showPlacerTooltip() {
-	const placerRes = await fetch("/placer",
+	const placerRes = await fetch("/placer_NC",
 		{
 			method: "POST",
 			headers: new Headers({ "content-type": "application/json" }),
@@ -421,7 +421,7 @@ async function adminPlace() {
 		return;
 	}
 
-	const placedRes = await fetch("/adminPlace",
+	const placedRes = await fetch("/adminPlace_NC",
 		{
 			method: "POST",
 			headers: new Headers({ "content-type": "application/json" }),
@@ -450,7 +450,7 @@ async function bulkPlace(x, y) {
 		return;
 	}
 
-	const placedRes = await fetch("/adminPlace",
+	const placedRes = await fetch("/adminPlace_NC",
 		{
 			method: "POST",
 			headers: new Headers({ "content-type": "application/json" }),
@@ -610,7 +610,7 @@ async function placeColor() {
 	const sentY = selectY;
 	const sentColor = +selectedColor.dataset.color;
 
-	const placedRes = await fetch("/place",
+	const placedRes = await fetch("/place_NC",
 		{
 			method: "POST",
 			headers: new Headers({ "content-type": "application/json" }),
@@ -858,10 +858,10 @@ function openManechat() {
 
 function openStats() {
 	clickSound.play();
-	window.location.href = "/stats";
+	window.location.href = "/stats_NC";
 }
 
-function openPaintCanvas() {
+function openNormalCanvas() {
 	clickSound.play();
-	window.location.href = "/paint";
+	window.location.href = "/ui";
 }
