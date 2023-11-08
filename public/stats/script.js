@@ -273,9 +273,9 @@ startInterval(5 * 60 * 1000 /* 5 mins */, async () => {
 	const heatmapScale = 2;
 
 	// TODO Get this from the server
-	heatmap.width = 500 * heatmapScale;
+	heatmap.width = 750 * heatmapScale;
 	heatmap.height = 500 * heatmapScale;
-	heatmap.style.maxWidth = `${500 * heatmapScale}px`;
+	heatmap.style.maxWidth = `${750 * heatmapScale}px`;
 	heatmap.style.maxHeight = `${500 * heatmapScale}px`;
 
 	const heatmapCtx = heatmap.getContext("2d");
