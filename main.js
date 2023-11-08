@@ -355,6 +355,22 @@ app.post("/adminPlace", userInfo, async (req, res) => {
 
 	res.send({ placed });
 });
+app.post("/adminPlace_NC", userInfo, async (req, res) => {
+	if (!req.member) {
+		return res.status(401).send();
+	}
+
+	if (isBanned(req.member)) {
+		return res.status(403).send();
+	}
+	if (!isMod(req.member)) {
+		return
+	}
+
+	const placed = canvas_NC.adminPlace(+req.body.x, +req.body.y, +req.body.color, req.member.user.id);
+
+	res.send({ placed });
+});
 app.get("/credits", (req, res) => {
 	const creditsPage = `
   <html lang="en">
