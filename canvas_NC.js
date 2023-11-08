@@ -231,8 +231,6 @@ Canvas_NC.Stats = class {
         this.global = {
             uniqueUserCount: 0,
             colorCounts: {},
-            topPlacer: {},
-            topPlacerDay: {},
             userCountOverTime: {},
             pixelCountOverTime: {}
         };
@@ -287,10 +285,6 @@ Canvas_NC.Stats = class {
 
     async _updateAtInterval() {
         console.log("Updated stats");
-        this.global.topPlacer = await generateCounters();
-        this.global.topPlacerDay = await generateCountersForCurrentDay();
-        sortedConvertedCounters = {};
-        sortedConvertedCountersDay = {};
         const currentTimeMs = Date.now();
         const startTimeMs = currentTimeMs - this._recordingDurationMs;
         const intervalTimeMs = this._recordingIntervalMs;
